@@ -21,14 +21,7 @@ public class SceneController : MonoBehaviour
 		get {return _sceneModel;}
 	}
 
-	[SerializeField]
-	protected GameObject _vfxPoolForScene;
-	public GameObject VfxPoolForScene
-	{
-		get { return _vfxPoolForScene; }
-	}
-
-	protected bool	_isInitialized = false;
+    protected bool	_isInitialized = false;
 
 	void Awake()
 	{

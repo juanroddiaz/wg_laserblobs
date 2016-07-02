@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MainSceneController : MonoBehaviour {
+public class MainSceneModel : SceneModel
+{
+    public MainSceneModel()
+    {
+        sceneIndex = SceneIndexEnum.MainScene;
+    }
+}
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class MainSceneController : SceneController
+{
+    private MainSceneModel _mainSceneModel;
+
+    public override IEnumerator InitSequence(SceneModel model)
+    {
+        _sceneModel = model;
+        _mainSceneModel = model as MainSceneModel;
+        yield break;
+    }
 }
