@@ -1,0 +1,13 @@
+using UnityEngine;
+using System.Collections;
+using UnityQuickSheet;
+
+///
+/// !!! Machine generated code !!!
+/// !!! DO NOT CHANGE Tabs to Spaces !!!
+///
+[System.Serializable]
+public class $ClassName
+{
+	$MemberFields
+}
