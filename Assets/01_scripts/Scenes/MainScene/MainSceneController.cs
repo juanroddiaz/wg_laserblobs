@@ -13,6 +13,13 @@ public class MainSceneController : SceneController
 {
     private MainSceneModel _mainSceneModel;
 
+    [SerializeField]
+    private MainScenarioLogic _scenarioLogic;
+    public MainScenarioLogic ScenarioLogic
+    {
+        get { return _scenarioLogic; }
+    }
+
     public override IEnumerator InitSequence(SceneModel model)
     {
         _sceneModel = model;
