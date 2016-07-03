@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LaserBeamGroupLogic : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class LaserBeamGroupLogic : MonoBehaviour
+{
+    [SerializeField]
+    private BattleGroundLogic _enemyBattleLogic;
+    [SerializeField]
+    private BattleGroundLogic _playerBattleLogic;
 }
