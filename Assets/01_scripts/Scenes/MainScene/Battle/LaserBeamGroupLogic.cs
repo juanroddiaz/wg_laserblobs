@@ -24,6 +24,8 @@ public class LaserBeamGroupLogic : MonoBehaviour
         {
             lbl.Init();
         }
+        _playerBattleLogic.Init();
+        _enemyBattleLogic.Init();
     }
 
     public void UpdateLogic()
