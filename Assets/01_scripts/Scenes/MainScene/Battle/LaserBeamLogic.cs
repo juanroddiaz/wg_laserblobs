@@ -7,4 +7,19 @@ public class LaserBeamLogic : MonoBehaviour
     private Image _enemyLaserImage;
     [SerializeField]
     private Image _playerLaserImage;
+
+    public void Init()
+    {
+
+    }
+
+    public void UpdateLaserLane()
+    {
+
+    }
+
+    public void PlayerBlobOnHoldLogic()
+    {
+
+    }
 }

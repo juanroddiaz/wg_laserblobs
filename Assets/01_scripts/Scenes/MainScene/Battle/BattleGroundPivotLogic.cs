@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class BattleGroundPivotLogic : MonoBehaviour
 {
     private bool _isHeld = false;
+    public bool IsHeld
+    {
+        get { return _isHeld; }
+    }
 
     public void OnHoldStart()
     {
@@ -18,10 +21,5 @@ public class BattleGroundPivotLogic : MonoBehaviour
             CustomLog.Log("OnHoldEnd");
             _isHeld = false;
         }        
-    }
-
-    public void OnHold()
-    {
-        CustomLog.Log("OnHold");
     }
 }
