@@ -12,6 +12,13 @@ public class BattleGroundPivotLogic : MonoBehaviour
         get { return _isHeld; }
     }
 
+    private float _dragThreshold = 0.0f;
+
+    public void Init(float dragThreshold)
+    {
+        _dragThreshold = dragThreshold;
+    }
+
     public void OnHoldStart()
     {
         CustomLog.Log("OnHoldStart");
@@ -31,10 +38,13 @@ public class BattleGroundPivotLogic : MonoBehaviour
 
     public void OnBeginDrag(BaseEventData data)
     {
-        _blobLogic.ToggleOnHoldState(false);
-        _isHeld = false;
         PointerEventData pointerData = data as PointerEventData;
-        CustomLog.Log("OnBeginDrag: delta -> " + pointerData.delta);
+        if (Mathf.Abs(pointerData.delta.x) >= _dragThreshold)
+        {
+            _blobLogic.ToggleOnHoldState(false);
+            _isHeld = false;
+            CustomLog.Log("OnBeginDrag: delta -> " + pointerData.delta);
+        }
     }
 
     public float GetBlobForce()

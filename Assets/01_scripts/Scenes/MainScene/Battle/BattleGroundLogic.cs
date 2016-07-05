@@ -6,13 +6,18 @@ public class BattleGroundLogic : MonoBehaviour
     [SerializeField]
     private List<Transform> _blobPivotList = new List<Transform>();
 
+    [SerializeField]
+    private float _dragThreshold = 4.0f;
+
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
 
     public void Init()
     {
         foreach (Transform t in _blobPivotList)
         {
-            _blobLogicList.Add(t.GetComponent<BattleGroundPivotLogic>());
+            BattleGroundPivotLogic bgLogic = t.GetComponent<BattleGroundPivotLogic>();
+            _blobLogicList.Add(bgLogic);
+            bgLogic.Init(_dragThreshold);
         }
     }
 
