@@ -10,34 +10,25 @@ public class LaserBeamLogic : MonoBehaviour
 
     private float _initialLaserValue = 0.5f;
     private float _currentPlayerLaserValue = 0.0f;
-
-    private float _initialPlayerLaserForceFactor = 0.00125f;
     private float _currentPlayerLaserForceFactor = 0.0f;
 
-    private float _holdFactor = 0.0050f;
-
-    public void Init()
+    public void Init(float enemyForce, float playerForce)
     {
         // TODO: get the right values from DM
         _currentPlayerLaserValue = _initialLaserValue;
         _playerLaserImage.fillAmount = _initialLaserValue;
         _enemyLaserImage.fillAmount = 1.0f - _initialLaserValue;
 
-        _currentPlayerLaserForceFactor = _initialPlayerLaserForceFactor;
+        _currentPlayerLaserForceFactor = enemyForce - playerForce;
     }
 
-    public void UpdateLaserLane()
+    public void UpdateLaserLane(float enemyForce, float playerForce)
     {
         _currentPlayerLaserValue -= _currentPlayerLaserForceFactor;
         _currentPlayerLaserValue = Mathf.Max(0.0f, _currentPlayerLaserValue);
         _currentPlayerLaserValue = Mathf.Min(_currentPlayerLaserValue, 1.0f);
         _playerLaserImage.fillAmount = _currentPlayerLaserValue;
         _enemyLaserImage.fillAmount = 1.0f - _currentPlayerLaserValue;
-        _currentPlayerLaserForceFactor = _initialPlayerLaserForceFactor;
-    }
-
-    public void PlayerBlobOnHoldLogic()
-    {
-        _currentPlayerLaserForceFactor = _initialPlayerLaserForceFactor - _holdFactor;
+        _currentPlayerLaserForceFactor = enemyForce - playerForce;
     }
 }

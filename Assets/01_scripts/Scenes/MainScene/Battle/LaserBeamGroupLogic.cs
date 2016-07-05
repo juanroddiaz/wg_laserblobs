@@ -20,25 +20,23 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
     public void Init()
     {
-        foreach (LaserBeamLogic lbl in _laserBeamList)
-        {
-            lbl.Init();
-        }
         _playerBattleLogic.Init();
         _enemyBattleLogic.Init();
+        int idx = 0;
+        foreach (LaserBeamLogic lbl in _laserBeamList)
+        {
+            lbl.Init(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
+            idx++;
+        }
     }
 
     public void UpdateLogic()
     {
+        int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.UpdateLaserLane();
-        }
-
-        int pressedBlobIdx = _playerBattleLogic.GetPressedBlobIndex();
-        if (pressedBlobIdx >= 0 && pressedBlobIdx < (int)LaserLinesEnum.Max)
-        {
-            _laserBeamList[pressedBlobIdx].PlayerBlobOnHoldLogic();
+            lbl.UpdateLaserLane(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
+            idx++;
         }
     }
 }
