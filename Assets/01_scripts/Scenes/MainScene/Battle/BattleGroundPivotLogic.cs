@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BattleGroundPivotLogic : MonoBehaviour
 {
@@ -26,6 +27,14 @@ public class BattleGroundPivotLogic : MonoBehaviour
             _blobLogic.ToggleOnHoldState(false);
             _isHeld = false;
         }        
+    }
+
+    public void OnBeginDrag(BaseEventData data)
+    {
+        _blobLogic.ToggleOnHoldState(false);
+        _isHeld = false;
+        PointerEventData pointerData = data as PointerEventData;
+        CustomLog.Log("OnBeginDrag: delta -> " + pointerData.delta);
     }
 
     public float GetBlobForce()
