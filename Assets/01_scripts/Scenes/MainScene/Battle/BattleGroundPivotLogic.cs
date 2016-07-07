@@ -33,7 +33,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
     #region Event triggers
     public void OnHoldStart()
     {
-        //CustomLog.Log("OnHoldStart");
+        CustomLog.Log("OnHoldStart: " + _laserLaneType.ToString());
         _isHeld = true;
         _blobLogic.ToggleOnHoldState(true);
     }

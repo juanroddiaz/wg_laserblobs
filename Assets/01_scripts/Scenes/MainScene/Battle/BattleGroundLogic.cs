@@ -61,8 +61,13 @@ public class BattleGroundLogic : MonoBehaviour
     {
         if (_onDragCooldown)
         {
+            CustomLog.LogWarning("Blocked By Cooldown!");
             return;
         }
+
+        int leftS = _blobLogicList[(int)LaserLinesEnum.Left].transform.GetSiblingIndex();
+        int middleS = _blobLogicList[(int)LaserLinesEnum.Middle].transform.GetSiblingIndex();
+        int rightS = _blobLogicList[(int)LaserLinesEnum.Right].transform.GetSiblingIndex();
 
         if (directionSign > 0)
         {
@@ -75,17 +80,21 @@ public class BattleGroundLogic : MonoBehaviour
                     BattleGroundPivotLogic lm = _blobLogicList[(int)LaserLinesEnum.Middle];
                     ll.UpdateLane(LaserLinesEnum.Middle);
                     lm.UpdateLane(LaserLinesEnum.Left);
+                    ll.transform.SetSiblingIndex(middleS);
+                    lm.transform.SetSiblingIndex(leftS);
                     _blobLogicList[(int)LaserLinesEnum.Left] = lm;
                     _blobLogicList[(int)LaserLinesEnum.Middle] = ll;
                     break;
                 case LaserLinesEnum.Middle:
-                    // middle - right swap
+                    // middle - right m
                     BattleGroundPivotLogic mm = _blobLogicList[(int)LaserLinesEnum.Middle];
                     BattleGroundPivotLogic mr = _blobLogicList[(int)LaserLinesEnum.Right];
                     mm.UpdateLane(LaserLinesEnum.Right);
                     mr.UpdateLane(LaserLinesEnum.Middle);
-                    _blobLogicList[(int)LaserLinesEnum.Middle] = mr;
+                    mm.transform.SetSiblingIndex(rightS);
+                    mr.transform.SetSiblingIndex(middleS);
                     _blobLogicList[(int)LaserLinesEnum.Right] = mm;
+                    _blobLogicList[(int)LaserLinesEnum.Middle] = mr;
                     break;
                 case LaserLinesEnum.Right:
                     // no movement

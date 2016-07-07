@@ -22,6 +22,7 @@ public class LaserBeamLogic : MonoBehaviour
         _currentPlayerLaserForceFactor = enemyForce - playerForce;
     }
 
+    // TODO: get the enemy and player type too, it will have an impact in laser force
     public void UpdateLaserLane(float enemyForce, float playerForce)
     {
         _currentPlayerLaserValue -= _currentPlayerLaserForceFactor;
