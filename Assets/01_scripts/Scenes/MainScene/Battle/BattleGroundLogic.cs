@@ -111,9 +111,25 @@ public class BattleGroundLogic : MonoBehaviour
                     break;
                 case LaserLinesEnum.Middle:
                     // middle - left swap
+                    BattleGroundPivotLogic mm = _blobLogicList[(int)LaserLinesEnum.Middle];
+                    BattleGroundPivotLogic lm = _blobLogicList[(int)LaserLinesEnum.Left];
+                    mm.UpdateLane(LaserLinesEnum.Left);
+                    lm.UpdateLane(LaserLinesEnum.Middle);
+                    mm.transform.SetSiblingIndex(leftS);
+                    lm.transform.SetSiblingIndex(middleS);
+                    _blobLogicList[(int)LaserLinesEnum.Left] = mm;
+                    _blobLogicList[(int)LaserLinesEnum.Middle] = lm;
                     break;
                 case LaserLinesEnum.Right:
                     // right - middle swap
+                    BattleGroundPivotLogic mr = _blobLogicList[(int)LaserLinesEnum.Middle];
+                    BattleGroundPivotLogic rm = _blobLogicList[(int)LaserLinesEnum.Right];
+                    mr.UpdateLane(LaserLinesEnum.Right);
+                    rm.UpdateLane(LaserLinesEnum.Middle);
+                    mr.transform.SetSiblingIndex(rightS);
+                    rm.transform.SetSiblingIndex(middleS);
+                    _blobLogicList[(int)LaserLinesEnum.Right] = mr;
+                    _blobLogicList[(int)LaserLinesEnum.Middle] = rm;
                     break;
             }
         }
