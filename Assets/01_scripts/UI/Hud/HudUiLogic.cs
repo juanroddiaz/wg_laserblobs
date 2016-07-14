@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MenuUIPanelLogic : MonoBehaviour
+public class HudUiLogic : MonoBehaviour
 {
-    [SerializeField]
-    
-
     public void Init()
     {
+
     }
 }

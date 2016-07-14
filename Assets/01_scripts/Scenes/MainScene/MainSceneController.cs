@@ -21,10 +21,13 @@ public class MainSceneController : SceneController
     }
 
     [SerializeField]
-    private GameUIPanelLogic _gameUiLogic;
+    private MainMenuLogic _mainMenuLogic;
 
     [SerializeField]
-    private MenuUIPanelLogic _menuUiLogic;
+    private PreGameLogic _preGameLogic;
+
+    [SerializeField]
+    private HudUiLogic _hudLogic;
 
     private bool _isPaused = true;
     public bool IsPaused
@@ -37,8 +40,9 @@ public class MainSceneController : SceneController
         _sceneModel = model;
         _mainSceneModel = model as MainSceneModel;
         _scenarioLogic.Init();
-        _gameUiLogic.Init();
-        _menuUiLogic.Init();
+        _mainMenuLogic.Init(this);
+        _preGameLogic.Init();
+        _hudLogic.Init();
         yield break;
     }
 
@@ -49,5 +53,10 @@ public class MainSceneController : SceneController
             _scenarioLogic.UpdateLogic();
         }
         base.Update();
+    }
+
+    public void StartGame()
+    {
+        _isPaused = false;
     }
 }

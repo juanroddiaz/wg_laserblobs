@@ -1,15 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class MainMenuLogic : MonoBehaviour {
+public class MainMenuLogic : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject _mainContentObject;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    [SerializeField]
+    private GameObject _logInContentObject;
+
+    [SerializeField]
+    private Button _leaderboardButton;
+    [SerializeField]
+    private Button _facebookButton;
+    [SerializeField]
+    private Button _guestButton;
+
+    private MainSceneController _sceneController;
+
+    public void Init(MainSceneController controller)
+    {
+        _sceneController = controller;
+        _mainContentObject.SetActive(true);
+        _logInContentObject.SetActive(false);
+    }
+
+    public void OnPlayButton()
+    {
+        _logInContentObject.SetActive(true);
+    }
+
+    public void OnGuestButton()
+    {
+        _mainContentObject.SetActive(false);
+        _logInContentObject.SetActive(false);
+        _sceneController.StartGame();
+    }
 }
