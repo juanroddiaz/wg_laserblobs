@@ -20,6 +20,12 @@ public class MainSceneController : SceneController
         get { return _scenarioLogic; }
     }
 
+    [SerializeField]
+    private GameUIPanelLogic _gameUiLogic;
+
+    [SerializeField]
+    private MenuUIPanelLogic _menuUiLogic;
+
     private bool _isPaused = false;
     public bool IsPaused
     {
@@ -31,6 +37,8 @@ public class MainSceneController : SceneController
         _sceneModel = model;
         _mainSceneModel = model as MainSceneModel;
         _scenarioLogic.Init();
+        _gameUiLogic.Init();
+        _menuUiLogic.Init();
         yield break;
     }
 
