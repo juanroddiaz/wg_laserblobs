@@ -26,7 +26,7 @@ public class MainSceneController : SceneController
     [SerializeField]
     private MenuUIPanelLogic _menuUiLogic;
 
-    private bool _isPaused = false;
+    private bool _isPaused = true;
     public bool IsPaused
     {
         get { return _isPaused; }
