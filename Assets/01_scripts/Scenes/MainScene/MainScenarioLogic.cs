@@ -1,5 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+
+public enum GameDifficulty
+{
+    Easy = 0,
+    Medium,
+    Hard,
+    Max
+}
 
 public class MainScenarioLogic : MonoBehaviour
 {
@@ -9,6 +17,11 @@ public class MainScenarioLogic : MonoBehaviour
     public void Init()
     {
         _laserGroupLogic.Init();
+    }
+
+    public void StartGame(List<string> _blobSelection)
+    {
+
     }
 
     public void UpdateLogic()

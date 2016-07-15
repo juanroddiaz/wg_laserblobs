@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MainSceneModel : SceneModel
 {
@@ -66,9 +67,10 @@ public class MainSceneController : SceneController
         _mainMenuLogic.Show(onlyMain);
     }
 
-    public void StartGame()
+    public void StartGame(List<string> _blobSelection)
     {
         _isPaused = false;
+        _scenarioLogic.StartGame(_blobSelection);
     }
     #endregion
 }
