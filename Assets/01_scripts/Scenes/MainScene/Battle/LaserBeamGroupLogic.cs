@@ -22,6 +22,11 @@ public class LaserBeamGroupLogic : MonoBehaviour
     {
         _playerBattleLogic.Init();
         _enemyBattleLogic.Init();
+        LaserSetting();
+    }
+
+    public void LaserSetting()
+    {
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {

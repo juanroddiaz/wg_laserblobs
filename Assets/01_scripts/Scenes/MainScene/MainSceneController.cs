@@ -36,6 +36,8 @@ public class MainSceneController : SceneController
         get { return _isPaused; }
     }
 
+    private List<string> _lastBlobSelection = new List<string>();
+
     public override IEnumerator InitSequence(SceneModel model)
     {
         _sceneModel = model;
@@ -70,12 +72,36 @@ public class MainSceneController : SceneController
     public void StartGame(List<string> _blobSelection)
     {
         _isPaused = false;
+        _lastBlobSelection = _blobSelection;
         _scenarioLogic.StartGame(_blobSelection);
     }
 
     public void TogglePauseGame()
     {
         _isPaused = !_isPaused;
+    }
+
+    public void RestartGame()
+    {
+        string blobLog = "Restart game's Selected blobs: ";
+        foreach (string s in _lastBlobSelection)
+        {
+            blobLog += (s + " ");
+        }
+        CustomLog.Log(blobLog);
+        TogglePauseGame();
+        _scenarioLogic.StartGame(_lastBlobSelection);
+    }
+
+    public void EndGame(bool goToMainMenu)
+    {
+        if (goToMainMenu)
+        {
+            _mainMenuLogic.Show();
+            return;
+        }
+
+        _preGameLogic.Show();
     }
     #endregion
 }

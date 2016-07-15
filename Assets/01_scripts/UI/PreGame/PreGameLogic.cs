@@ -19,6 +19,7 @@ public class PreGameLogic : MonoBehaviour
 
     private Dictionary<int, string> _blobSelectionMap = new Dictionary<int, string>();
     private List<string> _sortedBlobSelection = new List<string>();
+
     private GameDifficulty _selectedDifficulty;
 
     private MainSceneController _sceneController;
@@ -27,8 +28,6 @@ public class PreGameLogic : MonoBehaviour
     {
         _sceneController = controller;
         _pregameContentObject.SetActive(false);
-        _selectedDifficulty = GameDifficulty.Medium;
-        _difficultyToggleList[(int)_selectedDifficulty].interactable = false;
 
         // TODO: blob grid data configuration
         for (int i = 0; i < _blobsToggleList.Count; i++)
@@ -40,11 +39,39 @@ public class PreGameLogic : MonoBehaviour
 
     public void Show()
     {
+        _selectedDifficulty = GameDifficulty.Max;
+        int diffInt = (int)GameDifficulty.Medium;
+        for (int i = 0; i < (int)GameDifficulty.Max; i++)
+        {
+            if (i == diffInt)
+            {
+                _difficultyToggleList[i].isOn = true;
+                _difficultyToggleList[i].interactable = false;
+                continue;
+            }
+            _difficultyToggleList[i].isOn = false;
+            _difficultyToggleList[i].interactable = true;
+        }
+
+        foreach(Toggle t in _blobsToggleList)
+        {
+            t.isOn = false;
+        }
+
+        _sortedBlobSelection.Clear();
+        // initialize prebattle screen logic setting the difficulty to its default
+        _selectedDifficulty = GameDifficulty.Medium;
         _pregameContentObject.SetActive(true);
     }
 
     public void OnToggleDifficulty(int difficultyIdx)
     {
+        if (_selectedDifficulty == GameDifficulty.Max)
+        {
+            // uninitialized logic
+            return;
+        }
+
         GameDifficulty diff = (GameDifficulty)difficultyIdx;
         if (_selectedDifficulty != diff)
         {
@@ -52,11 +79,17 @@ public class PreGameLogic : MonoBehaviour
             _selectedDifficulty = diff;
             _difficultyToggleList[difficultyIdx].interactable = false;
             CustomLog.Log("Selected difficulty: " + _selectedDifficulty.ToString());
-        }        
+        }
     }
 
     public void OnToggleBlobs(int blobIdx)
     {
+        if (_selectedDifficulty == GameDifficulty.Max)
+        {
+            // uninitialized logic
+            return;
+        }
+
         if (_blobsToggleList[blobIdx].isOn)
         {
             _sortedBlobSelection.Add(_blobSelectionMap[blobIdx]);
@@ -85,6 +118,6 @@ public class PreGameLogic : MonoBehaviour
         CustomLog.Log(blobLog);
 
         _pregameContentObject.SetActive(false);
-        _sceneController.StartGame(_blobSelectionMap.Values.ToList());
+        _sceneController.StartGame(_sortedBlobSelection);
     }
 }

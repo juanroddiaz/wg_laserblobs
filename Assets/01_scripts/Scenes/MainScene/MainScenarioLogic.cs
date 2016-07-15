@@ -21,6 +21,11 @@ public class MainScenarioLogic : MonoBehaviour
 
     public void StartGame(List<string> _blobSelection)
     {
+        _laserGroupLogic.LaserSetting();
+    }
+
+    public void EndGame()
+    {
 
     }
 
