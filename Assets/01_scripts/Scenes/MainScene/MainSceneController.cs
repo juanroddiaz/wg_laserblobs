@@ -61,9 +61,9 @@ public class MainSceneController : SceneController
         _preGameLogic.Show();
     }
 
-    public void OnBackToMainMenu()
+    public void OnBackToMainMenu(bool onlyMain)
     {
-        _mainMenuLogic.Show();
+        _mainMenuLogic.Show(onlyMain);
     }
 
     public void StartGame()

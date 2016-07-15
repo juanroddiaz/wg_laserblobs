@@ -25,10 +25,10 @@ public class MainMenuLogic : MonoBehaviour
         Show();
     }
 
-    public void Show()
+    public void Show(bool onlyMain = true)
     {
         _mainContentObject.SetActive(true);
-        _logInContentObject.SetActive(false);
+        _logInContentObject.SetActive(!onlyMain);
     }
 
     public void OnPlayButton()

@@ -34,7 +34,8 @@ public class PreGameLogic : MonoBehaviour
     public void OnBackButton()
     {
         _pregameContentObject.SetActive(false);
-        _sceneController.OnBackToMainMenu();
+        // show whole Play Menu (TBD)
+        _sceneController.OnBackToMainMenu(true);
     }
 
     public void OnStartButton()
