@@ -41,7 +41,7 @@ public class MainSceneController : SceneController
         _mainSceneModel = model as MainSceneModel;
         _scenarioLogic.Init();
         _mainMenuLogic.Init(this);
-        _preGameLogic.Init();
+        _preGameLogic.Init(this);
         _hudLogic.Init();
         yield break;
     }
@@ -55,8 +55,20 @@ public class MainSceneController : SceneController
         base.Update();
     }
 
+    #region UI logic
+    public void DisplayPreGameMenu()
+    {
+        _preGameLogic.Show();
+    }
+
+    public void OnBackToMainMenu()
+    {
+        _mainMenuLogic.Show();
+    }
+
     public void StartGame()
     {
         _isPaused = false;
     }
+    #endregion
 }

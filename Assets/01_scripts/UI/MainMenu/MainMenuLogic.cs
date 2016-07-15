@@ -22,6 +22,11 @@ public class MainMenuLogic : MonoBehaviour
     public void Init(MainSceneController controller)
     {
         _sceneController = controller;
+        Show();
+    }
+
+    public void Show()
+    {
         _mainContentObject.SetActive(true);
         _logInContentObject.SetActive(false);
     }
@@ -35,6 +40,6 @@ public class MainMenuLogic : MonoBehaviour
     {
         _mainContentObject.SetActive(false);
         _logInContentObject.SetActive(false);
-        _sceneController.StartGame();
+        _sceneController.DisplayPreGameMenu();
     }
 }
