@@ -43,7 +43,7 @@ public class MainSceneController : SceneController
         _scenarioLogic.Init();
         _mainMenuLogic.Init(this);
         _preGameLogic.Init(this);
-        _hudLogic.Init();
+        _hudLogic.Init(this);
         yield break;
     }
 
@@ -71,6 +71,11 @@ public class MainSceneController : SceneController
     {
         _isPaused = false;
         _scenarioLogic.StartGame(_blobSelection);
+    }
+
+    public void TogglePauseGame()
+    {
+        _isPaused = !_isPaused;
     }
     #endregion
 }
