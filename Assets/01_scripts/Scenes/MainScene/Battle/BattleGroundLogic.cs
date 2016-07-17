@@ -73,6 +73,9 @@ public class BattleGroundLogic : MonoBehaviour
             return;
         }
 
+        // TODO: totally replace current logic by draggable blob logic
+        _blobDragObjs[(int)lane].StartDrag();
+
         int leftS = _blobLogicList[(int)LaserLinesEnum.Left].transform.GetSiblingIndex();
         int middleS = _blobLogicList[(int)LaserLinesEnum.Middle].transform.GetSiblingIndex();
         int rightS = _blobLogicList[(int)LaserLinesEnum.Right].transform.GetSiblingIndex();
