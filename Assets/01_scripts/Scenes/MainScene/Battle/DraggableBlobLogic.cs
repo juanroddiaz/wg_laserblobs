@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 public class DraggableBlobLogic : MonoBehaviour
 {
     private LaserLinesEnum _lane;
-    private DraggablePanelBattleLogic _panelLogic;
+    private BattleGroundLogic _panelLogic;
 
-    public void Init(LaserLinesEnum lane, DraggablePanelBattleLogic panelLogic)
+    public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic)
     {
         _lane = lane;
         _panelLogic = panelLogic;
