@@ -14,9 +14,13 @@ public class MainScenarioLogic : MonoBehaviour
     [SerializeField]
     private LaserBeamGroupLogic _laserGroupLogic;
 
+    [SerializeField]
+    private DraggablePanelBattleLogic _draggablePanelLogic;
+
     public void Init()
     {
         _laserGroupLogic.Init();
+        _draggablePanelLogic.Init();
     }
 
     public void StartGame(List<string> _blobSelection)

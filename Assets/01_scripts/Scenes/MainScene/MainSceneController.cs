@@ -40,6 +40,7 @@ public class MainSceneController : SceneController
 
     public override IEnumerator InitSequence(SceneModel model)
     {
+        yield return null;
         _sceneModel = model;
         _mainSceneModel = model as MainSceneModel;
         _scenarioLogic.Init();
