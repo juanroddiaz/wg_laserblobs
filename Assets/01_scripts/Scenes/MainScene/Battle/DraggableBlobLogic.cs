@@ -9,38 +9,70 @@ public class DraggableBlobLogic : MonoBehaviour
 
     private LaserLinesEnum _lane;
     private BattleGroundLogic _panelLogic;
-    private Vector3 _initialPosition;
+    private Vector2 _initialPosition;
+    private RectTransform _rectTrans;
+
+    private bool _isHeld = false;
+    public bool IsHeld
+    {
+        get { return _isHeld; }
+    }
 
     public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic)
     {
         _lane = lane;
         _panelLogic = panelLogic;
-        _initialPosition = transform.position;
+        _rectTrans = GetComponent<RectTransform>();
+        _initialPosition = _rectTrans.anchoredPosition;
     }
 
     #region Event triggers
-    public void OnBeginDrag(BaseEventData data)
+    public void OnHoldStart()
     {
-        CustomLog.Log("OnBeginDrag: " + _lane.ToString());
+        CustomLog.Log("OnHoldStart: " + _lane.ToString());
+        _isHeld = true;
+        _panelLogic.ToggleOnHoldState(_lane, true);
     }
 
-    public void StartDrag()
+    public void OnHoldEnd()
     {
-        _draggableImage.raycastTarget = true;
+        if (_isHeld)
+        {
+            //CustomLog.Log("OnHoldEnd");
+            _panelLogic.ToggleOnHoldState(_lane, false);
+            _isHeld = false;
+        }
+    }
+
+    public void OnBeginDrag(BaseEventData data)
+    {
+        CustomLog.Log("OnBeginDrag: lane " + _lane.ToString());
+        Color imgColor = new Color(1.0f, 1.0f, 1.0f, _panelLogic.DragBlobAlpha);
+        _draggableImage.color = imgColor;
     }
 
     public void OnDrag(BaseEventData data)
     {
-        CustomLog.Log("OnDrag: " + _lane.ToString());
+        //CustomLog.Log("OnDrag: " + _lane.ToString());
         PointerEventData pointerData = data as PointerEventData;
-        GetComponent<RectTransform>().anchoredPosition += pointerData.delta;
+        _rectTrans.anchoredPosition += pointerData.delta;
+        if (_isHeld)
+        {
+            if ((_initialPosition - _rectTrans.anchoredPosition).magnitude > _panelLogic.DragThreshold)
+            {
+                _panelLogic.ToggleOnHoldState(_lane, false);
+                _isHeld = false;
+                CustomLog.Log("Hold state cancelled!");
+            }
+        }        
     }
 
     public void OnEndDrag(BaseEventData data)
     {
         CustomLog.Log("OnEndDrag: " + _lane.ToString());
-        transform.position = _initialPosition;
-        _draggableImage.raycastTarget = false;
+        _rectTrans.anchoredPosition = _initialPosition;
+        Color imgColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        _draggableImage.color = imgColor;
     }
     #endregion
 }
