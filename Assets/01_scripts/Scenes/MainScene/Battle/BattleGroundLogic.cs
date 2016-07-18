@@ -11,10 +11,17 @@ public class BattleGroundLogic : MonoBehaviour
     private List<DraggableBlobLogic> _blobDragObjs = new List<DraggableBlobLogic>();
 
     [SerializeField]
-    private float _dragThreshold = 50.0f;
-    public float DragThreshold
+    private float _dragStartThreshold = 50.0f;
+    public float DragStartThreshold
     {
-        get { return _dragThreshold; }
+        get { return _dragStartThreshold; }
+    }
+
+    [SerializeField]
+    private float _dropThreshold = 70.0f;
+    public float DropThreshold
+    {
+        get { return _dropThreshold; }
     }
 
     [SerializeField]
@@ -66,5 +73,36 @@ public class BattleGroundLogic : MonoBehaviour
     {
         int ret = _blobDragObjs.FindIndex(x => x.IsHeld);        
         return ret;
-    }    
+    }
+
+    public void CheckBlobSwapping(LaserLinesEnum lane, Vector2 lastPos)
+    {
+        int laneIdx = (int)lane;
+        for (int i = 0; i < (int)LaserLinesEnum.Max; i++)
+        {
+            if (i == laneIdx)
+            {
+                continue;
+            }
+            float distance = (lastPos - _blobLogicList[i].GetComponent<RectTransform>().anchoredPosition).magnitude;
+            if (distance < _dropThreshold)
+            {
+                SwapBlobs(lane, (LaserLinesEnum)i);
+                return;
+            }
+        }
+    }
+
+    private void SwapBlobs(LaserLinesEnum from, LaserLinesEnum to)
+    {
+        CustomLog.Log("Swapping from " + from.ToString() + " to " + to.ToString());
+         BattleGroundPivotLogic fromLogic = _blobLogicList[(int)from];
+        BattleGroundPivotLogic toLogic = _blobLogicList[(int)to];
+        _blobDragObjs[(int)from].UpdateLane(to);
+        _blobDragObjs[(int)to].UpdateLane(from);
+        fromLogic.transform.SetSiblingIndex((int)to);
+        toLogic.transform.SetSiblingIndex((int)from);
+        _blobLogicList[(int)from] = toLogic;
+        _blobLogicList[(int)to] = fromLogic;
+    }
 }

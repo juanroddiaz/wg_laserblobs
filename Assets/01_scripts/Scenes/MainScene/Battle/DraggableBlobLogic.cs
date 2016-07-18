@@ -26,6 +26,11 @@ public class DraggableBlobLogic : MonoBehaviour
         _initialPosition = _rectTrans.anchoredPosition;
     }
 
+    public void UpdateLane(LaserLinesEnum lane)
+    {
+        _lane = lane;
+    }
+
     #region Event triggers
     public void OnHoldStart()
     {
@@ -58,7 +63,7 @@ public class DraggableBlobLogic : MonoBehaviour
         _rectTrans.anchoredPosition += pointerData.delta;
         if (_isHeld)
         {
-            if ((_initialPosition - _rectTrans.anchoredPosition).magnitude > _panelLogic.DragThreshold)
+            if ((_initialPosition - _rectTrans.anchoredPosition).magnitude > _panelLogic.DragStartThreshold)
             {
                 _panelLogic.ToggleOnHoldState(_lane, false);
                 _isHeld = false;
@@ -70,9 +75,13 @@ public class DraggableBlobLogic : MonoBehaviour
     public void OnEndDrag(BaseEventData data)
     {
         CustomLog.Log("OnEndDrag: " + _lane.ToString());
-        _rectTrans.anchoredPosition = _initialPosition;
         Color imgColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         _draggableImage.color = imgColor;
+
+        // TODO: check end drag position
+        Vector2 lastAnchoredPos = _rectTrans.anchoredPosition;
+        _rectTrans.anchoredPosition = _initialPosition;
+        _panelLogic.CheckBlobSwapping(_lane, lastAnchoredPos);
     }
     #endregion
 }

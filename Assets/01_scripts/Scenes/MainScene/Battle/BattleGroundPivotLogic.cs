@@ -30,9 +30,4 @@ public class BattleGroundPivotLogic : MonoBehaviour
     {
         return _blobLogic.CurrentBlobLaserForce;
     }
-
-    public void UpdateLane(LaserLinesEnum lane)
-    {
-        _laserLaneType = lane;
-    }
 }
