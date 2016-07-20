@@ -22,7 +22,7 @@ public class DraggableBlobLogic : MonoBehaviour
     {
         _lane = lane;
         _panelLogic = panelLogic;
-        _rectTrans = GetComponent<RectTransform>();
+        _rectTrans = _draggableImage.GetComponent<RectTransform>();
         _initialPosition = _rectTrans.anchoredPosition;
     }
 
@@ -79,7 +79,7 @@ public class DraggableBlobLogic : MonoBehaviour
         _draggableImage.color = imgColor;
 
         // TODO: check end drag position
-        Vector2 lastAnchoredPos = _rectTrans.anchoredPosition;
+        Vector3 lastAnchoredPos = _rectTrans.position;
         _rectTrans.anchoredPosition = _initialPosition;
         _panelLogic.CheckBlobSwapping(_lane, lastAnchoredPos);
     }

@@ -18,7 +18,7 @@ public class BattleGroundLogic : MonoBehaviour
     }
 
     [SerializeField]
-    private float _dropThreshold = 70.0f;
+    private float _dropThreshold = 0.125f;
     public float DropThreshold
     {
         get { return _dropThreshold; }
@@ -75,7 +75,7 @@ public class BattleGroundLogic : MonoBehaviour
         return ret;
     }
 
-    public void CheckBlobSwapping(LaserLinesEnum lane, Vector2 lastPos)
+    public void CheckBlobSwapping(LaserLinesEnum lane, Vector3 lastPos)
     {
         int laneIdx = (int)lane;
         for (int i = 0; i < (int)LaserLinesEnum.Max; i++)
@@ -84,7 +84,8 @@ public class BattleGroundLogic : MonoBehaviour
             {
                 continue;
             }
-            float distance = (lastPos - _blobLogicList[i].GetComponent<RectTransform>().anchoredPosition).magnitude;
+            float distance = (lastPos - _blobLogicList[i].transform.position).magnitude;
+            //CustomLog.Log("drag from " + lane.ToString() + " to " + (LaserLinesEnum)i + " distance: " + distance);
             if (distance < _dropThreshold)
             {
                 SwapBlobs(lane, (LaserLinesEnum)i);
@@ -96,13 +97,13 @@ public class BattleGroundLogic : MonoBehaviour
     private void SwapBlobs(LaserLinesEnum from, LaserLinesEnum to)
     {
         CustomLog.Log("Swapping from " + from.ToString() + " to " + to.ToString());
-         BattleGroundPivotLogic fromLogic = _blobLogicList[(int)from];
-        BattleGroundPivotLogic toLogic = _blobLogicList[(int)to];
-        _blobDragObjs[(int)from].UpdateLane(to);
-        _blobDragObjs[(int)to].UpdateLane(from);
-        fromLogic.transform.SetSiblingIndex((int)to);
-        toLogic.transform.SetSiblingIndex((int)from);
-        _blobLogicList[(int)from] = toLogic;
-        _blobLogicList[(int)to] = fromLogic;
+        // BattleGroundPivotLogic fromLogic = _blobLogicList[(int)from];
+        //BattleGroundPivotLogic toLogic = _blobLogicList[(int)to];
+        //_blobDragObjs[(int)from].UpdateLane(to);
+        //_blobDragObjs[(int)to].UpdateLane(from);
+        //fromLogic.transform.SetSiblingIndex((int)to);
+        //toLogic.transform.SetSiblingIndex((int)from);
+        //_blobLogicList[(int)from] = toLogic;
+        //_blobLogicList[(int)to] = fromLogic;
     }
 }
