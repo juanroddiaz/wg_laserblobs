@@ -97,13 +97,21 @@ public class BattleGroundLogic : MonoBehaviour
     private void SwapBlobs(LaserLinesEnum from, LaserLinesEnum to)
     {
         CustomLog.Log("Swapping from " + from.ToString() + " to " + to.ToString());
-        // BattleGroundPivotLogic fromLogic = _blobLogicList[(int)from];
-        //BattleGroundPivotLogic toLogic = _blobLogicList[(int)to];
-        //_blobDragObjs[(int)from].UpdateLane(to);
-        //_blobDragObjs[(int)to].UpdateLane(from);
-        //fromLogic.transform.SetSiblingIndex((int)to);
-        //toLogic.transform.SetSiblingIndex((int)from);
-        //_blobLogicList[(int)from] = toLogic;
-        //_blobLogicList[(int)to] = fromLogic;
+        int fromIdx = (int)from;
+        int toIdx = (int)to;
+        BattleGroundPivotLogic fromLogic = _blobLogicList[fromIdx];
+        BattleGroundPivotLogic toLogic = _blobLogicList[toIdx];
+        DraggableBlobLogic fromDragLogic = _blobDragObjs[fromIdx];
+        DraggableBlobLogic toDragLogic = _blobDragObjs[toIdx];
+        fromDragLogic.UpdateLane(to);
+        toDragLogic.UpdateLane(from);
+        int fromSibling = fromLogic.transform.GetSiblingIndex();
+        int toSibling = toLogic.transform.GetSiblingIndex();
+        fromLogic.transform.SetSiblingIndex(toSibling);
+        toLogic.transform.SetSiblingIndex(fromSibling);
+        _blobLogicList[fromIdx] = toLogic;
+        _blobLogicList[toIdx] = fromLogic;
+        _blobDragObjs[fromIdx] = toDragLogic;
+        _blobDragObjs[toIdx] = fromDragLogic;
     }
 }
