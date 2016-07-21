@@ -6,18 +6,38 @@ public class TestSceneLogic : MonoBehaviour
     [SerializeField]
     private Animator _blobAnimController;
 
-    public void SetIdle()
+    public void SetIdleFront()
     {
-        _blobAnimController.SetTrigger("Idle");
+        _blobAnimController.SetTrigger("IdleFront");
     }
 
-    public void SetJump()
+    public void SetJumpFront()
     {
-        _blobAnimController.SetTrigger("Jump");
+        _blobAnimController.SetTrigger("JumpFront");
     }
 
-    public void SetHold()
+    public void SetHoldFront()
     {
-        _blobAnimController.SetTrigger("Press");
+        _blobAnimController.SetTrigger("SqueezeFront");
     }
+
+	public void SetIdleBack()
+	{
+		_blobAnimController.SetTrigger("IdleBack");
+	}
+
+	public void SetJumpBack()
+	{
+		_blobAnimController.SetTrigger("JumpBack");
+	}
+
+	public void SetHoldBack()
+	{
+		_blobAnimController.SetTrigger("SqueezeBack");
+	}
+
+	public void SetGradient()
+	{
+		_blobAnimController.SetTrigger("ColorGradient");
+	}
 }
