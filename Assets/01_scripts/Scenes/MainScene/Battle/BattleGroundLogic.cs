@@ -31,6 +31,13 @@ public class BattleGroundLogic : MonoBehaviour
         get { return _dragBlobAlpha; }
     }
 
+	[SerializeField]
+	private float _blobCustomSize = 30.0f;
+	public float BlobCustomSize
+	{
+		get { return _blobCustomSize; }
+	}
+
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
 
     public void Init()

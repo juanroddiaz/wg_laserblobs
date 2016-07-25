@@ -11,6 +11,7 @@ public class DraggableBlobLogic : MonoBehaviour
     private BattleGroundLogic _panelLogic;
     private Vector2 _initialPosition;
     private RectTransform _rectTrans;
+	private float _blobCustomSize;
 
     private bool _isHeld = false;
     public bool IsHeld
@@ -24,6 +25,7 @@ public class DraggableBlobLogic : MonoBehaviour
         _panelLogic = panelLogic;
         _rectTrans = _draggableImage.GetComponent<RectTransform>();
         _initialPosition = _rectTrans.anchoredPosition;
+		_blobCustomSize = panelLogic.BlobCustomSize;
     }
 
     public void UpdateLane(LaserLinesEnum lane)
@@ -60,7 +62,7 @@ public class DraggableBlobLogic : MonoBehaviour
     {
         //CustomLog.Log("OnDrag: " + _lane.ToString());
         PointerEventData pointerData = data as PointerEventData;
-        _rectTrans.anchoredPosition += pointerData.delta;
+		_rectTrans.anchoredPosition += (pointerData.delta / _blobCustomSize);
         if (_isHeld)
         {
             if ((_initialPosition - _rectTrans.anchoredPosition).magnitude > _panelLogic.DragStartThreshold)
