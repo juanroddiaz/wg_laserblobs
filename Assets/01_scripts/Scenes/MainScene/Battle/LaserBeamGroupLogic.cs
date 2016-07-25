@@ -17,6 +17,12 @@ public class LaserBeamGroupLogic : MonoBehaviour
     private BattleGroundLogic _playerBattleLogic;
     [SerializeField]
     private List<LaserBeamLogic> _laserBeamList = new List<LaserBeamLogic>();
+    [SerializeField]
+    private float _laserTotalLenght = 4.75f;
+    [SerializeField]
+    private float _laserEnemyTipPos = 68.0f;
+    [SerializeField]
+    private float _laserPlayerTipPos = -45.0f;
 
     public void Init()
     {
@@ -30,7 +36,8 @@ public class LaserBeamGroupLogic : MonoBehaviour
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.Init(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
+            lbl.Init(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx), 
+                    _laserTotalLenght, _laserEnemyTipPos, _laserPlayerTipPos);
             idx++;
         }
     }
