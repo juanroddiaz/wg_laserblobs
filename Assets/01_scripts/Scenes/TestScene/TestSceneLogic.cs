@@ -40,9 +40,4 @@ public class TestSceneLogic : MonoBehaviour
 	{
 		_blobAnimController.SetTrigger("ColorGradient");
 	}
-
-	public void SetDeathFront()
-	{
-		_blobAnimController.SetTrigger("DeathFront");
-	}
 }
