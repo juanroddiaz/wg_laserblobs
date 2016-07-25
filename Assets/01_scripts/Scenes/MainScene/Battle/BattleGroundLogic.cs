@@ -65,6 +65,11 @@ public class BattleGroundLogic : MonoBehaviour
         return _blobLogicList[(int)lane].GetBlobForce();
     }
 
+    public Color GetBlobStartColor(LaserLinesEnum lane)
+    {
+        return _blobLogicList[(int)lane].BlobBaseColor;
+    }
+
     /// <summary>
     /// Returns the player's blob index who is currently being pressed, if any
     /// </summary>

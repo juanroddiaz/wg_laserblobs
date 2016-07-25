@@ -13,8 +13,8 @@ public class LaserBeamLogic : MonoBehaviour
     [SerializeField]
     private List<ParticleSystem> _collisionGlow;
     [SerializeField]
-    private Transform       _collisionGlowTransform;
-        
+    private Transform _collisionGlowTransform;
+
     private ParticleSystemRenderer _playerLaserRenderer;
     private ParticleSystemRenderer _enemyLaserRenderer;
 
@@ -32,17 +32,17 @@ public class LaserBeamLogic : MonoBehaviour
         _currentPlayerLaserValue = _initialLaserValue;
 
         _currentPlayerLaserForceFactor = enemyForce - playerForce;
-        _totalLaserValue = -1.0f*lenght;
+        _totalLaserValue = -1.0f * lenght;
         _playerLaserRenderer = _playerLaser.GetComponent<ParticleSystemRenderer>();
         _enemyLaserRenderer = _enemyLaser.GetComponent<ParticleSystemRenderer>();
         _playerLaserRenderer.lengthScale = 0.5f * lenght;
         _enemyLaserRenderer.lengthScale = 0.5f * lenght;
 
         _enemyTipPos = enemyTipPos;
-        _totalDistanceTipPos = enemyTipPos-playerTipPos;
+        _totalDistanceTipPos = enemyTipPos - playerTipPos;
         _collisionPosition = _collisionGlowTransform.localPosition;
         SetCollisionObjectPosition();
-}
+    }
 
     // TODO: get the enemy and player type too, it will have an impact in laser force
     public void UpdateLaserLane(float enemyForce, float playerForce)
@@ -61,5 +61,15 @@ public class LaserBeamLogic : MonoBehaviour
         float pos = _enemyTipPos - (_totalDistanceTipPos) * (1.0f - _currentPlayerLaserValue);
         _collisionPosition.x = pos;
         _collisionGlowTransform.localPosition = _collisionPosition;
+    }
+
+    public void SetLaserColors(Color enemyColor, Color playerColor)
+    {
+        playerColor.a = _playerLaser.startColor.a;
+        _playerLaser.startColor = playerColor;
+        enemyColor.a = _enemyLaser.startColor.a;
+        _enemyLaser.startColor = enemyColor;
+        enemyColor.a = _enemyStarGlow.startColor.a;
+        _enemyStarGlow.startColor = enemyColor;
     }
 }

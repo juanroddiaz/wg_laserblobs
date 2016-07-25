@@ -17,6 +17,13 @@ public class BattleGroundPivotLogic : MonoBehaviour
         get { return _blobLogic; }
     }
 
+    [SerializeField]
+    private Color _blobBaseColor;
+    public Color BlobBaseColor
+    {
+        get { return _blobBaseColor; }
+    }
+
     private LaserLinesEnum _laserLaneType;
     private BattleGroundLogic _bgLogic;
 

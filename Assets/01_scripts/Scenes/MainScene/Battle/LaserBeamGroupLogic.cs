@@ -38,6 +38,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         {
             lbl.Init(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx), 
                     _laserTotalLenght, _laserEnemyTipPos, _laserPlayerTipPos);
+            lbl.SetLaserColors(_enemyBattleLogic.GetBlobStartColor((LaserLinesEnum)idx), _playerBattleLogic.GetBlobStartColor((LaserLinesEnum)idx));
             idx++;
         }
     }
