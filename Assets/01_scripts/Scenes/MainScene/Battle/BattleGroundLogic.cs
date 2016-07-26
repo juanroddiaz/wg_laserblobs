@@ -115,8 +115,6 @@ public class BattleGroundLogic : MonoBehaviour
         BattleGroundPivotLogic toLogic = _blobLogicList[toIdx];
         DraggableBlobLogic fromDragLogic = _blobDragObjs[fromIdx];
         DraggableBlobLogic toDragLogic = _blobDragObjs[toIdx];
-        fromDragLogic.UpdateLane(to);
-        toDragLogic.UpdateLane(from);
         int fromSibling = fromLogic.transform.GetSiblingIndex();
         int toSibling = toLogic.transform.GetSiblingIndex();
         fromLogic.transform.SetSiblingIndex(toSibling);
