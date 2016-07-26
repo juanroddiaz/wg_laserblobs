@@ -5,9 +5,8 @@ using System.Collections.Generic;
 public class BattleGroundLogic : MonoBehaviour
 {
     [SerializeField]
-    private List<Transform> _blobPivotList = new List<Transform>();
+    private GameObject _blobObject;
 
-    [SerializeField]
     private List<DraggableBlobLogic> _blobDragObjs = new List<DraggableBlobLogic>();
 
     [SerializeField]
@@ -42,17 +41,21 @@ public class BattleGroundLogic : MonoBehaviour
 
     public void Init()
     {
-        for (int i = 0; i< _blobDragObjs.Count; i++)
-        {
-            _blobDragObjs[i].Init((LaserLinesEnum)i, this);
-        }
-
         int idx = 0;
-        foreach (Transform t in _blobPivotList)
+        for(int i=0; i<(int)LaserLinesEnum.Max; i++)
         {
-            BattleGroundPivotLogic bgLogic = t.GetComponent<BattleGroundPivotLogic>();
+            GameObject obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
+            obj.transform.SetParent(transform);
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
+            BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
             _blobLogicList.Add(bgLogic);
-            bgLogic.Init(this, (LaserLinesEnum)idx);            
+            bgLogic.Init(this, (LaserLinesEnum)idx);
+            if (bgLogic.BlobDragLogic != null)
+            {
+                bgLogic.BlobDragLogic.Init((LaserLinesEnum)i, this);
+                _blobDragObjs.Add(bgLogic.BlobDragLogic);
+            }        
             idx++;
         }
     }

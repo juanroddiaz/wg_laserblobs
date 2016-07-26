@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class BattleGroundPivotLogic : MonoBehaviour
 {
@@ -22,6 +21,13 @@ public class BattleGroundPivotLogic : MonoBehaviour
     public Color BlobBaseColor
     {
         get { return _blobBaseColor; }
+    }
+
+    [SerializeField]
+    private DraggableBlobLogic _blobDragLogic;
+    public DraggableBlobLogic BlobDragLogic
+    {
+        get { return _blobDragLogic; }
     }
 
     private LaserLinesEnum _laserLaneType;
