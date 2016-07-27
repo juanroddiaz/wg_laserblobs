@@ -45,4 +45,9 @@ public class TestSceneLogic : MonoBehaviour
 	{
 		_blobAnimController.SetTrigger("DeathFront");
 	}
+
+	public void SetFireFront()
+	{
+		_blobAnimController.SetTrigger("FireFront");
+	}
 }
