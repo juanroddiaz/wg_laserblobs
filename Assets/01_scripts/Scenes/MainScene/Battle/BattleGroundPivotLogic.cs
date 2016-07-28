@@ -37,6 +37,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
     {
         _laserLaneType = lane;
         _bgLogic = bgLogic;
+        _blobLogic.Init(bgLogic.BlobLaserForce, bgLogic.BlobHoldLaserMultiplier);
     }
 
     public float GetBlobForce()

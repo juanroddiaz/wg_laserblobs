@@ -3,19 +3,19 @@ using System.Collections;
 
 public class BlobInstanceLogic : MonoBehaviour
 {
-    [SerializeField]
-    private float _blobLaserForce = 0.00125f;
-    [SerializeField]
-    private float _blobHoldLaserMultiplier = 3.0f;
-
     private float _currentBlobLaserForce = 0.0f;
     public float CurrentBlobLaserForce
     {
         get { return _currentBlobLaserForce; }
     }
 
-    void Awake()
+    private float _blobLaserForce = 0.0f;
+    private float _blobHoldLaserMultiplier = 0.0f;
+
+    public void Init(float laserForce, float holdLaserMulti)
     {
+        _blobLaserForce = laserForce;
+        _blobHoldLaserMultiplier = holdLaserMulti;
         _currentBlobLaserForce = _blobLaserForce;
     }
 

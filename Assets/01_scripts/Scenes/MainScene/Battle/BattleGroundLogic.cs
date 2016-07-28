@@ -39,7 +39,21 @@ public class BattleGroundLogic : MonoBehaviour
         get { return _dragBlobAlpha; }
     }
 
-	[SerializeField]
+    [SerializeField]
+    private float _blobLaserForce = 0.00125f;
+    public float BlobLaserForce
+    {
+        get { return _blobLaserForce; }
+    }
+
+    [SerializeField]
+    private float _blobHoldLaserMultiplier = 3.0f;
+    public float BlobHoldLaserMultiplier
+    {
+        get { return _blobHoldLaserMultiplier; }
+    }
+
+    [SerializeField]
 	private float _blobCustomSize = 30.0f;
 	public float BlobCustomSize
 	{
@@ -60,7 +74,7 @@ public class BattleGroundLogic : MonoBehaviour
             BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
             _blobLogicList.Add(bgLogic);
             bgLogic.Init(this, (LaserLinesEnum)idx);
-            if (bgLogic.BlobDragLogic != null)
+            if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
             {
                 bgLogic.BlobDragLogic.Init((LaserLinesEnum)i, this);
                 _blobDragObjs.Add(bgLogic.BlobDragLogic);
