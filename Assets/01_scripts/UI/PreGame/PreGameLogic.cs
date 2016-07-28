@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq;
 
 public class PreGameLogic : MonoBehaviour
 {
@@ -17,8 +16,7 @@ public class PreGameLogic : MonoBehaviour
     [SerializeField][Tooltip("From blob #1 to #9")]
     private List<Toggle> _blobsToggleList = new List<Toggle>();
 
-    private Dictionary<int, string> _blobSelectionMap = new Dictionary<int, string>();
-    private List<string> _sortedBlobSelection = new List<string>();
+    private List<BlobTypes> _sortedBlobSelection = new List<BlobTypes>();
 
     private GameDifficulty _selectedDifficulty;
 
@@ -28,13 +26,6 @@ public class PreGameLogic : MonoBehaviour
     {
         _sceneController = controller;
         _pregameContentObject.SetActive(false);
-
-        // TODO: blob grid data configuration
-        for (int i = 0; i < _blobsToggleList.Count; i++)
-        {
-            _blobSelectionMap.Add(i, "blob_" + i.ToString("d2"));
-        }
-         
     }
 
     public void Show()
@@ -92,11 +83,11 @@ public class PreGameLogic : MonoBehaviour
 
         if (_blobsToggleList[blobIdx].isOn)
         {
-            _sortedBlobSelection.Add(_blobSelectionMap[blobIdx]);
+            _sortedBlobSelection.Add((BlobTypes)blobIdx);
         }
         else
         {
-            _sortedBlobSelection.Remove(_blobSelectionMap[blobIdx]);
+            _sortedBlobSelection.Remove((BlobTypes)blobIdx);
         }
     }
 
@@ -111,9 +102,9 @@ public class PreGameLogic : MonoBehaviour
     {
         // TODO: difficluty dependant blob quantity limit
         string blobLog = "Selected blobs: ";
-        foreach (string s in _sortedBlobSelection)
+        foreach (BlobTypes s in _sortedBlobSelection)
         {
-            blobLog += (s + " ");
+            blobLog += (s.ToString() + " ");
         }
         CustomLog.Log(blobLog);
 

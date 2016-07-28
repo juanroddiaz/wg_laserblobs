@@ -42,7 +42,7 @@ public class MainScenarioLogic : MonoBehaviour
         _laserGroupLogic.Init();
     }
 
-    public void StartGame(List<string> _blobSelection)
+    public void StartGame(List<BlobTypes> _blobSelection)
     {
         _laserGroupLogic.LaserSetting();
     }
