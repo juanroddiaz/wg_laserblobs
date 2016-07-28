@@ -52,6 +52,7 @@ public class PreGameLogic : MonoBehaviour
         _sortedBlobSelection.Clear();
         // initialize prebattle screen logic setting the difficulty to its default
         _selectedDifficulty = GameDifficulty.Medium;
+        _playButton.enabled = false;
         _pregameContentObject.SetActive(true);
     }
 
@@ -89,7 +90,12 @@ public class PreGameLogic : MonoBehaviour
         {
             _sortedBlobSelection.Remove((BlobTypes)blobIdx);
         }
+
+        // TODO: difficluty dependant blob quantity limit
+        _playButton.enabled = _sortedBlobSelection.Count >= 3;
     }
+
+
 
     public void OnBackButton()
     {
@@ -99,8 +105,7 @@ public class PreGameLogic : MonoBehaviour
     }
 
     public void OnStartButton()
-    {
-        // TODO: difficluty dependant blob quantity limit
+    {   
         string blobLog = "Selected blobs: ";
         foreach (BlobTypes s in _sortedBlobSelection)
         {
