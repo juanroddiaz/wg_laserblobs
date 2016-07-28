@@ -1,29 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public enum BlobTypes
-{
-    RED = 0,
-    BLUE,
-    YELLOW,
-    ORANGE,
-    PURPLE,
-    GREEN,
-    GRAY,
-    WHITE,
-    BLACK,
-    MAX
-}
-
-
-public enum GameDifficulty
-{
-    Easy = 0,
-    Medium,
-    Hard,
-    Max
-}
-
 public class MainScenarioLogic : MonoBehaviour
 {
     [SerializeField]

@@ -1,13 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public enum BattleGroundType
-{
-    PLAYER = 0,
-    ENEMY,
-    MAX
-}
-
 public class BattleGroundLogic : MonoBehaviour
 {
     [SerializeField]
