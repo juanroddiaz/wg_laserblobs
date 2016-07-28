@@ -24,15 +24,19 @@ public class LaserBeamGroupLogic : MonoBehaviour
     [SerializeField]
     private float _laserPlayerTipPos = -45.0f;
 
-    public void Init()
+    private MainScenarioLogic _scenarioLogic;
+
+    public void Init(MainScenarioLogic scenarioLogic)
     {
-        _playerBattleLogic.Init();
-        _enemyBattleLogic.Init();
-        LaserSetting();
+        _scenarioLogic = scenarioLogic;
     }
 
-    public void LaserSetting()
+    public void LaserSetting(List<BlobTypes> blobSelection)
     {
+        _playerBattleLogic.Init(blobSelection, _scenarioLogic);
+        // TODO: enemy list
+        _enemyBattleLogic.Init(null, _scenarioLogic);
+
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {

@@ -29,8 +29,13 @@ public class MainScenarioLogic : MonoBehaviour
     [SerializeField]
     private LaserBeamGroupLogic _laserGroupLogic;
 
+    [Header("Color blob prefabs, sorted by BlobTypes enumeration.")]
     [SerializeField]
     private List<GameObject> _blobPrefabs = new List<GameObject>();
+    public List<GameObject> BlobPrefabs
+    {
+        get { return _blobPrefabs; }
+    }
 
     public void Init()
     {
@@ -39,12 +44,12 @@ public class MainScenarioLogic : MonoBehaviour
             CustomLog.LogError("Missing blob prefab entries in MainScenarioLogic object!! Aborting :(");
             return;
         }
-        _laserGroupLogic.Init();
+        _laserGroupLogic.Init(this);
     }
 
     public void StartGame(List<BlobTypes> _blobSelection)
     {
-        _laserGroupLogic.LaserSetting();
+        _laserGroupLogic.LaserSetting(_blobSelection);
     }
 
     public void EndGame()

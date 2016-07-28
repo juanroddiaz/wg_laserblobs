@@ -62,12 +62,21 @@ public class BattleGroundLogic : MonoBehaviour
 
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
 
-    public void Init()
+    public void Init(List<BlobTypes> blobSelection, MainScenarioLogic scenarioLogic)
     {
         int idx = 0;
         for(int i=0; i<(int)LaserLinesEnum.Max; i++)
         {
-            GameObject obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject obj = null;
+            switch(_type)
+            {
+                case BattleGroundType.PLAYER:
+                    obj = Instantiate(scenarioLogic.BlobPrefabs[(int)blobSelection[i]], Vector3.zero, Quaternion.identity) as GameObject;
+                    break;
+                case BattleGroundType.ENEMY:
+                    obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
+                    break;
+            }
             obj.transform.SetParent(transform);
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
