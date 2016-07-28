@@ -159,4 +159,14 @@ public class BattleGroundLogic : MonoBehaviour
         _blobDragObjs[fromIdx] = toDragLogic;
         _blobDragObjs[toIdx] = fromDragLogic;
     }
+
+    public void Reset()
+    {
+        foreach (BattleGroundPivotLogic o in _blobLogicList)
+        {
+            Destroy(o.gameObject);
+        }
+        _blobLogicList.Clear();
+        _blobDragObjs.Clear();
+    }
 }

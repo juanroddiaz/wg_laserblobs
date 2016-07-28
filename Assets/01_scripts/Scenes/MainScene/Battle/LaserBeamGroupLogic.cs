@@ -56,4 +56,10 @@ public class LaserBeamGroupLogic : MonoBehaviour
             idx++;
         }
     }
+
+    public void EndGame()
+    {
+        _playerBattleLogic.Reset();
+        _enemyBattleLogic.Reset();
+    }
 }

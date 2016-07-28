@@ -95,8 +95,6 @@ public class PreGameLogic : MonoBehaviour
         _playButton.enabled = _sortedBlobSelection.Count >= 3;
     }
 
-
-
     public void OnBackButton()
     {
         _pregameContentObject.SetActive(false);

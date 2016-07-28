@@ -54,7 +54,7 @@ public class MainScenarioLogic : MonoBehaviour
 
     public void EndGame()
     {
-
+        _laserGroupLogic.EndGame();
     }
 
     public void UpdateLogic()

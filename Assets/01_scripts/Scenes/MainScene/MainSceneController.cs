@@ -84,6 +84,7 @@ public class MainSceneController : SceneController
 
     public void RestartGame()
     {
+        _scenarioLogic.EndGame();
         string blobLog = "Restart game's Selected blobs: ";
         foreach (BlobTypes s in _lastBlobSelection)
         {
@@ -96,6 +97,7 @@ public class MainSceneController : SceneController
 
     public void EndGame(bool goToMainMenu)
     {
+        _scenarioLogic.EndGame();
         if (goToMainMenu)
         {
             _mainMenuLogic.Show();
