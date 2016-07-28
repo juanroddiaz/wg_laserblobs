@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+
+public enum BattleGroundType
+{
+    PLAYER = 0,
+    ENEMY,
+    MAX
+}
 
 public class BattleGroundLogic : MonoBehaviour
 {
     [SerializeField]
     private GameObject _blobObject;
+
+    [SerializeField]
+    private BattleGroundType _type;
 
     private List<DraggableBlobLogic> _blobDragObjs = new List<DraggableBlobLogic>();
 
