@@ -26,12 +26,8 @@ public class LaserBeamLogic : MonoBehaviour
     private float _totalDistanceTipPos = 0.0f;
     private Vector3 _collisionPosition;
 
-    public void Init(float enemyForce, float playerForce, float lenght, float enemyTipPos, float playerTipPos)
+    public void Init(float lenght, float enemyTipPos, float playerTipPos)
     {
-        // TODO: get the right values from DM
-        _currentPlayerLaserValue = _initialLaserValue;
-
-        _currentPlayerLaserForceFactor = enemyForce - playerForce;
         _totalLaserValue = -1.0f * lenght;
         _playerLaserRenderer = _playerLaser.GetComponent<ParticleSystemRenderer>();
         _enemyLaserRenderer = _enemyLaser.GetComponent<ParticleSystemRenderer>();
@@ -41,6 +37,13 @@ public class LaserBeamLogic : MonoBehaviour
         _enemyTipPos = enemyTipPos;
         _totalDistanceTipPos = enemyTipPos - playerTipPos;
         _collisionPosition = _collisionGlowTransform.localPosition;
+    }
+
+    public void LasetSet(float enemyForce, float playerForce)
+    {
+        // TODO: get the right values from DM
+        _currentPlayerLaserValue = _initialLaserValue;
+        _currentPlayerLaserForceFactor = enemyForce - playerForce;        
         SetCollisionObjectPosition();
     }
 

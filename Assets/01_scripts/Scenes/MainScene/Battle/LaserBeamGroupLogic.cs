@@ -29,6 +29,10 @@ public class LaserBeamGroupLogic : MonoBehaviour
     public void Init(MainScenarioLogic scenarioLogic)
     {
         _scenarioLogic = scenarioLogic;
+        foreach (LaserBeamLogic lbl in _laserBeamList)
+        {
+            lbl.Init(_laserTotalLenght, _laserEnemyTipPos, _laserPlayerTipPos);
+        }
     }
 
     public void LaserSetting(List<BlobTypes> blobSelection)
@@ -40,8 +44,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.Init(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx), 
-                    _laserTotalLenght, _laserEnemyTipPos, _laserPlayerTipPos);
+            lbl.LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx)); 
             lbl.SetLaserColors(_enemyBattleLogic.GetBlobStartColor((LaserLinesEnum)idx), _playerBattleLogic.GetBlobStartColor((LaserLinesEnum)idx));
             idx++;
         }
