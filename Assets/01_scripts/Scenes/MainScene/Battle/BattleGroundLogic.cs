@@ -147,7 +147,9 @@ public class BattleGroundLogic : MonoBehaviour
         int fromIdx = (int)from;
         int toIdx = (int)to;
         BattleGroundPivotLogic fromLogic = _blobLogicList[fromIdx];
+        fromLogic.gameObject.SetActive(false);
         BattleGroundPivotLogic toLogic = _blobLogicList[toIdx];
+        toLogic.gameObject.SetActive(false);
         DraggableBlobLogic fromDragLogic = _blobDragObjs[fromIdx];
         DraggableBlobLogic toDragLogic = _blobDragObjs[toIdx];
         int fromSibling = fromLogic.transform.GetSiblingIndex();
@@ -156,8 +158,12 @@ public class BattleGroundLogic : MonoBehaviour
         toLogic.transform.SetSiblingIndex(fromSibling);
         _blobLogicList[fromIdx] = toLogic;
         _blobLogicList[toIdx] = fromLogic;
+        fromDragLogic.UpdateLane(to);
+        toDragLogic.UpdateLane(from);
         _blobDragObjs[fromIdx] = toDragLogic;
         _blobDragObjs[toIdx] = fromDragLogic;
+        fromLogic.gameObject.SetActive(true);
+        toLogic.gameObject.SetActive(true);
     }
 
     public void Reset()
