@@ -54,6 +54,7 @@ public class BattleGroundLogic : MonoBehaviour
 	}
 
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
+    private MainScenarioLogic _scenarioLogic;
 
     public void Init(List<BlobTypes> blobSelection, MainScenarioLogic scenarioLogic)
     {
@@ -83,6 +84,8 @@ public class BattleGroundLogic : MonoBehaviour
             }        
             idx++;
         }
+
+        _scenarioLogic = scenarioLogic;
     }
 
     public void ToggleOnHoldState(LaserLinesEnum lane, bool held)
@@ -159,9 +162,36 @@ public class BattleGroundLogic : MonoBehaviour
         toLogic.gameObject.SetActive(true);
     }
 
-    public void BlobDeath(LaserLinesEnum lane)
+    public void BlobDeath(LaserLinesEnum lane, BlobTypes blobType)
     {
         CustomLog.Log("Blob death!! Lane " + lane.ToString() + ", team: " + _type.ToString());
+        int deadIdx = (int)lane;
+        BattleGroundPivotLogic deadBlog = _blobLogicList[deadIdx];
+        int siblingIdx = deadBlog.transform.GetSiblingIndex();
+        Destroy(deadBlog.gameObject);
+
+        GameObject obj = null;
+        switch (_type)
+        {
+            case BattleGroundType.PLAYER:
+                obj = Instantiate(_scenarioLogic.BlobPrefabs[(int)blobType], Vector3.zero, Quaternion.identity) as GameObject;
+                break;
+            case BattleGroundType.ENEMY:
+                obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
+                break;
+        }
+        obj.transform.SetParent(transform);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
+        BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
+        _blobLogicList[deadIdx] = bgLogic;
+        bgLogic.Init(this, lane);
+        bgLogic.transform.SetSiblingIndex(siblingIdx);
+        if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
+        {
+            bgLogic.BlobDragLogic.Init(lane, this);
+            _blobDragObjs[deadIdx] = bgLogic.BlobDragLogic;
+        }
     }
 
     public void Reset()

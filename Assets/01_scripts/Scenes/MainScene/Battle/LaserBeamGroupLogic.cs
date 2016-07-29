@@ -25,6 +25,10 @@ public class LaserBeamGroupLogic : MonoBehaviour
     private float _laserPlayerTipPos = -45.0f;
 
     private MainScenarioLogic _scenarioLogic;
+    private int _playerBlobQueue = 0;
+    private int _enemyBlobQueue = 0;
+
+    private List<BlobTypes> _playerBlobSelection = new List<BlobTypes>();
 
     public void Init(MainScenarioLogic scenarioLogic)
     {
@@ -48,8 +52,11 @@ public class LaserBeamGroupLogic : MonoBehaviour
         {
             lbl.LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx)); 
             lbl.SetLaserColors(_enemyBattleLogic.GetBlobStartColor((LaserLinesEnum)idx), _playerBattleLogic.GetBlobStartColor((LaserLinesEnum)idx));
+            _playerBlobQueue++;
             idx++;
         }
+
+        _playerBlobSelection = blobSelection;
     }
 
     public void UpdateLogic()
@@ -70,11 +77,13 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
     public void PlayerDeath(LaserLinesEnum lane)
     {
-        _playerBattleLogic.BlobDeath(lane);
+        _playerBattleLogic.BlobDeath(lane, _playerBlobSelection[_playerBlobQueue]);
+        _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
+        _laserBeamList[(int)lane].SetLaserColors(_enemyBattleLogic.GetBlobStartColor(lane), _playerBattleLogic.GetBlobStartColor(lane));
     }
 
     public void EnemyDeath(LaserLinesEnum lane)
     {
-        _enemyBattleLogic.BlobDeath(lane);
+        //_enemyBattleLogic.BlobDeath(lane);
     }
 }
