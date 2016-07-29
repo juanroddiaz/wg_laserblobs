@@ -39,9 +39,8 @@ public class MainScenarioLogic : MonoBehaviour
         _laserGroupLogic.UpdateLogic();
     }
 
-    public void UpdateLaserColors(LaserLinesEnum from, Color fromColor, LaserLinesEnum to, Color toColor)
+    public void UpdateLaserColors(LaserLinesEnum line, Color lineColor, bool isPlayer)
     {
-        _laserGroupLogic.UpdateLaserLaneColor((int)from, fromColor);
-        _laserGroupLogic.UpdateLaserLaneColor((int)to, toColor);
+        _laserGroupLogic.UpdateLaserLaneColor((int)line, lineColor, isPlayer);
     }
 }

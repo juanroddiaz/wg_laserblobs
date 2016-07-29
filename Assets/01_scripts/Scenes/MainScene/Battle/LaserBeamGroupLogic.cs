@@ -50,8 +50,8 @@ public class LaserBeamGroupLogic : MonoBehaviour
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx)); 
-            lbl.SetLaserColors(_enemyBattleLogic.GetBlobStartColor((LaserLinesEnum)idx), _playerBattleLogic.GetBlobStartColor((LaserLinesEnum)idx));
+            lbl.LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
+            lbl.UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor((LaserLinesEnum)idx));
             _playerBlobQueue++;
             idx++;
         }
@@ -94,8 +94,13 @@ public class LaserBeamGroupLogic : MonoBehaviour
         //_enemyBattleLogic.BlobDeath(lane);
     }
 
-    public void UpdateLaserLaneColor(int laneIdx, Color color)
+    public void UpdateLaserLaneColor(int laneIdx, Color color, bool isPlayer)
     {
-        _laserBeamList[laneIdx].UpdatePlayerLaserColor(color);
+        if (isPlayer)
+        {
+            _laserBeamList[laneIdx].UpdatePlayerLaserColor(color);
+            return;
+        }
+        _laserBeamList[laneIdx].UpdateEnemyLaserColor(color);
     }
 }

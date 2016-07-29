@@ -58,6 +58,7 @@ public class BattleGroundLogic : MonoBehaviour
 
     public void Init(List<BlobTypes> blobSelection, MainScenarioLogic scenarioLogic)
     {
+        _scenarioLogic = scenarioLogic;
         int idx = 0;
         for(int i=0; i<(int)LaserLinesEnum.Max; i++)
         {
@@ -71,21 +72,23 @@ public class BattleGroundLogic : MonoBehaviour
                     obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
                     break;
             }
+            LaserLinesEnum lane = (LaserLinesEnum)idx;
             obj.transform.SetParent(transform);
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
             BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
             _blobLogicList.Add(bgLogic);
-            bgLogic.Init(this, (LaserLinesEnum)idx);
+            bgLogic.Init(this, lane);
             if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
             {
-                bgLogic.BlobDragLogic.Init((LaserLinesEnum)i, this);
+                bgLogic.BlobDragLogic.Init(lane, this);
                 _blobDragObjs.Add(bgLogic.BlobDragLogic);
-            }        
+            }
+
+            _scenarioLogic.UpdateLaserColors(lane, bgLogic.BlobBaseColor, _type == BattleGroundType.PLAYER);
+
             idx++;
         }
-
-        _scenarioLogic = scenarioLogic;
     }
 
     public void ToggleOnHoldState(LaserLinesEnum lane, bool held)
@@ -163,7 +166,8 @@ public class BattleGroundLogic : MonoBehaviour
         fromLogic.gameObject.SetActive(true);
         toLogic.gameObject.SetActive(true);
 
-        _scenarioLogic.UpdateLaserColors(from, toColor, to, fromColor);
+        _scenarioLogic.UpdateLaserColors(from, toColor, true);
+        _scenarioLogic.UpdateLaserColors(to, fromColor, true);
     }
 
     public void BlobDeath(LaserLinesEnum lane, BlobTypes blobType)

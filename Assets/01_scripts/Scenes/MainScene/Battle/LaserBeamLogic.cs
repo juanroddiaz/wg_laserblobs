@@ -84,12 +84,6 @@ public class LaserBeamLogic : MonoBehaviour
         _collisionGlowTransform.localPosition = _collisionPosition;
     }
 
-    public void SetLaserColors(Color enemyColor, Color playerColor)
-    {
-        UpdatePlayerLaserColor(playerColor);
-        UpdatePlayerLaserColor(enemyColor);
-    }
-
     public void UpdatePlayerLaserColor(Color playerColor)
     {
         playerColor.a = _playerLaser.startColor.a;
