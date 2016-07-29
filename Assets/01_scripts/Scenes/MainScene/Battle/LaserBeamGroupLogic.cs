@@ -71,6 +71,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
     public void EndGame()
     {
+        _playerBlobQueue = 0;
         _playerBattleLogic.Reset();
         _enemyBattleLogic.Reset();
     }
