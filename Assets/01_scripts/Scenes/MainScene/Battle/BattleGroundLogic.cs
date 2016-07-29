@@ -143,8 +143,10 @@ public class BattleGroundLogic : MonoBehaviour
         int fromIdx = (int)from;
         int toIdx = (int)to;
         BattleGroundPivotLogic fromLogic = _blobLogicList[fromIdx];
+        Color fromColor = GetBlobStartColor(from);
         fromLogic.gameObject.SetActive(false);
         BattleGroundPivotLogic toLogic = _blobLogicList[toIdx];
+        Color toColor = GetBlobStartColor(to);
         toLogic.gameObject.SetActive(false);
         DraggableBlobLogic fromDragLogic = _blobDragObjs[fromIdx];
         DraggableBlobLogic toDragLogic = _blobDragObjs[toIdx];
@@ -160,6 +162,8 @@ public class BattleGroundLogic : MonoBehaviour
         _blobDragObjs[toIdx] = fromDragLogic;
         fromLogic.gameObject.SetActive(true);
         toLogic.gameObject.SetActive(true);
+
+        _scenarioLogic.UpdateLaserColors(from, toColor, to, fromColor);
     }
 
     public void BlobDeath(LaserLinesEnum lane, BlobTypes blobType)

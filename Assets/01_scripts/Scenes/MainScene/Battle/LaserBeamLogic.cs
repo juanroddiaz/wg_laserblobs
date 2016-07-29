@@ -86,8 +86,18 @@ public class LaserBeamLogic : MonoBehaviour
 
     public void SetLaserColors(Color enemyColor, Color playerColor)
     {
+        UpdatePlayerLaserColor(playerColor);
+        UpdatePlayerLaserColor(enemyColor);
+    }
+
+    public void UpdatePlayerLaserColor(Color playerColor)
+    {
         playerColor.a = _playerLaser.startColor.a;
         _playerLaser.startColor = playerColor;
+    }
+
+    public void UpdateEnemyLaserColor(Color enemyColor)
+    {
         enemyColor.a = _enemyLaser.startColor.a;
         _enemyLaser.startColor = enemyColor;
         enemyColor.a = _enemyStarGlow.startColor.a;

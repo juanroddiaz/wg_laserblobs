@@ -86,11 +86,16 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
         _playerBattleLogic.BlobDeath(lane, type);
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
-        _laserBeamList[(int)lane].SetLaserColors(_enemyBattleLogic.GetBlobStartColor(lane), _playerBattleLogic.GetBlobStartColor(lane));
+        _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
     }
 
     public void EnemyDeath(LaserLinesEnum lane)
     {
         //_enemyBattleLogic.BlobDeath(lane);
+    }
+
+    public void UpdateLaserLaneColor(int laneIdx, Color color)
+    {
+        _laserBeamList[laneIdx].UpdatePlayerLaserColor(color);
     }
 }
