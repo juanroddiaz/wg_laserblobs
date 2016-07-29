@@ -29,9 +29,11 @@ public class LaserBeamGroupLogic : MonoBehaviour
     public void Init(MainScenarioLogic scenarioLogic)
     {
         _scenarioLogic = scenarioLogic;
+        int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.Init(_laserTotalLenght, _laserEnemyTipPos, _laserPlayerTipPos);
+            lbl.Init(_laserTotalLenght, _laserEnemyTipPos, _laserPlayerTipPos, (LaserLinesEnum)idx, this);
+            idx++;
         }
     }
 
@@ -64,5 +66,15 @@ public class LaserBeamGroupLogic : MonoBehaviour
     {
         _playerBattleLogic.Reset();
         _enemyBattleLogic.Reset();
+    }
+
+    public void PlayerDeath(LaserLinesEnum lane)
+    {
+        _playerBattleLogic.BlobDeath(lane);
+    }
+
+    public void EnemyDeath(LaserLinesEnum lane)
+    {
+        _enemyBattleLogic.BlobDeath(lane);
     }
 }

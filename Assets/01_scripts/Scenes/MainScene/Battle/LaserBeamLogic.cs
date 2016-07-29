@@ -26,7 +26,10 @@ public class LaserBeamLogic : MonoBehaviour
     private float _totalDistanceTipPos = 0.0f;
     private Vector3 _collisionPosition;
 
-    public void Init(float lenght, float enemyTipPos, float playerTipPos)
+    private LaserLinesEnum _lane;
+    private LaserBeamGroupLogic _laserBeamLogic;
+
+    public void Init(float lenght, float enemyTipPos, float playerTipPos, LaserLinesEnum lane, LaserBeamGroupLogic laserLogic)
     {
         _totalLaserValue = -1.0f * lenght;
         _playerLaserRenderer = _playerLaser.GetComponent<ParticleSystemRenderer>();
@@ -37,6 +40,8 @@ public class LaserBeamLogic : MonoBehaviour
         _enemyTipPos = enemyTipPos;
         _totalDistanceTipPos = enemyTipPos - playerTipPos;
         _collisionPosition = _collisionGlowTransform.localPosition;
+        _lane = lane;
+        _laserBeamLogic = laserLogic;
     }
 
     public void LasetSet(float enemyForce, float playerForce)
@@ -53,10 +58,23 @@ public class LaserBeamLogic : MonoBehaviour
         _currentPlayerLaserValue -= _currentPlayerLaserForceFactor;
         _currentPlayerLaserValue = Mathf.Max(0.0f, _currentPlayerLaserValue);
         _currentPlayerLaserValue = Mathf.Min(_currentPlayerLaserValue, 1.0f);
-        _playerLaserRenderer.lengthScale = _currentPlayerLaserValue * _totalLaserValue;
-        _enemyLaserRenderer.lengthScale = _totalLaserValue * (1.0f - _currentPlayerLaserValue);
+
+        float playerLife = _currentPlayerLaserValue * _totalLaserValue;
+        _playerLaserRenderer.lengthScale = playerLife;
+        float enemyLife = _totalLaserValue * (1.0f - _currentPlayerLaserValue);
+        _enemyLaserRenderer.lengthScale = enemyLife;
         SetCollisionObjectPosition();
         _currentPlayerLaserForceFactor = enemyForce - playerForce;
+
+        if (playerLife == 0.0f)
+        {
+            _laserBeamLogic.PlayerDeath(_lane);
+            return;
+        }
+        if (enemyLife == 0.0f)
+        {
+            _laserBeamLogic.EnemyDeath(_lane);
+        }
     }
 
     private void SetCollisionObjectPosition()

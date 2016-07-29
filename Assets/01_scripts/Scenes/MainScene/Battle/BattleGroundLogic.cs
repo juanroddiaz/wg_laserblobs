@@ -159,6 +159,11 @@ public class BattleGroundLogic : MonoBehaviour
         toLogic.gameObject.SetActive(true);
     }
 
+    public void BlobDeath(LaserLinesEnum lane)
+    {
+        CustomLog.Log("Blob death!! Lane " + lane.ToString() + ", team: " + _type.ToString());
+    }
+
     public void Reset()
     {
         foreach (BattleGroundPivotLogic o in _blobLogicList)
