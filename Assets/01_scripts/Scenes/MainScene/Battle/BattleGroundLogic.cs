@@ -9,6 +9,9 @@ public class BattleGroundLogic : MonoBehaviour
     [SerializeField]
     private BattleGroundType _type;
 
+    [SerializeField]
+    private ReserveQueueLogic _selectionQueueLogic;
+
     private List<DraggableBlobLogic> _blobDragObjs = new List<DraggableBlobLogic>();
 
     [SerializeField]
