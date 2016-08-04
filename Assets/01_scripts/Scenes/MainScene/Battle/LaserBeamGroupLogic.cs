@@ -28,8 +28,6 @@ public class LaserBeamGroupLogic : MonoBehaviour
     private int _playerBlobQueue = 0;
     private int _enemyBlobQueue = 0;
 
-    private List<BlobTypes> _playerBlobSelection = new List<BlobTypes>();
-
     public void Init(MainScenarioLogic scenarioLogic)
     {
         _scenarioLogic = scenarioLogic;
@@ -41,11 +39,11 @@ public class LaserBeamGroupLogic : MonoBehaviour
         }
     }
 
-    public void LaserSetting(List<BlobTypes> blobSelection)
+    public void LaserSetting()
     {
-        _playerBattleLogic.Init(blobSelection, _scenarioLogic);
+        _playerBattleLogic.Init(_scenarioLogic);
         // TODO: enemy list
-        _enemyBattleLogic.Init(null, _scenarioLogic);
+        _enemyBattleLogic.Init(_scenarioLogic);
 
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
@@ -55,8 +53,6 @@ public class LaserBeamGroupLogic : MonoBehaviour
             _playerBlobQueue++;
             idx++;
         }
-
-        _playerBlobSelection = blobSelection;
     }
 
     public void UpdateLogic()
@@ -76,12 +72,12 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _enemyBattleLogic.Reset();
     }
 
-    public void PlayerDeath(LaserLinesEnum lane)
+    public void PlayerBlobDeath(LaserLinesEnum lane)
     {
         BlobTypes type = BlobTypes.BLACK;
-        if (_playerBlobSelection.Count > _playerBlobQueue)
+        if (_scenarioLogic.CurrentBlobSelection.Count > _playerBlobQueue)
         {
-            type = _playerBlobSelection[_playerBlobQueue];
+            type = _scenarioLogic.CurrentBlobSelection[_playerBlobQueue];
             _playerBlobQueue++;
         }
 
@@ -90,7 +86,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
     }
 
-    public void EnemyDeath(LaserLinesEnum lane)
+    public void EnemyBlobDeath(LaserLinesEnum lane)
     {
         //_enemyBattleLogic.BlobDeath(lane);
     }

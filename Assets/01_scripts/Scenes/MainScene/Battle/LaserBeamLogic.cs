@@ -68,12 +68,12 @@ public class LaserBeamLogic : MonoBehaviour
 
         if (playerLife == 0.0f)
         {
-            _laserBeamLogic.PlayerDeath(_lane);
+            _laserBeamLogic.PlayerBlobDeath(_lane);
             return;
         }
         if (enemyLife == 0.0f)
         {
-            _laserBeamLogic.EnemyDeath(_lane);
+            _laserBeamLogic.EnemyBlobDeath(_lane);
         }
     }
 

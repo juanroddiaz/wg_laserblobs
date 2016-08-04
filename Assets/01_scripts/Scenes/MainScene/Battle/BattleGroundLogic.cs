@@ -59,7 +59,7 @@ public class BattleGroundLogic : MonoBehaviour
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
     private MainScenarioLogic _scenarioLogic;
 
-    public void Init(List<BlobTypes> blobSelection, MainScenarioLogic scenarioLogic)
+    public void Init(MainScenarioLogic scenarioLogic)
     {
         _scenarioLogic = scenarioLogic;
         int idx = 0;
@@ -69,7 +69,7 @@ public class BattleGroundLogic : MonoBehaviour
             switch(_type)
             {
                 case BattleGroundType.PLAYER:
-                    obj = Instantiate(scenarioLogic.BlobPrefabs[(int)blobSelection[i]], Vector3.zero, Quaternion.identity) as GameObject;
+                    obj = Instantiate(scenarioLogic.BlobPrefabs[(int)scenarioLogic.CurrentBlobSelection[i]], Vector3.zero, Quaternion.identity) as GameObject;
                     break;
                 case BattleGroundType.ENEMY:
                     obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
@@ -92,6 +92,18 @@ public class BattleGroundLogic : MonoBehaviour
 
             idx++;
         }
+
+        switch (_type)
+        {
+            case BattleGroundType.PLAYER:
+                _scenarioLogic.RemoveNextBlobFromQueue(3);
+                break;
+            case BattleGroundType.ENEMY:
+                break;
+        }        
+
+        // reserve queue initialization
+        _selectionQueueLogic.Init(_scenarioLogic);
     }
 
     public void ToggleOnHoldState(LaserLinesEnum lane, bool held)

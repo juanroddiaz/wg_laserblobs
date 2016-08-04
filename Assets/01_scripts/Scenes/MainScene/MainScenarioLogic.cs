@@ -14,6 +14,12 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _blobPrefabs; }
     }
 
+    private List<BlobTypes> _currentBlobSelection = new List<BlobTypes>();
+    public List<BlobTypes> CurrentBlobSelection
+    {
+        get { return _currentBlobSelection; }
+    }
+
     public void Init()
     {
         if (_blobPrefabs.Count != (int)BlobTypes.MAX)
@@ -26,7 +32,8 @@ public class MainScenarioLogic : MonoBehaviour
 
     public void StartGame(List<BlobTypes> _blobSelection)
     {
-        _laserGroupLogic.LaserSetting(_blobSelection);
+        _currentBlobSelection = _blobSelection;
+        _laserGroupLogic.LaserSetting();
     }
 
     public void EndGame()
@@ -43,4 +50,16 @@ public class MainScenarioLogic : MonoBehaviour
     {
         _laserGroupLogic.UpdateLaserLaneColor((int)line, lineColor, isPlayer);
     }
+
+    #region Blob reserve logic
+    public void RemoveNextBlobFromQueue(int amount = 1)
+    {
+        if (_currentBlobSelection.Count < amount)
+        {
+            CustomLog.LogError("Trying to remove more blobs than the current queue contains!!");
+            return;
+        }
+        _currentBlobSelection.RemoveRange(0, amount);
+    }
+    #endregion
 }
