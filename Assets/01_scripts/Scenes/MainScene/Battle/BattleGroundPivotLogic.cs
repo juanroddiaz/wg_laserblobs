@@ -46,4 +46,9 @@ public class BattleGroundPivotLogic : MonoBehaviour
     {
         return _blobLogic.CurrentBlobLaserForce;
     }
+
+    public void SetAsReserve()
+    {
+        _blobDragLogic.gameObject.SetActive(false);
+    }
 }
