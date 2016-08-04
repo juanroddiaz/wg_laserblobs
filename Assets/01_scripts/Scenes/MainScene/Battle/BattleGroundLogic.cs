@@ -225,5 +225,13 @@ public class BattleGroundLogic : MonoBehaviour
         }
         _blobLogicList.Clear();
         _blobDragObjs.Clear();
+        _selectionQueueLogic.Reset();
     }
+
+    #region Reserve logic
+    public void RemoveNextBlobFromReserve()
+    {
+        _selectionQueueLogic.RemoveNextBlobFromReserve();
+    }
+    #endregion
 }

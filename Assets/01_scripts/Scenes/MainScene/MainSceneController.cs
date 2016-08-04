@@ -36,7 +36,7 @@ public class MainSceneController : SceneController
         get { return _isPaused; }
     }
 
-    private List<BlobTypes> _lastBlobSelection = new List<BlobTypes>();
+    private List<BlobTypes> _lastBlobSelection;
 
     public override IEnumerator InitSequence(SceneModel model)
     {
@@ -73,7 +73,8 @@ public class MainSceneController : SceneController
     public void StartGame(List<BlobTypes> _blobSelection)
     {
         _isPaused = false;
-        _lastBlobSelection = _blobSelection;
+        // making a copy of original selection for restart game logic
+        _lastBlobSelection = new List<BlobTypes>(_blobSelection);
         _scenarioLogic.StartGame(_blobSelection);
     }
 
@@ -92,7 +93,7 @@ public class MainSceneController : SceneController
         }
         CustomLog.Log(blobLog);
         TogglePauseGame();
-        _scenarioLogic.StartGame(_lastBlobSelection);
+        _scenarioLogic.StartGame(new List<BlobTypes>(_lastBlobSelection));
     }
 
     public void EndGame(bool goToMainMenu)
