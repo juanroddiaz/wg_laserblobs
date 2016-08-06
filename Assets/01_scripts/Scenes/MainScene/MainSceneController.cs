@@ -12,7 +12,7 @@ public class MainSceneModel : SceneModel
 
 public class MainSceneController : SceneController
 {
-    private MainSceneModel _mainSceneModel;
+    private MainSceneModel _mainSceneModel = new MainSceneModel();
 
     [SerializeField]
     private MainScenarioLogic _scenarioLogic;

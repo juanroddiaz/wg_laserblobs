@@ -10,9 +10,9 @@ public class GameOverLogic : MonoBehaviour
         _sceneController = sceneController;
     }
 
-    public void ToggleScreen(bool show)
+    public void ShowScreen()
     {
-        gameObject.SetActive(show);
+        gameObject.SetActive(true);
     }
 
     public void OnRestartClick()
@@ -31,5 +31,10 @@ public class GameOverLogic : MonoBehaviour
     {
         gameObject.SetActive(false);
         _sceneController.EndGame(true);
+    }
+
+    public void OnLeaderboardClick()
+    {
+        CustomLog.Log("TODO: CREATE LEADERBOARD SCREEN AND LOGIC"); 
     }
 }

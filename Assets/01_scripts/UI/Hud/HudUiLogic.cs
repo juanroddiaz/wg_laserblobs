@@ -22,4 +22,10 @@ public class HudUiLogic : MonoBehaviour
         _pauseLogic.ToggleScreen(!_sceneController.IsPaused);
         _sceneController.TogglePauseGame();
     }
+
+    public void OnGameOver()
+    {
+        _gameOverLogic.ShowScreen();
+        _sceneController.TogglePauseGame();
+    }
 }

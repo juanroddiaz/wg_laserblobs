@@ -32,14 +32,12 @@ public class BattleGroundPivotLogic : MonoBehaviour
 
     private LaserLinesEnum _laserLaneType;
     private BattleGroundLogic _bgLogic;
-    private Animator _animController;
 
     public void Init(BattleGroundLogic bgLogic, LaserLinesEnum lane)
     {
         _laserLaneType = lane;
         _bgLogic = bgLogic;
         _blobLogic.Init(bgLogic.BlobLaserForce, bgLogic.BlobHoldLaserMultiplier);
-        _animController = GetComponent<Animator>();
     }
 
     public float GetBlobForce()
