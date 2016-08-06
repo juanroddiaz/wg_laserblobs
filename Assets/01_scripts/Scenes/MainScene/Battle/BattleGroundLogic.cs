@@ -8,6 +8,11 @@ public class BattleGroundLogic : MonoBehaviour
 
     [SerializeField]
     private BattleGroundType _type;
+    public BattleGroundType Type
+    {
+        get { return _type; }
+    }
+
 
     [SerializeField]
     private ReserveQueueLogic _selectionQueueLogic;
