@@ -6,6 +6,9 @@ public class HudUiLogic : MonoBehaviour
     [SerializeField]
     private PauseLogic _pauseLogic;
 
+    [SerializeField]
+    private GameOverLogic _gameOverLogic;
+
     private MainSceneController _sceneController;
 
     public void Init(MainSceneController controller)
