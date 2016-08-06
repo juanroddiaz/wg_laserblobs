@@ -83,9 +83,20 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
     }
 
+    // [TODO] enemy reserve from seed!
     public void EnemyBlobDeath(LaserLinesEnum lane)
     {
-        //_enemyBattleLogic.BlobDeath(lane);
+        BlobTypes type = BlobTypes.BLACK;
+        if (_scenarioLogic.CurrentEnemyQueue.Count > 0)
+        {
+            type = _scenarioLogic.CurrentEnemyQueue[0];
+            _scenarioLogic.RemoveNextBlobFromEnemyQueue();
+            _enemyBattleLogic.RemoveNextBlobFromReserve();
+        }
+
+        _enemyBattleLogic.BlobDeath(lane, type);
+        _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
+        _laserBeamList[(int)lane].UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
     }
 
     public void UpdateLaserLaneColor(int laneIdx, Color color, bool isPlayer)

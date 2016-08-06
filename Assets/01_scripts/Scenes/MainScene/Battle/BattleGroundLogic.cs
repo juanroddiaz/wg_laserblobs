@@ -72,7 +72,7 @@ public class BattleGroundLogic : MonoBehaviour
                     obj = Instantiate(scenarioLogic.BlobPrefabs[(int)scenarioLogic.CurrentBlobSelection[i]], Vector3.zero, Quaternion.identity) as GameObject;
                     break;
                 case BattleGroundType.ENEMY:
-                    obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
+                    obj = Instantiate(scenarioLogic.BlobPrefabs[i], Vector3.zero, Quaternion.identity) as GameObject;
                     break;
             }
             LaserLinesEnum lane = (LaserLinesEnum)idx;
@@ -99,11 +99,12 @@ public class BattleGroundLogic : MonoBehaviour
                 _scenarioLogic.RemoveNextBlobFromQueue(3);
                 break;
             case BattleGroundType.ENEMY:
+                _scenarioLogic.RemoveNextBlobFromEnemyQueue(3);
                 break;
         }        
 
         // reserve queue initialization
-        _selectionQueueLogic.Init(_scenarioLogic);
+        _selectionQueueLogic.Init(_scenarioLogic, _type);
     }
 
     public void ToggleOnHoldState(LaserLinesEnum lane, bool held)
@@ -193,16 +194,7 @@ public class BattleGroundLogic : MonoBehaviour
         int siblingIdx = deadBlog.transform.GetSiblingIndex();
         Destroy(deadBlog.gameObject);
 
-        GameObject obj = null;
-        switch (_type)
-        {
-            case BattleGroundType.PLAYER:
-                obj = Instantiate(_scenarioLogic.BlobPrefabs[(int)blobType], Vector3.zero, Quaternion.identity) as GameObject;
-                break;
-            case BattleGroundType.ENEMY:
-                obj = Instantiate(_blobObject, Vector3.zero, Quaternion.identity) as GameObject;
-                break;
-        }
+        GameObject obj = Instantiate(_scenarioLogic.BlobPrefabs[(int)blobType], Vector3.zero, Quaternion.identity) as GameObject;
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);

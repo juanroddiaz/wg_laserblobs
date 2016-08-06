@@ -20,6 +20,16 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _currentBlobSelection; }
     }
 
+    private List<BlobTypes> _currentEnemyQueue = new List<BlobTypes>();
+    public List<BlobTypes> CurrentEnemyQueue
+    {
+        get { return _currentEnemyQueue; }
+    }
+
+    [Header("Debug stuff!")]
+    [SerializeField]
+    private int _debugEnemyCount = 20;
+
     public void Init()
     {
         if (_blobPrefabs.Count != (int)BlobTypes.MAX)
@@ -33,6 +43,10 @@ public class MainScenarioLogic : MonoBehaviour
     public void StartGame(List<BlobTypes> _blobSelection)
     {
         _currentBlobSelection = _blobSelection;
+        for (int i = 0; i < _debugEnemyCount; i++)
+        {
+            _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
+        }
         _laserGroupLogic.LaserSetting();
     }
 
@@ -60,6 +74,16 @@ public class MainScenarioLogic : MonoBehaviour
             return;
         }
         _currentBlobSelection.RemoveRange(0, amount);
+    }
+
+    public void RemoveNextBlobFromEnemyQueue(int amount = 1)
+    {
+        if (_currentEnemyQueue.Count < amount)
+        {
+            CustomLog.LogError("Trying to remove more blobs than the current ENEMY queue contains!!");
+            return;
+        }
+        _currentEnemyQueue.RemoveRange(0, amount);
     }
     #endregion
 }
