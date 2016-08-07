@@ -185,8 +185,8 @@ public class BattleGroundLogic : MonoBehaviour
         _blobDragObjs[toIdx] = fromDragLogic;
         fromLogic.gameObject.SetActive(true);
         toLogic.gameObject.SetActive(true);
-        fromLogic.SetIdle();
-        toLogic.SetIdle();
+        fromLogic.StartLaserFire();
+        toLogic.StartLaserFire();
 
         _scenarioLogic.UpdateLaserColors(from, toColor, true, toDragLogic != null);
         _scenarioLogic.UpdateLaserColors(to, fromColor, true, fromDragLogic != null);
