@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 public class GameOverLogic : MonoBehaviour
 {
+    [SerializeField]
+    private Text _violenceLevelLabel;
+    [SerializeField]
+    private Text _violenceChartLabel;
+
     private MainSceneController _sceneController;
 
     public void Init(MainSceneController sceneController)
@@ -13,6 +18,8 @@ public class GameOverLogic : MonoBehaviour
     public void ShowScreen()
     {
         gameObject.SetActive(true);
+        _violenceLevelLabel.text = _sceneController.Score.ToString();
+        _violenceChartLabel.text = "6669th";
     }
 
     public void OnRestartClick()
