@@ -79,13 +79,17 @@ public class BattleGroundPivotLogic : MonoBehaviour
         _blobDragLogic.gameObject.SetActive(false);
         if(notInBattleground)
         {
-            _currentAnim = BlobAnimations.Idle;
-            _blobAnimator.SetTrigger(_currentAnim.ToString() + BlobAnimType._F.ToString());
-        }        
+            SetAsReserve();
+        }
     }
 
     private void SetAnimation()
     {
+        if (_type == BlobTypes.MAX)
+        {
+            // dead blob
+            return;
+        }
         _blobAnimator.SetTrigger(_currentAnim.ToString() + _teamAnimType.ToString());
     }
 
@@ -116,6 +120,12 @@ public class BattleGroundPivotLogic : MonoBehaviour
     public void JumpToBattleground()
     {
         _currentAnim = BlobAnimations.Jump;
+        SetAnimation();
+    }
+
+    public void SetAsReserve()
+    {
+        _currentAnim = BlobAnimations.Reserve;
         SetAnimation();
     }
     #endregion

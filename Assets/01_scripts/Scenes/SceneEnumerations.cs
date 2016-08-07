@@ -23,6 +23,7 @@ public enum BlobAnimations
     FireIn,
     Fire,
     FireOut,
+    Reserve,
     Max
 }
 
