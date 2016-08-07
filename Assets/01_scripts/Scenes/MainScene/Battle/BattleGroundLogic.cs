@@ -81,7 +81,7 @@ public class BattleGroundLogic : MonoBehaviour
             bgLogic.Init(this, lane, (BlobTypes)blobTypeIdx);
             if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
             {
-                bgLogic.BlobDragLogic.Init(lane, this);
+                bgLogic.BlobDragLogic.Init(lane, this, bgLogic.BlobBaseColor);
                 _blobDragObjs.Add(bgLogic.BlobDragLogic);
             }
 
@@ -185,6 +185,8 @@ public class BattleGroundLogic : MonoBehaviour
         _blobDragObjs[toIdx] = fromDragLogic;
         fromLogic.gameObject.SetActive(true);
         toLogic.gameObject.SetActive(true);
+        fromLogic.SetIdle();
+        toLogic.SetIdle();
 
         _scenarioLogic.UpdateLaserColors(from, toColor, true, toDragLogic != null);
         _scenarioLogic.UpdateLaserColors(to, fromColor, true, fromDragLogic != null);
@@ -237,7 +239,7 @@ public class BattleGroundLogic : MonoBehaviour
 
                 if (bgLogic.BlobDragLogic != null)
                 {
-                    bgLogic.BlobDragLogic.Init(lane, this);
+                    bgLogic.BlobDragLogic.Init(lane, this, bgLogic.BlobBaseColor);
                     _blobDragObjs[deadIdx] = bgLogic.BlobDragLogic;
                 }
                 break;

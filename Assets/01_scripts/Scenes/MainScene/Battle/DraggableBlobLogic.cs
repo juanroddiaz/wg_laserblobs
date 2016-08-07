@@ -12,6 +12,7 @@ public class DraggableBlobLogic : MonoBehaviour
     private Vector2 _initialPosition;
     private RectTransform _rectTrans;
 	private float _blobCustomSize;
+    private Color _blobColor;
 
     private bool _isHeld = false;
     public bool IsHeld
@@ -19,10 +20,11 @@ public class DraggableBlobLogic : MonoBehaviour
         get { return _isHeld; }
     }
 
-    public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic)
+    public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic, Color blobColor)
     {
         _lane = lane;
         _panelLogic = panelLogic;
+        _blobColor = blobColor;
         _rectTrans = _draggableImage.GetComponent<RectTransform>();
         _initialPosition = _rectTrans.anchoredPosition;
 		_blobCustomSize = panelLogic.BlobCustomSize;
@@ -54,8 +56,8 @@ public class DraggableBlobLogic : MonoBehaviour
     public void OnBeginDrag(BaseEventData data)
     {
         CustomLog.Log("OnBeginDrag: lane " + _lane.ToString());
-        Color imgColor = new Color(1.0f, 1.0f, 1.0f, _panelLogic.DragBlobAlpha);
-        _draggableImage.color = imgColor;
+        _blobColor.a = _panelLogic.DragBlobAlpha;
+        _draggableImage.color = _blobColor;
     }
 
     public void OnDrag(BaseEventData data)
@@ -77,10 +79,10 @@ public class DraggableBlobLogic : MonoBehaviour
     public void OnEndDrag(BaseEventData data)
     {
         CustomLog.Log("OnEndDrag: " + _lane.ToString());
-        Color imgColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-        _draggableImage.color = imgColor;
+        _blobColor.a = 0.0f;
+        _draggableImage.color = _blobColor;
 
-        // TODO: check end drag position
+        // check end drag position
         Vector3 lastAnchoredPos = _rectTrans.position;
         _rectTrans.anchoredPosition = _initialPosition;
         _panelLogic.CheckBlobSwapping(_lane, lastAnchoredPos);
