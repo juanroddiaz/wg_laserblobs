@@ -21,8 +21,13 @@ public class HudUiLogic : MonoBehaviour
         _sceneController = controller;
         _pauseLogic.Init(controller);
         _gameOverLogic.Init(controller);
-        _scoreLabel.text = controller.Score.ToString();
-        _multiplierLabel.text = "x" + controller.Multiplier.ToString();
+        ResetGameData();
+    }
+
+    public void ResetGameData()
+    {
+        _scoreLabel.text = _sceneController.Score.ToString();
+        _multiplierLabel.text = "x" + _sceneController.Multiplier.ToString();
     }
 
     public void OnPauseButton()

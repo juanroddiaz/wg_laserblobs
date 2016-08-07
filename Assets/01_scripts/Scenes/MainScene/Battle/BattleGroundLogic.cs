@@ -262,5 +262,10 @@ public class BattleGroundLogic : MonoBehaviour
     {
         _selectionQueueLogic.RemoveNextBlobFromReserve();
     }
+
+    public void AddBlobToReserve()
+    {
+        _selectionQueueLogic.AddBlobToReserve();
+    }
     #endregion
 }

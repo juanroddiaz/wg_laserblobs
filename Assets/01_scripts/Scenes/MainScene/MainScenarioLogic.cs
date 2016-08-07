@@ -99,6 +99,11 @@ public class MainScenarioLogic : MonoBehaviour
             return;
         }
         _currentEnemyQueue.RemoveRange(0, amount);
+        // TODO: enemy spawing generetaion according to difficulty and game settings
+        for (int i = 0; i < amount; i++)
+        {
+            _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
+        }
     }
     #endregion
 }

@@ -107,6 +107,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
             type = _scenarioLogic.CurrentEnemyQueue[0];
             _scenarioLogic.RemoveNextBlobFromEnemyQueue();
             _enemyBattleLogic.RemoveNextBlobFromReserve();
+            _enemyBattleLogic.AddBlobToReserve();
         }
 
         _enemyBattleLogic.BlobDeath(lane, type);

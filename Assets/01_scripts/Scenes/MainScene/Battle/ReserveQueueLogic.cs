@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ReserveQueueLogic : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ReserveQueueLogic : MonoBehaviour
     private MainScenarioLogic _bgLogic;
     private List<GameObject> _reserveObjList = new List<GameObject>();
     private BattleGroundType _type;
+    private int _reserveIdx = 0;
 
     public void Init(MainScenarioLogic bgLogic, BattleGroundType type)
     {
@@ -37,6 +39,7 @@ public class ReserveQueueLogic : MonoBehaviour
             _reserveObjList.Add(obj);
             BattleGroundPivotLogic bgpLogic = obj.GetComponent<BattleGroundPivotLogic>();
             bgpLogic.SetAsReserve();
+            _reserveIdx++;
         }
     }
 
@@ -44,6 +47,29 @@ public class ReserveQueueLogic : MonoBehaviour
     {
         Destroy(_reserveObjList[0]);
         _reserveObjList.RemoveAt(0);
+    }
+
+    public void AddBlobToReserve()
+    {
+        BlobTypes blobType = BlobTypes.MAX;
+        switch (_type)
+        {
+            case BattleGroundType.PLAYER:
+                blobType = _bgLogic.CurrentBlobSelection.Last();
+                break;
+            case BattleGroundType.ENEMY:
+                blobType = _bgLogic.CurrentEnemyQueue.Last();
+                break;
+        }
+        GameObject obj = Instantiate(_bgLogic.BlobPrefabs[(int)blobType], Vector3.zero, Quaternion.identity) as GameObject; ;
+        obj.transform.SetParent(_queueTransform);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = new Vector3(_blobReserveCustomSize, _blobReserveCustomSize, 1.0f);
+        obj.name = obj.name + "_" + _reserveIdx.ToString();
+        _reserveObjList.Add(obj);
+        BattleGroundPivotLogic bgpLogic = obj.GetComponent<BattleGroundPivotLogic>();
+        bgpLogic.SetAsReserve();
+        _reserveIdx++;
     }
 
     public void Reset()

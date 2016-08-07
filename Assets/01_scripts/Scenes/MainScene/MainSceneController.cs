@@ -99,6 +99,7 @@ public class MainSceneController : SceneController
         _isPaused = false;
         _multiplier = 1;
         _score = 0;
+        _hudLogic.ResetGameData();
         // making a copy of original selection for restart game logic
         _lastBlobSelection = new List<BlobTypes>(_blobSelection);
         _scenarioLogic.StartGame(_blobSelection);
@@ -124,6 +125,9 @@ public class MainSceneController : SceneController
         }
         CustomLog.Log(blobLog);
         TogglePauseGame();
+        _multiplier = 1;
+        _score = 0;
+        _hudLogic.ResetGameData();
         _scenarioLogic.StartGame(new List<BlobTypes>(_lastBlobSelection));
     }
 
