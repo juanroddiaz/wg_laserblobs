@@ -14,7 +14,23 @@
 
 public enum BlobAnimations
 {
+    Idle = 0,
+    Jump,
+    SqueezeIn,
+    Squeeze,
+    SqueezeOut,
+    Death,
+    FireIn,
+    Fire,
+    FireOut,
+    Max
+}
 
+public enum BlobAnimType
+{
+    _F = 0,
+    _B,
+    Max
 }
 
 public enum GameDifficulty

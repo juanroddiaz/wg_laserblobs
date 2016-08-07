@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class BattleGroundLogic : MonoBehaviour
@@ -12,7 +13,6 @@ public class BattleGroundLogic : MonoBehaviour
     {
         get { return _type; }
     }
-
 
     [SerializeField]
     private ReserveQueueLogic _selectionQueueLogic;
@@ -189,15 +189,17 @@ public class BattleGroundLogic : MonoBehaviour
         _scenarioLogic.UpdateLaserColors(to, fromColor, true, fromDragLogic != null);
     }
 
-    public void BlobDeath(LaserLinesEnum lane, BlobTypes blobType)
+    public IEnumerator BlobDeath(LaserLinesEnum lane, BlobTypes blobType)
     {
         CustomLog.Log("Blob death!! Lane " + lane.ToString() + ", team: " + _type.ToString());
         int deadIdx = (int)lane;
         BattleGroundPivotLogic deadBlob = _blobLogicList[deadIdx];
         int siblingIdx = deadBlob.transform.GetSiblingIndex();
+        deadBlob.DeathEvent();
+        yield return new WaitForSeconds(0.5f);
         Destroy(deadBlob.gameObject);
 
-        // blob reserve is over!
+        // blob reserve is over?
         GameObject blobObj = blobType == BlobTypes.MAX ? _scenarioLogic.DeadBlob : _scenarioLogic.BlobPrefabs[(int)blobType];
         GameObject obj = Instantiate(blobObj, Vector3.zero, Quaternion.identity) as GameObject;
         obj.transform.SetParent(transform);
@@ -209,7 +211,6 @@ public class BattleGroundLogic : MonoBehaviour
         _blobLogicList[deadIdx] = bgLogic;
         bgLogic.Init(this, lane, blobType);
 
-        // blob reserve is over!
         switch (_type)
         {
             case BattleGroundType.PLAYER:
@@ -230,7 +231,7 @@ public class BattleGroundLogic : MonoBehaviour
                     {
                         _scenarioLogic.SceneController.ShowGameOver();
                     }
-                    return;
+                    yield break;
                 }
 
                 if (bgLogic.BlobDragLogic != null)
@@ -244,6 +245,7 @@ public class BattleGroundLogic : MonoBehaviour
                 _scenarioLogic.SceneController.UpdateScore();
                 break;
         }
+        yield break;
     }
 
     public void Reset()

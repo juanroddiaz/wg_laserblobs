@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class LaserBeamLogic : MonoBehaviour
 {
@@ -28,6 +28,7 @@ public class LaserBeamLogic : MonoBehaviour
 
     private LaserLinesEnum _lane;
     private LaserBeamGroupLogic _laserBeamLogic;
+    private bool _deathEventRunning = false;
 
     private bool _isActive = false;
     public bool IsActive
@@ -76,13 +77,33 @@ public class LaserBeamLogic : MonoBehaviour
 
         if (playerLife == 0.0f)
         {
-            _laserBeamLogic.PlayerBlobDeath(_lane);
+            StartCoroutine(BlobDeathRoutine(BattleGroundType.PLAYER));
             return;
         }
         if (enemyLife == 0.0f)
         {
-            _laserBeamLogic.EnemyBlobDeath(_lane);
+            StartCoroutine(BlobDeathRoutine(BattleGroundType.ENEMY));
         }
+    }
+
+    private IEnumerator BlobDeathRoutine(BattleGroundType type)
+    {
+        if (_deathEventRunning)
+        {
+            yield break;
+        }
+        _deathEventRunning = true;
+        switch (type)
+        {
+            case BattleGroundType.PLAYER:
+                yield return StartCoroutine(_laserBeamLogic.PlayerBlobDeath(_lane));
+                break;
+            case BattleGroundType.ENEMY:
+                yield return StartCoroutine(_laserBeamLogic.EnemyBlobDeath(_lane));
+                break;
+        }
+        _deathEventRunning = false;
+        yield break;
     }
 
     private void SetCollisionObjectPosition()

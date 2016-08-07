@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public enum LaserLinesEnum
@@ -75,7 +76,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         }
     }
 
-    public void PlayerBlobDeath(LaserLinesEnum lane)
+    public IEnumerator PlayerBlobDeath(LaserLinesEnum lane)
     {
         BlobTypes type = BlobTypes.MAX;
         if (_scenarioLogic.CurrentBlobSelection.Count > 0)
@@ -85,13 +86,13 @@ public class LaserBeamGroupLogic : MonoBehaviour
             _playerBattleLogic.RemoveNextBlobFromReserve();
         }
 
-        _playerBattleLogic.BlobDeath(lane, type);
+        yield return StartCoroutine(_playerBattleLogic.BlobDeath(lane, type));
 
         // blob reserve is over!
         if (type == BlobTypes.MAX)
         {
             _laserBeamList[(int)lane].DeactivateLaser();
-            return;
+            yield break;
         }
 
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
@@ -99,7 +100,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
     }
 
     // [TODO] enemy reserve from seed!
-    public void EnemyBlobDeath(LaserLinesEnum lane)
+    public IEnumerator EnemyBlobDeath(LaserLinesEnum lane)
     {
         BlobTypes type = BlobTypes.MAX;
         if (_scenarioLogic.CurrentEnemyQueue.Count > 0)
@@ -110,13 +111,13 @@ public class LaserBeamGroupLogic : MonoBehaviour
             _enemyBattleLogic.AddBlobToReserve();
         }
 
-        _enemyBattleLogic.BlobDeath(lane, type);
+        yield return StartCoroutine(_enemyBattleLogic.BlobDeath(lane, type));
 
         // blob reserve is over!
         if (type == BlobTypes.MAX)
         {
             _laserBeamList[(int)lane].DeactivateLaser();
-            return;
+            yield break;
         }
 
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
