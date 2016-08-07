@@ -55,7 +55,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
         _bgLogic = bgLogic;
         _type = type;
         _teamAnimType = bgLogic.Type == BattleGroundType.PLAYER ? BlobAnimType._B : BlobAnimType._F;
-        _currentAnim = BlobAnimations.Idle;
+        SetIdle();
         // if not dead blob case
         if (type != BlobTypes.MAX)
         {
@@ -63,6 +63,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
             if (_bgLogic.Type == BattleGroundType.ENEMY)
             {
                 SetAsReserve();
+                StartLaserFire();
             }
             return;
         }
@@ -86,6 +87,12 @@ public class BattleGroundPivotLogic : MonoBehaviour
         _blobAnimator.SetTrigger(_currentAnim.ToString() + _teamAnimType.ToString());
     }
 
+    public void SetIdle()
+    {
+        _currentAnim = BlobAnimations.Idle;
+        SetAnimation();
+    }
+
     public void StartLaserFire()
     {
         _currentAnim = BlobAnimations.FireIn;
@@ -98,15 +105,9 @@ public class BattleGroundPivotLogic : MonoBehaviour
         SetAnimation();
     }
 
-    public void SqueezeIn()
+    public void Squeeze(bool squeezeIn)
     {
-        _currentAnim = BlobAnimations.SqueezeIn;
-        SetAnimation();
-    }
-
-    public void SqueezeOut()
-    {
-        _currentAnim = BlobAnimations.SqueezeIn;
+        _currentAnim = squeezeIn ? BlobAnimations.SqueezeIn : BlobAnimations.SqueezeOut;
         SetAnimation();
     }
 

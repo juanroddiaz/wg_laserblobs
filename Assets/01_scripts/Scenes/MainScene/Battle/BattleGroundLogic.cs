@@ -107,6 +107,7 @@ public class BattleGroundLogic : MonoBehaviour
     public void ToggleOnHoldState(LaserLinesEnum lane, bool held)
     {
         _blobLogicList[(int)lane].BlobLogic.ToggleOnHoldState(held);
+        _blobLogicList[(int)lane].Squeeze(held);
     }
 
     /// <summary>
