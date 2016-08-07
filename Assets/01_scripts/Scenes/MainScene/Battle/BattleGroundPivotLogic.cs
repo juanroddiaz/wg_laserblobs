@@ -32,16 +32,22 @@ public class BattleGroundPivotLogic : MonoBehaviour
 
     private LaserLinesEnum _laserLaneType;
     private BattleGroundLogic _bgLogic;
+    private BlobTypes _type;
 
-    public void Init(BattleGroundLogic bgLogic, LaserLinesEnum lane)
+    public void Init(BattleGroundLogic bgLogic, LaserLinesEnum lane, BlobTypes type)
     {
         _laserLaneType = lane;
         _bgLogic = bgLogic;
-        _blobLogic.Init(bgLogic.BlobLaserForce, bgLogic.BlobHoldLaserMultiplier);
-        if (_bgLogic.Type == BattleGroundType.ENEMY)
+        _type = type;
+        // dead blob case
+        if (type != BlobTypes.MAX)
         {
-            SetAsReserve();
-        }
+            _blobLogic.Init(bgLogic.BlobLaserForce, bgLogic.BlobHoldLaserMultiplier);
+            if (_bgLogic.Type == BattleGroundType.ENEMY)
+            {
+                SetAsReserve();
+            }
+        }        
     }
 
     public float GetBlobForce()

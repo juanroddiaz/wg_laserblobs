@@ -53,6 +53,7 @@ public class LaserBeamLogic : MonoBehaviour
 
     public void LasetSet(float enemyForce, float playerForce)
     {
+        _isActive = true;
         // TODO: get the right values from DM
         _currentPlayerLaserValue = _initialLaserValue;
         _currentPlayerLaserForceFactor = enemyForce - playerForce;        
@@ -105,8 +106,13 @@ public class LaserBeamLogic : MonoBehaviour
         _enemyStarGlow.startColor = enemyColor;
     }
 
-    public void ToggleActivation()
+    public void DeactivateLaser()
     {
-        _isActive = !_isActive;
+        _isActive = false;
+    }
+
+    public void ActivateLaser()
+    {
+        _isActive = true;
     }
 }

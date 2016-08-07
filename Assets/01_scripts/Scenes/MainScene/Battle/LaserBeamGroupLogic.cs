@@ -86,7 +86,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         // blob reserve is over!
         if (type == BlobTypes.MAX)
         {
-            _laserBeamList[(int)lane].ToggleActivation();
+            _laserBeamList[(int)lane].DeactivateLaser();
             return;
         }
 
@@ -110,7 +110,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         // blob reserve is over!
         if (type == BlobTypes.MAX)
         {
-            _laserBeamList[(int)lane].ToggleActivation();
+            _laserBeamList[(int)lane].DeactivateLaser();
             return;
         }
 
@@ -118,10 +118,21 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _laserBeamList[(int)lane].UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
     }
 
-    public void UpdateLaserLaneColor(int laneIdx, Color color, bool isPlayer)
+    public void ReactivateLaserLane(LaserLinesEnum lane)
+    {
+        _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
+        _laserBeamList[(int)lane].UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
+    }
+
+    public void UpdateLaserLaneColor(int laneIdx, Color color, bool isPlayer, bool blobAlive)
     {
         if (isPlayer)
         {
+            if (blobAlive && !_laserBeamList[laneIdx].IsActive)
+            {
+                // reactivating the laser
+                _laserBeamList[laneIdx].LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)laneIdx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)laneIdx));
+            }
             _laserBeamList[laneIdx].UpdatePlayerLaserColor(color);
             return;
         }

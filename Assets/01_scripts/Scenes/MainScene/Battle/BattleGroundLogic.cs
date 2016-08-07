@@ -70,30 +70,22 @@ public class BattleGroundLogic : MonoBehaviour
         int idx = 0;
         for(int i=0; i<(int)LaserLinesEnum.Max; i++)
         {
-            GameObject obj = null;
-            switch(_type)
-            {
-                case BattleGroundType.PLAYER:
-                    obj = Instantiate(scenarioLogic.BlobPrefabs[(int)scenarioLogic.CurrentBlobSelection[i]], Vector3.zero, Quaternion.identity) as GameObject;
-                    break;
-                case BattleGroundType.ENEMY:
-                    obj = Instantiate(scenarioLogic.BlobPrefabs[i], Vector3.zero, Quaternion.identity) as GameObject;
-                    break;
-            }
+            int blobTypeIdx = _type == BattleGroundType.PLAYER ? (int)scenarioLogic.CurrentBlobSelection[i] : i;
+            GameObject obj = Instantiate(scenarioLogic.BlobPrefabs[blobTypeIdx], Vector3.zero, Quaternion.identity) as GameObject;
             LaserLinesEnum lane = (LaserLinesEnum)idx;
             obj.transform.SetParent(transform);
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
             BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
             _blobLogicList.Add(bgLogic);
-            bgLogic.Init(this, lane);
+            bgLogic.Init(this, lane, (BlobTypes)blobTypeIdx);
             if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
             {
                 bgLogic.BlobDragLogic.Init(lane, this);
                 _blobDragObjs.Add(bgLogic.BlobDragLogic);
             }
 
-            _scenarioLogic.UpdateLaserColors(lane, bgLogic.BlobBaseColor, _type == BattleGroundType.PLAYER);
+            _scenarioLogic.UpdateLaserColors(lane, bgLogic.BlobBaseColor, _type == BattleGroundType.PLAYER, true);
 
             idx++;
         }
@@ -180,15 +172,21 @@ public class BattleGroundLogic : MonoBehaviour
         toLogic.transform.SetSiblingIndex(fromSibling);
         _blobLogicList[fromIdx] = toLogic;
         _blobLogicList[toIdx] = fromLogic;
-        fromDragLogic.UpdateLane(to);
-        toDragLogic.UpdateLane(from);
+        if (fromDragLogic != null)
+        {
+            fromDragLogic.UpdateLane(to);
+        }
+        if (toDragLogic != null)
+        {
+            toDragLogic.UpdateLane(from);
+        }        
         _blobDragObjs[fromIdx] = toDragLogic;
         _blobDragObjs[toIdx] = fromDragLogic;
         fromLogic.gameObject.SetActive(true);
         toLogic.gameObject.SetActive(true);
 
-        _scenarioLogic.UpdateLaserColors(from, toColor, true);
-        _scenarioLogic.UpdateLaserColors(to, fromColor, true);
+        _scenarioLogic.UpdateLaserColors(from, toColor, true, toDragLogic != null);
+        _scenarioLogic.UpdateLaserColors(to, fromColor, true, fromDragLogic != null);
     }
 
     public void BlobDeath(LaserLinesEnum lane, BlobTypes blobType)
@@ -207,17 +205,17 @@ public class BattleGroundLogic : MonoBehaviour
         obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
         obj.transform.SetSiblingIndex(siblingIdx);
 
+        BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
+        _blobLogicList[deadIdx] = bgLogic;
+        bgLogic.Init(this, lane, blobType);
+
         // blob reserve is over!
         if (blobType == BlobTypes.MAX)
         {
-            _blobLogicList[deadIdx] = null;
             _blobDragObjs[deadIdx] = null;
             return;
         }
 
-        BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
-        _blobLogicList[deadIdx] = bgLogic;
-        bgLogic.Init(this, lane);
         if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
         {
             bgLogic.BlobDragLogic.Init(lane, this);

@@ -67,9 +67,9 @@ public class MainScenarioLogic : MonoBehaviour
         _laserGroupLogic.UpdateLogic();
     }
 
-    public void UpdateLaserColors(LaserLinesEnum line, Color lineColor, bool isPlayer)
+    public void UpdateLaserColors(LaserLinesEnum line, Color lineColor, bool isPlayer, bool blobAlive)
     {
-        _laserGroupLogic.UpdateLaserLaneColor((int)line, lineColor, isPlayer);
+        _laserGroupLogic.UpdateLaserLaneColor((int)line, lineColor, isPlayer, blobAlive);
     }
 
     #region Blob reserve logic
