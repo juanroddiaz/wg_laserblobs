@@ -69,6 +69,10 @@ public class LaserBeamGroupLogic : MonoBehaviour
     {
         _playerBattleLogic.Reset();
         _enemyBattleLogic.Reset();
+        foreach (LaserBeamLogic lbl in _laserBeamList)
+        {
+            lbl.ActivateLaser();
+        }
     }
 
     public void PlayerBlobDeath(LaserLinesEnum lane)

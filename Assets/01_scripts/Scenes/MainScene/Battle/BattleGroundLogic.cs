@@ -210,17 +210,33 @@ public class BattleGroundLogic : MonoBehaviour
         bgLogic.Init(this, lane, blobType);
 
         // blob reserve is over!
-        if (blobType == BlobTypes.MAX)
+        if (_type == BattleGroundType.PLAYER)
         {
-            _blobDragObjs[deadIdx] = null;
-            return;
-        }
+            if (blobType == BlobTypes.MAX)
+            {
+                _blobDragObjs[deadIdx] = null;
+                bool gameOver = true;
+                for (int i = 0; i < _blobLogicList.Count; i++)
+                {
+                    if (_blobLogicList[i].Type != BlobTypes.MAX)
+                    {
+                        gameOver = false;
+                        break;
+                    }
+                }
+                if (gameOver)
+                {
+                    _scenarioLogic.SceneController.ShowGameOver();
+                }
+                return;
+            }
 
-        if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
-        {
-            bgLogic.BlobDragLogic.Init(lane, this);
-            _blobDragObjs[deadIdx] = bgLogic.BlobDragLogic;
-        }
+            if (bgLogic.BlobDragLogic != null)
+            {
+                bgLogic.BlobDragLogic.Init(lane, this);
+                _blobDragObjs[deadIdx] = bgLogic.BlobDragLogic;
+            }
+        }        
     }
 
     public void Reset()

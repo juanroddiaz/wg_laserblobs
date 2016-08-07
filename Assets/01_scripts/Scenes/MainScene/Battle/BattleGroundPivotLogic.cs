@@ -32,7 +32,12 @@ public class BattleGroundPivotLogic : MonoBehaviour
 
     private LaserLinesEnum _laserLaneType;
     private BattleGroundLogic _bgLogic;
-    private BlobTypes _type;
+
+    private BlobTypes _type = BlobTypes.MAX;
+    public BlobTypes Type
+    {
+        get { return _type; }
+    }   
 
     public void Init(BattleGroundLogic bgLogic, LaserLinesEnum lane, BlobTypes type)
     {

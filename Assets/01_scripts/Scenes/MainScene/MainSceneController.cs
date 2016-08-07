@@ -43,7 +43,7 @@ public class MainSceneController : SceneController
         yield return null;
         _sceneModel = model;
         _mainSceneModel = model as MainSceneModel;
-        _scenarioLogic.Init();
+        _scenarioLogic.Init(this);
         _mainMenuLogic.Init(this);
         _preGameLogic.Init(this);
         _hudLogic.Init(this);
@@ -81,6 +81,11 @@ public class MainSceneController : SceneController
     public void TogglePauseGame()
     {
         _isPaused = !_isPaused;
+    }
+
+    public void ShowGameOver()
+    {
+        _hudLogic.OnGameOver();
     }
 
     public void RestartGame()

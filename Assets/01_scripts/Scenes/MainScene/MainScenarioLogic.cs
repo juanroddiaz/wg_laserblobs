@@ -37,8 +37,16 @@ public class MainScenarioLogic : MonoBehaviour
     [SerializeField]
     private int _debugEnemyCount = 20;
 
-    public void Init()
+    private MainSceneController _sceneController;
+    public MainSceneController SceneController
     {
+        get { return _sceneController; }
+    }
+
+    public void Init(MainSceneController sceneController)
+    {
+        _sceneController = sceneController;
+
         if (_blobPrefabs.Count != (int)BlobTypes.MAX)
         {
             CustomLog.LogError("Missing blob prefab entries in MainScenarioLogic object!! Aborting :(");

@@ -15,6 +15,7 @@ public class HudUiLogic : MonoBehaviour
     {
         _sceneController = controller;
         _pauseLogic.Init(controller);
+        _gameOverLogic.Init(controller);
     }
 
     public void OnPauseButton()
