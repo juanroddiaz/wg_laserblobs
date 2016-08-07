@@ -14,6 +14,13 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _blobPrefabs; }
     }
 
+    [SerializeField]
+    private GameObject _deadBlob;
+    public GameObject DeadBlob
+    {
+        get { return _deadBlob; }
+    }
+
     private List<BlobTypes> _currentBlobSelection = new List<BlobTypes>();
     public List<BlobTypes> CurrentBlobSelection
     {

@@ -57,7 +57,10 @@ public class LaserBeamGroupLogic : MonoBehaviour
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.UpdateLaserLane(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
+            if (lbl.IsActive)
+            {
+                lbl.UpdateLaserLane(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
+            }            
             idx++;
         }
     }
@@ -70,7 +73,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
     public void PlayerBlobDeath(LaserLinesEnum lane)
     {
-        BlobTypes type = BlobTypes.BLACK;
+        BlobTypes type = BlobTypes.MAX;
         if (_scenarioLogic.CurrentBlobSelection.Count > 0)
         {
             type = _scenarioLogic.CurrentBlobSelection[0];
@@ -79,6 +82,14 @@ public class LaserBeamGroupLogic : MonoBehaviour
         }
 
         _playerBattleLogic.BlobDeath(lane, type);
+
+        // blob reserve is over!
+        if (type == BlobTypes.MAX)
+        {
+            _laserBeamList[(int)lane].ToggleActivation();
+            return;
+        }
+
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
     }
@@ -86,7 +97,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
     // [TODO] enemy reserve from seed!
     public void EnemyBlobDeath(LaserLinesEnum lane)
     {
-        BlobTypes type = BlobTypes.BLACK;
+        BlobTypes type = BlobTypes.MAX;
         if (_scenarioLogic.CurrentEnemyQueue.Count > 0)
         {
             type = _scenarioLogic.CurrentEnemyQueue[0];
@@ -95,6 +106,14 @@ public class LaserBeamGroupLogic : MonoBehaviour
         }
 
         _enemyBattleLogic.BlobDeath(lane, type);
+
+        // blob reserve is over!
+        if (type == BlobTypes.MAX)
+        {
+            _laserBeamList[(int)lane].ToggleActivation();
+            return;
+        }
+
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
         _laserBeamList[(int)lane].UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
     }

@@ -195,18 +195,29 @@ public class BattleGroundLogic : MonoBehaviour
     {
         CustomLog.Log("Blob death!! Lane " + lane.ToString() + ", team: " + _type.ToString());
         int deadIdx = (int)lane;
-        BattleGroundPivotLogic deadBlog = _blobLogicList[deadIdx];
-        int siblingIdx = deadBlog.transform.GetSiblingIndex();
-        Destroy(deadBlog.gameObject);
+        BattleGroundPivotLogic deadBlob = _blobLogicList[deadIdx];
+        int siblingIdx = deadBlob.transform.GetSiblingIndex();
+        Destroy(deadBlob.gameObject);
 
-        GameObject obj = Instantiate(_scenarioLogic.BlobPrefabs[(int)blobType], Vector3.zero, Quaternion.identity) as GameObject;
+        // blob reserve is over!
+        GameObject blobObj = blobType == BlobTypes.MAX ? _scenarioLogic.DeadBlob : _scenarioLogic.BlobPrefabs[(int)blobType];
+        GameObject obj = Instantiate(blobObj, Vector3.zero, Quaternion.identity) as GameObject;
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
+        obj.transform.SetSiblingIndex(siblingIdx);
+
+        // blob reserve is over!
+        if (blobType == BlobTypes.MAX)
+        {
+            _blobLogicList[deadIdx] = null;
+            _blobDragObjs[deadIdx] = null;
+            return;
+        }
+
         BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
         _blobLogicList[deadIdx] = bgLogic;
         bgLogic.Init(this, lane);
-        bgLogic.transform.SetSiblingIndex(siblingIdx);
         if (bgLogic.BlobDragLogic != null && _type == BattleGroundType.PLAYER)
         {
             bgLogic.BlobDragLogic.Init(lane, this);

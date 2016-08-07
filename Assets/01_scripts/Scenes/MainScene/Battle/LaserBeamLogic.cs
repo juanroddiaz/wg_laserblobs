@@ -29,6 +29,12 @@ public class LaserBeamLogic : MonoBehaviour
     private LaserLinesEnum _lane;
     private LaserBeamGroupLogic _laserBeamLogic;
 
+    private bool _isActive = false;
+    public bool IsActive
+    {
+        get { return _isActive; }
+    }
+
     public void Init(float lenght, float enemyTipPos, float playerTipPos, LaserLinesEnum lane, LaserBeamGroupLogic laserLogic)
     {
         _totalLaserValue = -1.0f * lenght;
@@ -42,6 +48,7 @@ public class LaserBeamLogic : MonoBehaviour
         _collisionPosition = _collisionGlowTransform.localPosition;
         _lane = lane;
         _laserBeamLogic = laserLogic;
+        _isActive = true;
     }
 
     public void LasetSet(float enemyForce, float playerForce)
@@ -96,5 +103,10 @@ public class LaserBeamLogic : MonoBehaviour
         _enemyLaser.startColor = enemyColor;
         enemyColor.a = _enemyStarGlow.startColor.a;
         _enemyStarGlow.startColor = enemyColor;
+    }
+
+    public void ToggleActivation()
+    {
+        _isActive = !_isActive;
     }
 }
