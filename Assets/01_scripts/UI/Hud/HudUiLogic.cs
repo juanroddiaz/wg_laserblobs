@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class HudUiLogic : MonoBehaviour
 {
     [SerializeField]
     private PauseLogic _pauseLogic;
-
     [SerializeField]
     private GameOverLogic _gameOverLogic;
+
+    [SerializeField]
+    private Text _scoreLabel;
+    [SerializeField]
+    private Text _multiplierLabel;
 
     private MainSceneController _sceneController;
 
@@ -16,6 +21,8 @@ public class HudUiLogic : MonoBehaviour
         _sceneController = controller;
         _pauseLogic.Init(controller);
         _gameOverLogic.Init(controller);
+        _scoreLabel.text = controller.Score.ToString();
+        _multiplierLabel.text = "x" + controller.Multiplier.ToString();
     }
 
     public void OnPauseButton()
@@ -28,5 +35,15 @@ public class HudUiLogic : MonoBehaviour
     {
         _gameOverLogic.ShowScreen();
         _sceneController.TogglePauseGame();
+    }
+
+    public void UpdateScore()
+    {
+        _scoreLabel.text = _sceneController.Score.ToString();
+    }
+
+    public void UpdateMultiplier()
+    {
+        _multiplierLabel.text = "x" + _sceneController.Multiplier.ToString();
     }
 }

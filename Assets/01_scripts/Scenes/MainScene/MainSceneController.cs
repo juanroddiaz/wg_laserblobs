@@ -38,6 +38,18 @@ public class MainSceneController : SceneController
 
     private List<BlobTypes> _lastBlobSelection;
 
+    private int _multiplier = 1;
+    public int Multiplier
+    {
+        get { return _multiplier; }
+    }
+
+    private int _score = 0;
+    public int Score
+    {
+        get { return _score; }
+    }
+
     public override IEnumerator InitSequence(SceneModel model)
     {
         yield return null;
@@ -59,6 +71,18 @@ public class MainSceneController : SceneController
         base.Update();
     }
 
+    public void UpdateMultiplier(int m)
+    {
+        _multiplier = m;
+        _hudLogic.UpdateMultiplier();
+    }
+
+    public void UpdateScore()
+    {
+        _score += _multiplier;
+        _hudLogic.UpdateScore();
+    }
+
     #region UI logic
     public void DisplayPreGameMenu()
     {
@@ -73,6 +97,8 @@ public class MainSceneController : SceneController
     public void StartGame(List<BlobTypes> _blobSelection)
     {
         _isPaused = false;
+        _multiplier = 1;
+        _score = 0;
         // making a copy of original selection for restart game logic
         _lastBlobSelection = new List<BlobTypes>(_blobSelection);
         _scenarioLogic.StartGame(_blobSelection);

@@ -210,33 +210,40 @@ public class BattleGroundLogic : MonoBehaviour
         bgLogic.Init(this, lane, blobType);
 
         // blob reserve is over!
-        if (_type == BattleGroundType.PLAYER)
+        switch (_type)
         {
-            if (blobType == BlobTypes.MAX)
-            {
-                _blobDragObjs[deadIdx] = null;
-                bool gameOver = true;
-                for (int i = 0; i < _blobLogicList.Count; i++)
+            case BattleGroundType.PLAYER:
+                // Dead blob logic and game over checking
+                if (blobType == BlobTypes.MAX)
                 {
-                    if (_blobLogicList[i].Type != BlobTypes.MAX)
+                    _blobDragObjs[deadIdx] = null;
+                    bool gameOver = true;
+                    for (int i = 0; i < _blobLogicList.Count; i++)
                     {
-                        gameOver = false;
-                        break;
+                        if (_blobLogicList[i].Type != BlobTypes.MAX)
+                        {
+                            gameOver = false;
+                            break;
+                        }
                     }
+                    if (gameOver)
+                    {
+                        _scenarioLogic.SceneController.ShowGameOver();
+                    }
+                    return;
                 }
-                if (gameOver)
-                {
-                    _scenarioLogic.SceneController.ShowGameOver();
-                }
-                return;
-            }
 
-            if (bgLogic.BlobDragLogic != null)
-            {
-                bgLogic.BlobDragLogic.Init(lane, this);
-                _blobDragObjs[deadIdx] = bgLogic.BlobDragLogic;
-            }
-        }        
+                if (bgLogic.BlobDragLogic != null)
+                {
+                    bgLogic.BlobDragLogic.Init(lane, this);
+                    _blobDragObjs[deadIdx] = bgLogic.BlobDragLogic;
+                }
+                break;
+            case BattleGroundType.ENEMY:
+                // score updating
+                _scenarioLogic.SceneController.UpdateScore();
+                break;
+        }
     }
 
     public void Reset()
