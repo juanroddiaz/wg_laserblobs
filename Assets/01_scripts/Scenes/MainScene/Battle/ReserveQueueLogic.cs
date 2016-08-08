@@ -39,6 +39,7 @@ public class ReserveQueueLogic : MonoBehaviour
             obj.name = obj.name + "_" + i.ToString();
             _reserveObjList.Add(obj);
             BattleGroundPivotLogic bgpLogic = obj.GetComponent<BattleGroundPivotLogic>();
+            bgpLogic.SetBattleGroundTeam(_type);
             bgpLogic.SetAsReserve(true);
             _reserveIdx++;
         }
@@ -78,6 +79,7 @@ public class ReserveQueueLogic : MonoBehaviour
         obj.name = obj.name + "_" + _reserveIdx.ToString();
         _reserveObjList.Add(obj);
         BattleGroundPivotLogic bgpLogic = obj.GetComponent<BattleGroundPivotLogic>();
+        bgpLogic.SetBattleGroundTeam(_type);
         bgpLogic.SetAsReserve(true);
         _reserveIdx++;
     }

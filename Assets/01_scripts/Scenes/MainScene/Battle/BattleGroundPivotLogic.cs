@@ -74,6 +74,11 @@ public class BattleGroundPivotLogic : MonoBehaviour
     }
 
     #region Blob States
+    public void SetBattleGroundTeam(BattleGroundType bgType)
+    {
+        _teamAnimType = bgType == BattleGroundType.PLAYER ? BlobAnimType._B : BlobAnimType._F;
+    }
+
     public void SetAsReserve(bool notInBattleground)
     {
         _blobDragLogic.gameObject.SetActive(false);
