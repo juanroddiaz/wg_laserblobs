@@ -196,6 +196,10 @@ public class BattleGroundLogic : MonoBehaviour
     {
         CustomLog.Log("Blob death!! Lane " + lane.ToString() + ", team: " + _type.ToString());
         int deadIdx = (int)lane;
+        if (_type == BattleGroundType.PLAYER && _blobDragObjs[deadIdx] != null)
+        {
+            _blobDragObjs[deadIdx].BlockDragLogic();
+        }
         BattleGroundPivotLogic deadBlob = _blobLogicList[deadIdx];
         int siblingIdx = deadBlob.transform.GetSiblingIndex();
         deadBlob.DeathEvent();

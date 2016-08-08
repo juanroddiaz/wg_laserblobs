@@ -20,6 +20,8 @@ public class DraggableBlobLogic : MonoBehaviour
         get { return _isHeld; }
     }
 
+    private bool _isBlocked = false;
+
     public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic, Color blobColor)
     {
         _lane = lane;
@@ -35,9 +37,18 @@ public class DraggableBlobLogic : MonoBehaviour
         _lane = lane;
     }
 
+    public void BlockDragLogic()
+    {
+        _isBlocked = true;
+    }
+
     #region Event triggers
     public void OnHoldStart()
     {
+        if (_isBlocked)
+        {
+            return;
+        }
         CustomLog.Log("OnHoldStart: " + _lane.ToString());
         _isHeld = true;
         _panelLogic.ToggleOnHoldState(_lane, true);
@@ -55,6 +66,11 @@ public class DraggableBlobLogic : MonoBehaviour
 
     public void OnBeginDrag(BaseEventData data)
     {
+        if (_isBlocked)
+        {
+            return;
+        }
+
         CustomLog.Log("OnBeginDrag: lane " + _lane.ToString());
         _blobColor.a = _panelLogic.DragBlobAlpha;
         _draggableImage.color = _blobColor;
@@ -62,6 +78,11 @@ public class DraggableBlobLogic : MonoBehaviour
 
     public void OnDrag(BaseEventData data)
     {
+        if (_isBlocked)
+        {
+            return;
+        }
+
         //CustomLog.Log("OnDrag: " + _lane.ToString());
         PointerEventData pointerData = data as PointerEventData;
 		_rectTrans.anchoredPosition += (pointerData.delta / _blobCustomSize);
@@ -78,6 +99,11 @@ public class DraggableBlobLogic : MonoBehaviour
 
     public void OnEndDrag(BaseEventData data)
     {
+        if (_isBlocked)
+        {
+            return;
+        }
+
         CustomLog.Log("OnEndDrag: " + _lane.ToString());
         _blobColor.a = 0.0f;
         _draggableImage.color = _blobColor;
