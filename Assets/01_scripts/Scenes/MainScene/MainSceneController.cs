@@ -30,6 +30,13 @@ public class MainSceneController : SceneController
     [SerializeField]
     private HudUiLogic _hudLogic;
 
+    [SerializeField]
+    private AudioSource _audioSource;
+
+    [Header("Debug Stuff!")]
+    [SerializeField]
+    private List<AudioClip> _debugClips = new List<AudioClip>();
+
     private bool _isPaused = true;
     public bool IsPaused
     {
@@ -84,13 +91,16 @@ public class MainSceneController : SceneController
     }
 
     #region UI logic
-    public void DisplayPreGameMenu()
+    public void DisplayPreGameMenu(int debugMusic)
     {
+        _audioSource.clip = _debugClips[debugMusic];
+        _audioSource.Play();
         _preGameLogic.Show();
     }
 
     public void OnBackToMainMenu(bool onlyMain)
     {
+        _audioSource.Stop();
         _mainMenuLogic.Show(onlyMain);
     }
 

@@ -36,10 +36,10 @@ public class MainMenuLogic : MonoBehaviour
         _logInContentObject.SetActive(true);
     }
 
-    public void OnGuestButton()
+    public void OnGuestButton(int debugMusic)
     {
         _mainContentObject.SetActive(false);
         _logInContentObject.SetActive(false);
-        _sceneController.DisplayPreGameMenu();
+        _sceneController.DisplayPreGameMenu(debugMusic);
     }
 }
