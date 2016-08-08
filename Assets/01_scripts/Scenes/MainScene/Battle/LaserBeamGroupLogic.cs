@@ -86,6 +86,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
             _playerBattleLogic.RemoveNextBlobFromReserve();
         }
 
+        _enemyBattleLogic.SetLaserAnim(lane, false);
         yield return StartCoroutine(_playerBattleLogic.BlobDeath(lane, type));
 
         // blob reserve is over!
@@ -95,6 +96,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
             yield break;
         }
 
+        _enemyBattleLogic.SetLaserAnim(lane, true);
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
     }
@@ -111,6 +113,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
             _enemyBattleLogic.AddBlobToReserve();
         }
 
+        _playerBattleLogic.SetLaserAnim(lane, false);
         yield return StartCoroutine(_enemyBattleLogic.BlobDeath(lane, type));
 
         // blob reserve is over!
@@ -120,12 +123,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
             yield break;
         }
 
-        _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
-        _laserBeamList[(int)lane].UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
-    }
-
-    public void ReactivateLaserLane(LaserLinesEnum lane)
-    {
+        _playerBattleLogic.SetLaserAnim(lane, true);
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
         _laserBeamList[(int)lane].UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
     }
@@ -134,12 +132,21 @@ public class LaserBeamGroupLogic : MonoBehaviour
     {
         if (isPlayer)
         {
-            if (blobAlive && !_laserBeamList[laneIdx].IsActive)
+            if (blobAlive)
             {
-                // reactivating the laser
-                _laserBeamList[laneIdx].LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)laneIdx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)laneIdx));
+                if (!_laserBeamList[laneIdx].IsActive)
+                {
+                    // reactivating the laser
+                    _enemyBattleLogic.SetLaserAnim((LaserLinesEnum)laneIdx, true);
+                    _laserBeamList[laneIdx].LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)laneIdx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)laneIdx));
+                }
+                _laserBeamList[laneIdx].UpdatePlayerLaserColor(color);
             }
-            _laserBeamList[laneIdx].UpdatePlayerLaserColor(color);
+            else
+            {
+                _enemyBattleLogic.SetLaserAnim((LaserLinesEnum)laneIdx, false);
+                _laserBeamList[laneIdx].DeactivateLaser();
+            }
             return;
         }
         _laserBeamList[laneIdx].UpdateEnemyLaserColor(color);

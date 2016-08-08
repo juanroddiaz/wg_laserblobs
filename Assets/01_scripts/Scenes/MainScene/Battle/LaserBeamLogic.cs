@@ -15,6 +15,9 @@ public class LaserBeamLogic : MonoBehaviour
     [SerializeField]
     private Transform _collisionGlowTransform;
 
+    [SerializeField]
+    private List<GameObject> _laserContainerObjs = new List<GameObject>();
+
     private ParticleSystemRenderer _playerLaserRenderer;
     private ParticleSystemRenderer _enemyLaserRenderer;
 
@@ -54,7 +57,7 @@ public class LaserBeamLogic : MonoBehaviour
 
     public void LasetSet(float enemyForce, float playerForce)
     {
-        _isActive = true;
+        ActivateLaser();
         // TODO: get the right values from DM
         _currentPlayerLaserValue = _initialLaserValue;
         _currentPlayerLaserForceFactor = enemyForce - playerForce;        
@@ -130,10 +133,18 @@ public class LaserBeamLogic : MonoBehaviour
     public void DeactivateLaser()
     {
         _isActive = false;
+        foreach (GameObject obj in _laserContainerObjs)
+        {
+            obj.SetActive(false);
+        }
     }
 
     public void ActivateLaser()
     {
         _isActive = true;
+        foreach (GameObject obj in _laserContainerObjs)
+        {
+            obj.SetActive(true);
+        }
     }
 }

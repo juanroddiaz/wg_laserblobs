@@ -185,8 +185,8 @@ public class BattleGroundLogic : MonoBehaviour
         _blobDragObjs[toIdx] = fromDragLogic;
         fromLogic.gameObject.SetActive(true);
         toLogic.gameObject.SetActive(true);
-        fromLogic.StartLaserFire();
-        toLogic.StartLaserFire();
+        fromLogic.LaserFireEvent();
+        toLogic.LaserFireEvent();
 
         _scenarioLogic.UpdateLaserColors(from, toColor, true, toDragLogic != null);
         _scenarioLogic.UpdateLaserColors(to, fromColor, true, fromDragLogic != null);
@@ -253,6 +253,11 @@ public class BattleGroundLogic : MonoBehaviour
                 break;
         }
         yield break;
+    }
+
+    public void SetLaserAnim(LaserLinesEnum lane, bool fire)
+    {
+        _blobLogicList[(int)lane].LaserFireEvent(fire);
     }
 
     public void Reset()

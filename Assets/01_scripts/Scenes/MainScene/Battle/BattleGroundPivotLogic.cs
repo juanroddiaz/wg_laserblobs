@@ -55,7 +55,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
         _bgLogic = bgLogic;
         _type = type;
         _teamAnimType = bgLogic.Type == BattleGroundType.PLAYER ? BlobAnimType._B : BlobAnimType._F;
-        StartLaserFire();
+        LaserFireEvent();
         // if not dead blob case
         if (type != BlobTypes.MAX)
         {
@@ -99,9 +99,9 @@ public class BattleGroundPivotLogic : MonoBehaviour
         SetAnimation();
     }
 
-    public void StartLaserFire()
+    public void LaserFireEvent(bool fire = true)
     {
-        _currentAnim = BlobAnimations.FireIn;
+        _currentAnim = fire ? BlobAnimations.FireIn : BlobAnimations.Idle;
         SetAnimation();
     }
 
