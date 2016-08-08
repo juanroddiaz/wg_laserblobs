@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,8 +46,16 @@ public class ReserveQueueLogic : MonoBehaviour
 
     public void RemoveNextBlobFromReserve()
     {
-        Destroy(_reserveObjList[0]);
+        StartCoroutine(ReserveJumpRoutine(_reserveObjList[0]));
         _reserveObjList.RemoveAt(0);
+    }
+
+    private IEnumerator ReserveJumpRoutine(GameObject obj)
+    {
+        obj.GetComponent<BattleGroundPivotLogic>().JumpToBattleground();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(obj);
+        yield break;
     }
 
     public void AddBlobToReserve()
