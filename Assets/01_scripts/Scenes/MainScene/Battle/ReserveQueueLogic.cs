@@ -44,15 +44,16 @@ public class ReserveQueueLogic : MonoBehaviour
         }
     }
 
-    public void RemoveNextBlobFromReserve()
+    public void RemoveNextBlobFromReserve(Vector3 targetPos)
     {
-        StartCoroutine(ReserveJumpRoutine(_reserveObjList[0]));
+        StartCoroutine(ReserveJumpRoutine(_reserveObjList[0], targetPos));
         _reserveObjList.RemoveAt(0);
     }
 
-    private IEnumerator ReserveJumpRoutine(GameObject obj)
+    private IEnumerator ReserveJumpRoutine(GameObject obj, Vector3 targetPos)
     {
         obj.GetComponent<BattleGroundPivotLogic>().JumpToBattleground();
+        LeanTween.move(obj, targetPos, 0.5f).setEase(LeanTweenType.linear);
         yield return new WaitForSeconds(0.5f);
         Destroy(obj);
         yield break;

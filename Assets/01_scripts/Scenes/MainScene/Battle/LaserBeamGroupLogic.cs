@@ -83,7 +83,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         {
             type = _scenarioLogic.CurrentBlobSelection[0];
             _scenarioLogic.RemoveNextBlobFromQueue();
-            _playerBattleLogic.RemoveNextBlobFromReserve();
+            _playerBattleLogic.RemoveNextBlobFromReserve(_playerBattleLogic.BlobLogicList[(int)lane].transform.position);
         }
 
         _enemyBattleLogic.SetLaserAnim(lane, false);
@@ -109,7 +109,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         {
             type = _scenarioLogic.CurrentEnemyQueue[0];
             _scenarioLogic.RemoveNextBlobFromEnemyQueue();
-            _enemyBattleLogic.RemoveNextBlobFromReserve();
+            _enemyBattleLogic.RemoveNextBlobFromReserve(_enemyBattleLogic.BlobLogicList[(int)lane].transform.position);
             _enemyBattleLogic.AddBlobToReserve();
         }
 

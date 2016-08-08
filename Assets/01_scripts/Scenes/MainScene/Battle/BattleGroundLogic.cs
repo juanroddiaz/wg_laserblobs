@@ -62,6 +62,11 @@ public class BattleGroundLogic : MonoBehaviour
 	}
 
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
+    public List<BattleGroundPivotLogic> BlobLogicList
+    {
+        get { return _blobLogicList; }
+    }
+
     private MainScenarioLogic _scenarioLogic;
 
     public void Init(MainScenarioLogic scenarioLogic)
@@ -272,9 +277,9 @@ public class BattleGroundLogic : MonoBehaviour
     }
 
     #region Reserve logic
-    public void RemoveNextBlobFromReserve()
+    public void RemoveNextBlobFromReserve(Vector3 targetPos)
     {
-        _selectionQueueLogic.RemoveNextBlobFromReserve();
+        _selectionQueueLogic.RemoveNextBlobFromReserve(targetPos);
     }
 
     public void AddBlobToReserve()
