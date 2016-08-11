@@ -114,6 +114,7 @@ public class MainScenarioLogic : MonoBehaviour
     #region Affinity and Damage methods
     public void GetBlobsDamageRelation(BlobTypes playerType, BlobTypes enemyType, out float playerPerc, out float enemyPerc)
     {
+        CustomLog.Log("Calculating " + playerType.ToString() + " VS " + enemyType.ToString() + " damage percentages!");
         playerPerc = 100.0f;
         enemyPerc = 100.0f;
 
@@ -203,35 +204,6 @@ public class MainScenarioLogic : MonoBehaviour
 
         enemyPerc = 100.0f + damagePercAcc;
         CustomLog.Log("enemyPerc: " + enemyPerc.ToString());
-    }
-
-    private float GetDamageMultiplierFromTypes(BlobTypes fromType, BlobTypes targetType)
-    {
-        float ret = 100.0f;
-        BlobSetting bs = _affinityConfig.blobsSetting.Find(x => x.type == fromType);
-        if (bs == null)
-        {
-            CustomLog.LogError("Blobtype " + fromType.ToString() + " is not configured in AffinityConfig's blobSetting list!! Aborting!");
-            return 0.0f;
-        }
-
-        BlobAffinities ba = BlobAffinities.MAX;
-        AffinitySetting affs = null;
-        for (int i = 0; i < bs.affinities.Count; i++)
-        {
-            ba = bs.affinities[i];
-            affs = _affinityConfig.affinitySetting.Find(x => x.affinity == ba);
-            if (affs == null)
-            {
-                CustomLog.LogError("Affinity " + ba.ToString() + " is not configured in AffinityConfig's affinitySetting list!! Aborting!");
-                return 0.0f;
-            }
-            // TOOD: check targetType intro affs and get the right multiplier at the end of all resistances/weaknesses
-            affs.affinities.Find(x =>)
-
-        }
-
-        return ret;
-    }
+    }    
     #endregion
 }
