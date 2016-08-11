@@ -8,6 +8,7 @@ public class BlobSetting
     public List<BlobAffinities> affinities = new List<BlobAffinities>();
 }
 
+[System.Serializable]
 public class AffinityRelationship
 {
     public BlobAffinities affinity = BlobAffinities.MAX;
@@ -21,6 +22,7 @@ public class AffinitySetting
     public List<AffinityRelationship> affinities = new List<AffinityRelationship>();
 }
 
+[System.Serializable]
 public class AffinityConfiguration : ScriptableObject
 {
     public List<BlobSetting> blobsSetting = new List<BlobSetting>();
