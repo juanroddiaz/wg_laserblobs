@@ -12,6 +12,20 @@
     MAX
 }
 
+public enum BlobAffinities
+{
+    NEUTRAL = 0,
+    EARTH,
+    WATER,
+    DARK,
+    POISON,
+    GRASS,
+    LIGHT,
+    ELECTRIC,
+    FIRE,
+    MAX
+}
+
 public enum BlobAnimations
 {
     Idle = 0,
