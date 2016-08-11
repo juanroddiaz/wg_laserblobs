@@ -26,6 +26,17 @@ public enum BlobAffinities
     MAX
 }
 
+public enum BlobDamageHierarchy
+{
+    PrimaryWeakness = 0,
+    PrimaryResistance,
+    SecondaryWeakness,
+    SecondaryResistance,
+    TertiaryWeakness,
+    TertiaryResistance,
+    Max
+}
+
 public enum BlobAnimations
 {
     Idle = 0,
