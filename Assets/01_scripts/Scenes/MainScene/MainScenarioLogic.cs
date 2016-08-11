@@ -114,8 +114,95 @@ public class MainScenarioLogic : MonoBehaviour
     #region Affinity and Damage methods
     public void GetBlobsDamageRelation(BlobTypes playerType, BlobTypes enemyType, out float playerPerc, out float enemyPerc)
     {
-        playerPerc = GetDamageMultiplierFromTypes(playerType, enemyType);
-        enemyPerc = GetDamageMultiplierFromTypes(enemyType, playerType);
+        playerPerc = 100.0f;
+        enemyPerc = 100.0f;
+
+        BlobSetting playerBs = _affinityConfig.blobsSetting.Find(x => x.type == playerType);
+        if (playerBs == null)
+        {
+            CustomLog.LogError("Blobtype " + playerType.ToString() + " is not configured in AffinityConfig's blobSetting list!! Aborting!");
+            return;
+        }
+
+        BlobSetting enemyBs = _affinityConfig.blobsSetting.Find(x => x.type == enemyType);
+        if (enemyBs == null)
+        {
+            CustomLog.LogError("Blobtype " + enemyType.ToString() + " is not configured in AffinityConfig's blobSetting list!! Aborting!");
+            return;
+        }
+
+        BlobAffinities playerBa = BlobAffinities.MAX;
+        BlobAffinities enemyBa = BlobAffinities.MAX;
+        AffinitySetting affs = null;
+        AffinityRelationship ar = null;
+        DamageConfiguration dc = null;
+        float damagePercAcc = 0.0f;
+
+        // player affinities and damage
+        for (int i = 0; i < playerBs.affinities.Count; i++)
+        {
+            playerBa = playerBs.affinities[i];
+            affs = _affinityConfig.affinitySetting.Find(x => x.affinity == playerBa);
+            if (affs == null)
+            {
+                CustomLog.LogError("Affinity " + playerBa.ToString() + " is not configured in AffinityConfig's affinitySetting list!! Aborting!");
+                return;
+            }
+            // check targetType intro affs and get the right multiplier at the end of all resistances/weaknesses
+            for (int j = 0; j < enemyBs.affinities.Count; j++)
+            {
+                enemyBa = enemyBs.affinities[j];
+                ar = affs.affinities.Find(x => x.affinity == enemyBa);
+                if (ar != null)
+                {
+                    // affinity relationship found
+                    dc = _affinityConfig.damageConfiguration.Find(x => x.damageHierarchy == ar.damage);
+                    if (dc == null)
+                    {
+                        CustomLog.LogError("DamageConfiguration " + ar.damage.ToString() + " is not configured in AffinityConfig's damageConfiguration list!! Aborting!");
+                        return;
+                    }
+                    // bigger than 100? enemy weakness. below 100? enemy resistance
+                    damagePercAcc += dc.percentage - 100.0f;
+                }
+            }
+        }
+
+        playerPerc = 100.0f + damagePercAcc;
+        CustomLog.Log("playerPerc: " + playerPerc.ToString());
+        damagePercAcc = 0.0f;
+        // enemy affinities and damage
+        for (int i = 0; i < enemyBs.affinities.Count; i++)
+        {
+            enemyBa = enemyBs.affinities[i];
+            affs = _affinityConfig.affinitySetting.Find(x => x.affinity == enemyBa);
+            if (affs == null)
+            {
+                CustomLog.LogError("Affinity " + enemyBa.ToString() + " is not configured in AffinityConfig's affinitySetting list!! Aborting!");
+                return;
+            }
+            // check targetType intro affs and get the right multiplier at the end of all resistances/weaknesses
+            for (int j = 0; j < playerBs.affinities.Count; j++)
+            {
+                playerBa = playerBs.affinities[j];
+                ar = affs.affinities.Find(x => x.affinity == playerBa);
+                if (ar != null)
+                {
+                    // affinity relationship found
+                    dc = _affinityConfig.damageConfiguration.Find(x => x.damageHierarchy == ar.damage);
+                    if (dc == null)
+                    {
+                        CustomLog.LogError("DamageConfiguration " + ar.damage.ToString() + " is not configured in AffinityConfig's damageConfiguration list!! Aborting!");
+                        return;
+                    }
+                    // bigger than 100? enemy weakness. below 100? enemy resistance
+                    damagePercAcc += dc.percentage - 100.0f;
+                }
+            }
+        }
+
+        enemyPerc = 100.0f + damagePercAcc;
+        CustomLog.Log("enemyPerc: " + enemyPerc.ToString());
     }
 
     private float GetDamageMultiplierFromTypes(BlobTypes fromType, BlobTypes targetType)
@@ -140,6 +227,7 @@ public class MainScenarioLogic : MonoBehaviour
                 return 0.0f;
             }
             // TOOD: check targetType intro affs and get the right multiplier at the end of all resistances/weaknesses
+            affs.affinities.Find(x =>)
 
         }
 
