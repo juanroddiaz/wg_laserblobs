@@ -33,6 +33,10 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _currentEnemyQueue; }
     }
 
+    [Header("Main configuration for affinity and damage tables")]
+    [SerializeField]
+    private AffinityConfiguration _affinityConfig;
+
     [Header("Debug stuff!")]
     [SerializeField]
     private int _debugEnemyCount = 20;
@@ -104,6 +108,42 @@ public class MainScenarioLogic : MonoBehaviour
         {
             _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
         }
+    }
+    #endregion
+
+    #region Affinity and Damage methods
+    public void GetBlobsDamageRelation(BlobTypes playerType, BlobTypes enemyType, out float playerPerc, out float enemyPerc)
+    {
+        playerPerc = GetDamageMultiplierFromTypes(playerType, enemyType);
+        enemyPerc = GetDamageMultiplierFromTypes(enemyType, playerType);
+    }
+
+    private float GetDamageMultiplierFromTypes(BlobTypes fromType, BlobTypes targetType)
+    {
+        float ret = 100.0f;
+        BlobSetting bs = _affinityConfig.blobsSetting.Find(x => x.type == fromType);
+        if (bs == null)
+        {
+            CustomLog.LogError("Blobtype " + fromType.ToString() + " is not configured in AffinityConfig's blobSetting list!! Aborting!");
+            return 0.0f;
+        }
+
+        BlobAffinities ba = BlobAffinities.MAX;
+        AffinitySetting affs = null;
+        for (int i = 0; i < bs.affinities.Count; i++)
+        {
+            ba = bs.affinities[i];
+            affs = _affinityConfig.affinitySetting.Find(x => x.affinity == ba);
+            if (affs == null)
+            {
+                CustomLog.LogError("Affinity " + ba.ToString() + " is not configured in AffinityConfig's affinitySetting list!! Aborting!");
+                return 0.0f;
+            }
+            // TOOD: check targetType intro affs and get the right multiplier at the end of all resistances/weaknesses
+
+        }
+
+        return ret;
     }
     #endregion
 }
