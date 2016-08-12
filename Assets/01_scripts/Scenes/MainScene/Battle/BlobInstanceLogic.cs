@@ -32,4 +32,11 @@ public class BlobInstanceLogic : MonoBehaviour
         _currentBlobLaserForce = _blobLaserForce;
         _currentBlobLaserForce *= _currentDamageMult;
     }
+
+    // DEBUG
+    public void IncreaseBaseLaserForce(float inc)
+    {
+        _blobLaserForce += inc;
+        _currentBlobLaserForce = _blobLaserForce;
+    }
 }

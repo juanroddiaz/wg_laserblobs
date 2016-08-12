@@ -268,6 +268,19 @@ public class BattleGroundLogic : MonoBehaviour
             case BattleGroundType.ENEMY:
                 // score updating
                 _scenarioLogic.SceneController.UpdateScore();
+                // DEBUG DIFFICULT INCREASING 
+                if (_scenarioLogic.SceneController.Score > 0)
+                {
+                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.DebugEnemyCountForDifficultyInc == 0)
+                    {
+                        foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
+                        {
+                            bgpl.DebugIncreaseLaserForce(_scenarioLogic.DebugDifficultyIncForceStep);
+                            _blobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
+                        }
+                        CustomLog.LogWarning("DIFFICULT INCREASED!");
+                    }
+                }
                 break;
         }
         yield break;

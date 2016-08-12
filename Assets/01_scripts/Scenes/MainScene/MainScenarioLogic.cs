@@ -40,6 +40,18 @@ public class MainScenarioLogic : MonoBehaviour
     [Header("Debug stuff!")]
     [SerializeField]
     private int _debugEnemyCount = 20;
+    [SerializeField]
+    private int _debugEnemyCountForDifficultyInc = 10;
+    public int DebugEnemyCountForDifficultyInc
+    {
+        get { return _debugEnemyCountForDifficultyInc; }
+    }
+    [SerializeField]
+    private float _debugDifficultyIncForceStep = 0.0005f;
+    public float DebugDifficultyIncForceStep
+    {
+        get { return _debugDifficultyIncForceStep; }
+    }
 
     private MainSceneController _sceneController;
     public MainSceneController SceneController
