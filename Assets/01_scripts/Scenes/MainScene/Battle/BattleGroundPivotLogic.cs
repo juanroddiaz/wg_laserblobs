@@ -59,7 +59,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
         // if not dead blob case
         if (type != BlobTypes.MAX)
         {
-            _blobLogic.Init(bgLogic.BlobLaserForce, bgLogic.BlobHoldLaserMultiplier);
+            _blobLogic.Init(bgLogic.BlobLaserForce, bgLogic.BlobHoldLaserOffset);
             if (_bgLogic.Type == BattleGroundType.ENEMY)
             {
                 SetAsReserve(false);

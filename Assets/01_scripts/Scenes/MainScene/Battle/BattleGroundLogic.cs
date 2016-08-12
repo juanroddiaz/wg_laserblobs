@@ -49,10 +49,10 @@ public class BattleGroundLogic : MonoBehaviour
     private float _currentBlobLaserForce;
 
     [SerializeField]
-    private float _blobHoldLaserMultiplier = 3.0f;
-    public float BlobHoldLaserMultiplier
+    private float _blobHoldLaserOffset = 0.006f;
+    public float BlobHoldLaserOffset
     {
-        get { return _blobHoldLaserMultiplier; }
+        get { return _blobHoldLaserOffset; }
     }
 
     [SerializeField]
