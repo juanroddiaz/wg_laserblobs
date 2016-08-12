@@ -87,7 +87,7 @@ public class DraggableBlobLogic : MonoBehaviour
         
         if (_isHeld)
         {
-            CustomLog.Log((_initialPosition - _rectTrans.anchoredPosition).magnitude.ToString());
+            //CustomLog.Log((_initialPosition - _rectTrans.anchoredPosition).magnitude.ToString());
             if ((_initialPosition - _rectTrans.anchoredPosition).magnitude > _panelLogic.DragStartThreshold)
             {
                 _panelLogic.ToggleOnHoldState(_lane, false);
