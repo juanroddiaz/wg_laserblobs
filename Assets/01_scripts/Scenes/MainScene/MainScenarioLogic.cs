@@ -229,6 +229,11 @@ public class MainScenarioLogic : MonoBehaviour
     }
     #endregion
 
+    public void UpdateDifficulty()
+    {
+        _laserGroupLogic.UpdateDifficulty();
+    }
+
     #region Blob earning methods
     public void AddBlobToPlayerReserve()
     {

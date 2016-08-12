@@ -56,11 +56,11 @@ public class BattleGroundLogic : MonoBehaviour
     }
 
     [SerializeField]
-	private float _blobCustomSize = 30.0f;
-	public float BlobCustomSize
-	{
-		get { return _blobCustomSize; }
-	}
+    private float _blobCustomSize = 30.0f;
+    public float BlobCustomSize
+    {
+        get { return _blobCustomSize; }
+    }
 
     private List<BattleGroundPivotLogic> _blobLogicList = new List<BattleGroundPivotLogic>();
     public List<BattleGroundPivotLogic> BlobLogicList
@@ -75,7 +75,7 @@ public class BattleGroundLogic : MonoBehaviour
         _scenarioLogic = scenarioLogic;
         _currentBlobLaserForce = _blobLaserForce;
         int idx = 0;
-        for(int i=0; i<(int)LaserLinesEnum.Max; i++)
+        for (int i = 0; i < (int)LaserLinesEnum.Max; i++)
         {
             int blobTypeIdx = _type == BattleGroundType.PLAYER ? (int)scenarioLogic.CurrentBlobSelection[i] : i;
             GameObject obj = Instantiate(scenarioLogic.BlobPrefabs[blobTypeIdx], Vector3.zero, Quaternion.identity) as GameObject;
@@ -105,7 +105,7 @@ public class BattleGroundLogic : MonoBehaviour
             case BattleGroundType.ENEMY:
                 _scenarioLogic.RemoveNextBlobFromEnemyQueue(3);
                 break;
-        }        
+        }
 
         // reserve queue initialization
         _selectionQueueLogic.Init(_scenarioLogic, _type);
@@ -148,7 +148,7 @@ public class BattleGroundLogic : MonoBehaviour
     /// <returns></returns>
     public int GetPressedBlobIndex()
     {
-        int ret = _blobDragObjs.FindIndex(x => x.IsHeld);        
+        int ret = _blobDragObjs.FindIndex(x => x.IsHeld);
         return ret;
     }
 
@@ -278,8 +278,9 @@ public class BattleGroundLogic : MonoBehaviour
                         foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
                         {
                             bgpl.DebugIncreaseLaserForce(_scenarioLogic.DebugDifficultyIncForceStep);
-                            _currentBlobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
+                            _scenarioLogic.UpdateDifficulty();
                         }
+                        // rewarding the player with a blob
                         _scenarioLogic.AddBlobToPlayerReserve();
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
@@ -288,6 +289,48 @@ public class BattleGroundLogic : MonoBehaviour
         }
         yield break;
     }
+
+    public void UpdateDifficulty()
+    {
+        _currentBlobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
+    }
+
+    #region Blob resurrection!
+    public void BlobResurrectionFromReserve(LaserLinesEnum lane, BlobTypes blobType)
+    {
+        int siblingIdx = (int)lane;
+        // removing dead blob obj
+        Destroy(_blobLogicList[siblingIdx].gameObject);
+
+        GameObject blobObj = _scenarioLogic.BlobPrefabs[(int)blobType];
+        GameObject obj = Instantiate(blobObj, Vector3.zero, Quaternion.identity) as GameObject;
+        obj.transform.SetParent(transform);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = new Vector3(_blobCustomSize, _blobCustomSize, 1.0f);
+        obj.transform.SetSiblingIndex(siblingIdx);
+
+        BattleGroundPivotLogic bgLogic = obj.GetComponent<BattleGroundPivotLogic>();
+        _blobLogicList[siblingIdx] = bgLogic;
+        bgLogic.Init(this, lane, blobType);
+
+        bgLogic.BlobDragLogic.Init(lane, this, bgLogic.BlobBaseColor);
+        _blobDragObjs[siblingIdx] = bgLogic.BlobDragLogic;
+    }
+
+    public LaserLinesEnum CheckDeathBlobLane()
+    {
+        LaserLinesEnum lane = LaserLinesEnum.Max;
+        for (int i = 0; i < _blobDragObjs.Count; i++)
+        {
+            if (_blobDragObjs[i] == null)
+            {
+                lane = (LaserLinesEnum)i;
+                break;
+            }
+        }
+        return lane;
+    }
+    #endregion
 
     public void SetLaserAnim(LaserLinesEnum lane, bool fire)
     {

@@ -163,8 +163,36 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _laserBeamList[laneIdx].UpdateEnemyLaserColor(color);
     }
 
+    public void UpdateDifficulty()
+    {
+        _enemyBattleLogic.UpdateDifficulty();
+        _playerBattleLogic.UpdateDifficulty();
+    }
+
     public void AddBlobToPlayerReserve()
     {
         _playerBattleLogic.AddBlobToReserve();
+        // checkin if any battleground blob is dead to replace it inmediately
+        LaserLinesEnum lane = _playerBattleLogic.CheckDeathBlobLane();
+        if (lane != LaserLinesEnum.Max)
+        {
+            StartCoroutine(ResurrectRoutine(lane));
+        }
+    }
+
+    private IEnumerator ResurrectRoutine(LaserLinesEnum lane)
+    {
+        yield return new WaitForEndOfFrame();
+        BlobTypes type = _scenarioLogic.CurrentBlobSelection[0];
+        _scenarioLogic.RemoveNextBlobFromQueue();
+        _playerBattleLogic.RemoveNextBlobFromReserve(_playerBattleLogic.BlobLogicList[(int)lane].transform.position);
+
+        yield return new WaitForSeconds(0.5f);
+        _playerBattleLogic.BlobResurrectionFromReserve(lane, type);
+
+        _enemyBattleLogic.SetLaserAnim(lane, true);
+        _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
+        _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
+        yield break;
     }
 }
