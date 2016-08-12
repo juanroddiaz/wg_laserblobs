@@ -72,8 +72,6 @@ public class DraggableBlobLogic : MonoBehaviour
         }
 
         CustomLog.Log("OnBeginDrag: lane " + _lane.ToString());
-        _blobColor.a = _panelLogic.DragBlobAlpha;
-        _draggableImage.color = _blobColor;
     }
 
     public void OnDrag(BaseEventData data)
@@ -85,15 +83,20 @@ public class DraggableBlobLogic : MonoBehaviour
 
         //CustomLog.Log("OnDrag: " + _lane.ToString());
         PointerEventData pointerData = data as PointerEventData;
-		_rectTrans.anchoredPosition += (pointerData.delta / _blobCustomSize);
+        _rectTrans.anchoredPosition += (pointerData.delta / _blobCustomSize);
+        
         if (_isHeld)
         {
+            CustomLog.Log((_initialPosition - _rectTrans.anchoredPosition).magnitude.ToString());
             if ((_initialPosition - _rectTrans.anchoredPosition).magnitude > _panelLogic.DragStartThreshold)
             {
                 _panelLogic.ToggleOnHoldState(_lane, false);
                 _isHeld = false;
                 CustomLog.Log("Hold state cancelled!");
-            }
+
+                _blobColor.a = _panelLogic.DragBlobAlpha;
+                _draggableImage.color = _blobColor;
+            }            
         }        
     }
 
