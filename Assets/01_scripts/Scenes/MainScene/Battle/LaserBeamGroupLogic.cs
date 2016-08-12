@@ -162,4 +162,9 @@ public class LaserBeamGroupLogic : MonoBehaviour
         }
         _laserBeamList[laneIdx].UpdateEnemyLaserColor(color);
     }
+
+    public void AddBlobToPlayerReserve()
+    {
+        _playerBattleLogic.AddBlobToReserve();
+    }
 }

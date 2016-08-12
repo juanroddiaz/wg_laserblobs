@@ -280,6 +280,7 @@ public class BattleGroundLogic : MonoBehaviour
                             bgpl.DebugIncreaseLaserForce(_scenarioLogic.DebugDifficultyIncForceStep);
                             _currentBlobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
                         }
+                        _scenarioLogic.AddBlobToPlayerReserve();
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
                 }

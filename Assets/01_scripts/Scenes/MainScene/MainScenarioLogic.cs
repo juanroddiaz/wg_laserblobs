@@ -115,7 +115,7 @@ public class MainScenarioLogic : MonoBehaviour
             return;
         }
         _currentEnemyQueue.RemoveRange(0, amount);
-        // TODO: enemy spawing generetaion according to difficulty and game settings
+        // TODO: enemy spawing generetion according to difficulty and game settings
         for (int i = 0; i < amount; i++)
         {
             _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
@@ -226,6 +226,14 @@ public class MainScenarioLogic : MonoBehaviour
     public void CalculateDamageMultiplierForLane(LaserLinesEnum lane)
     {
         _laserGroupLogic.CalculateDamageMultiplierForLane(lane);
+    }
+    #endregion
+
+    #region Blob earning methods
+    public void AddBlobToPlayerReserve()
+    {
+        _currentBlobSelection.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
+        _laserGroupLogic.AddBlobToPlayerReserve();
     }
     #endregion
 }

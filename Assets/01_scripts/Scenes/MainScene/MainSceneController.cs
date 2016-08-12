@@ -12,8 +12,6 @@ public class MainSceneModel : SceneModel
 
 public class MainSceneController : SceneController
 {
-    private MainSceneModel _mainSceneModel = new MainSceneModel();
-
     [SerializeField]
     private MainScenarioLogic _scenarioLogic;
     public MainScenarioLogic ScenarioLogic
@@ -61,7 +59,6 @@ public class MainSceneController : SceneController
     {
         yield return null;
         _sceneModel = model;
-        _mainSceneModel = model as MainSceneModel;
         _scenarioLogic.Init(this);
         _mainMenuLogic.Init(this);
         _preGameLogic.Init(this);
