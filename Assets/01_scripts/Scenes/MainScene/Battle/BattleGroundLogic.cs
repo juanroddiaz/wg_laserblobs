@@ -44,8 +44,9 @@ public class BattleGroundLogic : MonoBehaviour
     private float _blobLaserForce = 0.00125f;
     public float BlobLaserForce
     {
-        get { return _blobLaserForce; }
+        get { return _currentBlobLaserForce; }
     }
+    private float _currentBlobLaserForce;
 
     [SerializeField]
     private float _blobHoldLaserMultiplier = 3.0f;
@@ -72,6 +73,7 @@ public class BattleGroundLogic : MonoBehaviour
     public void Init(MainScenarioLogic scenarioLogic)
     {
         _scenarioLogic = scenarioLogic;
+        _currentBlobLaserForce = _blobLaserForce;
         int idx = 0;
         for(int i=0; i<(int)LaserLinesEnum.Max; i++)
         {
@@ -276,7 +278,7 @@ public class BattleGroundLogic : MonoBehaviour
                         foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
                         {
                             bgpl.DebugIncreaseLaserForce(_scenarioLogic.DebugDifficultyIncForceStep);
-                            _blobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
+                            _currentBlobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
                         }
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
