@@ -64,7 +64,6 @@ public class LaserBeamLogic : MonoBehaviour
         SetCollisionObjectPosition();
     }
 
-    // TODO: get the enemy and player type too, it will have an impact in laser force
     public void UpdateLaserLane(float enemyForce, float playerForce)
     {
         _currentPlayerLaserValue -= _currentPlayerLaserForceFactor;
@@ -105,6 +104,7 @@ public class LaserBeamLogic : MonoBehaviour
                 yield return StartCoroutine(_laserBeamLogic.EnemyBlobDeath(_lane));
                 break;
         }
+        _laserBeamLogic.CalculateDamageMultiplierForLane(_lane);
         _deathEventRunning = false;
         yield break;
     }

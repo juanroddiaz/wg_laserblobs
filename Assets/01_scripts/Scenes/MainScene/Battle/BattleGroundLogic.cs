@@ -130,6 +130,16 @@ public class BattleGroundLogic : MonoBehaviour
         return _blobLogicList[(int)lane].BlobBaseColor;
     }
 
+    public BlobTypes GetBlobType(LaserLinesEnum lane)
+    {
+        return _blobLogicList[(int)lane].Type;
+    }
+
+    public void UpdateBlobForce(LaserLinesEnum lane, float force)
+    {
+        _blobLogicList[(int)lane].UpdateBlobForce(force);
+    }
+
     /// <summary>
     /// Returns the player's blob index who is currently being pressed, if any
     /// </summary>
@@ -185,7 +195,7 @@ public class BattleGroundLogic : MonoBehaviour
         if (toDragLogic != null)
         {
             toDragLogic.UpdateLane(from);
-        }        
+        }
         _blobDragObjs[fromIdx] = toDragLogic;
         _blobDragObjs[toIdx] = fromDragLogic;
         fromLogic.gameObject.SetActive(true);
@@ -195,6 +205,9 @@ public class BattleGroundLogic : MonoBehaviour
 
         _scenarioLogic.UpdateLaserColors(from, toColor, true, toDragLogic != null);
         _scenarioLogic.UpdateLaserColors(to, fromColor, true, fromDragLogic != null);
+
+        _scenarioLogic.CalculateDamageMultiplierForLane(from);
+        _scenarioLogic.CalculateDamageMultiplierForLane(to);
     }
 
     public IEnumerator BlobDeath(LaserLinesEnum lane, BlobTypes blobType)

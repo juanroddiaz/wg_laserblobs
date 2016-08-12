@@ -73,6 +73,11 @@ public class BattleGroundPivotLogic : MonoBehaviour
         return _blobLogic.CurrentBlobLaserForce;
     }
 
+    public void UpdateBlobForce(float force)
+    {
+        _blobLogic.UpdateLaserForce(force);
+    }
+
     #region Blob States
     public void SetBattleGroundTeam(BattleGroundType bgType)
     {

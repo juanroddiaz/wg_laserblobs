@@ -118,6 +118,11 @@ public class MainScenarioLogic : MonoBehaviour
         playerPerc = 100.0f;
         enemyPerc = 100.0f;
 
+        if (playerType == BlobTypes.MAX || enemyType == BlobTypes.MAX)
+        {
+            return;
+        }
+
         BlobSetting playerBs = _affinityConfig.blobsSetting.Find(x => x.type == playerType);
         if (playerBs == null)
         {
@@ -204,6 +209,11 @@ public class MainScenarioLogic : MonoBehaviour
 
         enemyPerc = 100.0f + damagePercAcc;
         CustomLog.Log("enemyPerc: " + enemyPerc.ToString());
-    }    
+    }
+
+    public void CalculateDamageMultiplierForLane(LaserLinesEnum lane)
+    {
+        _laserGroupLogic.CalculateDamageMultiplierForLane(lane);
+    }
     #endregion
 }

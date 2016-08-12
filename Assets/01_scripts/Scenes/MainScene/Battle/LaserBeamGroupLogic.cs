@@ -47,10 +47,21 @@ public class LaserBeamGroupLogic : MonoBehaviour
         int idx = 0;
         foreach (LaserBeamLogic lbl in _laserBeamList)
         {
-            lbl.LasetSet(_enemyBattleLogic.GetBlobForce((LaserLinesEnum)idx), _playerBattleLogic.GetBlobForce((LaserLinesEnum)idx));
-            lbl.UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor((LaserLinesEnum)idx));
+            LaserLinesEnum lane = (LaserLinesEnum)idx;
+            lbl.LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
+            lbl.UpdateEnemyLaserColor(_enemyBattleLogic.GetBlobStartColor(lane));
+            CalculateDamageMultiplierForLane(lane);
             idx++;
         }
+    }
+
+    public void CalculateDamageMultiplierForLane(LaserLinesEnum lane)
+    {
+        float playerDmg = 0.0f;
+        float enemyDmg = 0.0f;
+        _scenarioLogic.GetBlobsDamageRelation(_playerBattleLogic.GetBlobType(lane), _enemyBattleLogic.GetBlobType(lane), out playerDmg, out enemyDmg);
+        _playerBattleLogic.UpdateBlobForce(lane, playerDmg);
+        _enemyBattleLogic.UpdateBlobForce(lane, enemyDmg);
     }
 
     public void UpdateLogic()
