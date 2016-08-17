@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class MainScenarioLogic : MonoBehaviour
@@ -57,6 +58,13 @@ public class MainScenarioLogic : MonoBehaviour
     public MainSceneController SceneController
     {
         get { return _sceneController; }
+    }
+
+    [SerializeField]
+    private CanvasScaler _canvasScaler;
+    public CanvasScaler CanvasScaler
+    {
+        get { return _canvasScaler; }
     }
 
     public void Init(MainSceneController sceneController)

@@ -69,6 +69,10 @@ public class BattleGroundLogic : MonoBehaviour
     }
 
     private MainScenarioLogic _scenarioLogic;
+    public MainScenarioLogic ScenarioLogic
+    {
+        get { return _scenarioLogic; }
+    }
 
     public void Init(MainScenarioLogic scenarioLogic)
     {
