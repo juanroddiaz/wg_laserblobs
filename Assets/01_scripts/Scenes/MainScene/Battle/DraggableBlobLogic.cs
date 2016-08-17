@@ -21,7 +21,7 @@ public class DraggableBlobLogic : MonoBehaviour
     }
 
     private bool _isBlocked = false;
-    private CanvasScaler _scaler;
+    private float _scalerFactorForHeight = 0.0f;
 
     public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic, Color blobColor)
     {
@@ -31,7 +31,7 @@ public class DraggableBlobLogic : MonoBehaviour
         _rectTrans = _draggableImage.GetComponent<RectTransform>();
         _initialPosition = _rectTrans.anchoredPosition;
 		_blobCustomSize = panelLogic.BlobCustomSize;
-        _scaler = _panelLogic.ScenarioLogic.CanvasScaler;
+        _scalerFactorForHeight = _panelLogic.ScenarioLogic.CanvasScaler.referenceResolution.y / Screen.height;
     }
 
     public void UpdateLane(LaserLinesEnum lane)
@@ -85,8 +85,8 @@ public class DraggableBlobLogic : MonoBehaviour
 
         //CustomLog.Log("OnDrag: " + _lane.ToString());
         PointerEventData pointerData = data as PointerEventData;
-        Vector2 delta = new Vector2(pointerData.delta.x * _scaler.referenceResolution.y / Screen.height,
-                                    pointerData.delta.y * _scaler.referenceResolution.y / Screen.height);
+        Vector2 delta = new Vector2(pointerData.delta.x * _scalerFactorForHeight,
+                                    pointerData.delta.y * _scalerFactorForHeight);
         _rectTrans.anchoredPosition += (delta / _blobCustomSize);
         
         if (_isHeld)
