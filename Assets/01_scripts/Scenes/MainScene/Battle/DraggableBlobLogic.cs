@@ -22,6 +22,7 @@ public class DraggableBlobLogic : MonoBehaviour
 
     private bool _isBlocked = false;
     private float _scalerFactorForHeight = 0.0f;
+    private Vector2 _deltaPos = new Vector2();
 
     public void Init(LaserLinesEnum lane, BattleGroundLogic panelLogic, Color blobColor)
     {
@@ -85,9 +86,9 @@ public class DraggableBlobLogic : MonoBehaviour
 
         //CustomLog.Log("OnDrag: " + _lane.ToString());
         PointerEventData pointerData = data as PointerEventData;
-        Vector2 delta = new Vector2(pointerData.delta.x * _scalerFactorForHeight,
-                                    pointerData.delta.y * _scalerFactorForHeight);
-        _rectTrans.anchoredPosition += (delta / _blobCustomSize);
+        _deltaPos.x = pointerData.delta.x * _scalerFactorForHeight;
+        _deltaPos.y = pointerData.delta.y * _scalerFactorForHeight;
+        _rectTrans.anchoredPosition += (_deltaPos / _blobCustomSize);
         
         if (_isHeld)
         {
