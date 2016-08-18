@@ -293,9 +293,14 @@ public class BattleGroundLogic : MonoBehaviour
                             bgpl.DebugIncreaseLaserForce(_scenarioLogic.DebugDifficultyIncForceStep);
                             _scenarioLogic.UpdateDifficulty();
                         }
+                        CustomLog.LogWarning("DIFFICULT INCREASED!");
+                    }
+
+                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.DebugEnemyCountForEarningBlob == 0)
+                    {
                         // rewarding the player with a blob
                         _scenarioLogic.AddBlobToPlayerReserve();
-                        CustomLog.LogWarning("DIFFICULT INCREASED!");
+                        CustomLog.LogWarning("ADDING A BLOB!");
                     }
                 }
                 break;

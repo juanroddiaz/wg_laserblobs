@@ -48,6 +48,12 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _debugEnemyCountForDifficultyInc; }
     }
     [SerializeField]
+    private int _debugEnemyCountForEarningBlob = 5;
+    public int DebugEnemyCountForEarningBlob
+    {
+        get { return _debugEnemyCountForEarningBlob; }
+    }
+    [SerializeField]
     private float _debugDifficultyIncForceStep = 0.0005f;
     public float DebugDifficultyIncForceStep
     {
