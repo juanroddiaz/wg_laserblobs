@@ -68,10 +68,6 @@ public class DraggableBlobLogic : MonoBehaviour
     #region Event triggers
     public void OnHoldStart()
     {
-        if (_isBlocked)
-        {
-            return;
-        }
         CustomLog.Log("OnHoldStart: " + _lane.ToString());
         _isHeld = true;
         _panelLogic.ToggleOnHoldState(_lane, true);

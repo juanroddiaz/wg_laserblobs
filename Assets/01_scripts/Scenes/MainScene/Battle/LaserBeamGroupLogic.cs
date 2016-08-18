@@ -189,12 +189,12 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _playerBattleLogic.RemoveNextBlobFromReserve(_playerBattleLogic.BlobLogicList[(int)lane].transform.position);
 
         yield return new WaitForSeconds(0.5f);
+        _playerBattleLogic.BlockBlobDrag(false);
         _playerBattleLogic.BlobResurrectionFromReserve(lane, type);
 
         _enemyBattleLogic.SetLaserAnim(lane, true);
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
-        _playerBattleLogic.BlockBlobDrag(false);
         yield break;
     }
 }
