@@ -165,6 +165,15 @@ public class BattleGroundLogic : MonoBehaviour
             {
                 continue;
             }
+            if (_blobLogicList[i] == null)
+            {
+                continue;
+            }
+            if(_blobDragObjs[i] != null && _blobDragObjs[i].IsBlocked)
+            {
+                continue;
+            }
+
             float distance = (lastPos - _blobLogicList[i].transform.position).magnitude;
             //CustomLog.Log("drag from " + lane.ToString() + " to " + (LaserLinesEnum)i + " distance: " + distance);
             if (distance < _dropThreshold)
@@ -361,6 +370,18 @@ public class BattleGroundLogic : MonoBehaviour
     public void AddBlobToReserve()
     {
         _selectionQueueLogic.AddBlobToReserve();
+    }
+
+    public void BlockBlobDrag(bool block)
+    {
+        for (int i = 0; i < _blobDragObjs.Count; i++)
+        {
+            if (_blobDragObjs[i] == null)
+            {
+                continue;
+            }
+            _blobDragObjs[i].BlockDragLogic(block);
+        }
     }
     #endregion
 }

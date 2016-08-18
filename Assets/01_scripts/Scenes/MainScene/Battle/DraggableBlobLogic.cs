@@ -11,7 +11,7 @@ public class DraggableBlobLogic : MonoBehaviour
     private BattleGroundLogic _panelLogic;
     private Vector2 _initialPosition;
     private RectTransform _rectTrans;
-	private float _blobCustomSize;
+    private float _blobCustomSize;
     private Color _blobColor;
 
     private bool _isHeld = false;
@@ -21,6 +21,17 @@ public class DraggableBlobLogic : MonoBehaviour
     }
 
     private bool _isBlocked = false;
+    public bool IsBlocked
+    {
+        get { return _isBlocked; }
+    }
+
+    private bool _isDragged = false;
+    public bool IsDragged
+    {
+        get { return _isDragged; }
+    }
+
     private float _scalerFactorForHeight = 0.0f;
     private Vector2 _deltaPos = new Vector2();
 
@@ -40,9 +51,18 @@ public class DraggableBlobLogic : MonoBehaviour
         _lane = lane;
     }
 
-    public void BlockDragLogic()
+    public void BlockDragLogic(bool block = true)
     {
-        _isBlocked = true;
+        _isBlocked = block;
+        if (block && _isDragged)
+        {
+            // cancel current dragging
+            CustomLog.Log("OnEndDrag: " + _lane.ToString());
+            _blobColor.a = 0.0f;
+            _draggableImage.color = _blobColor;
+            _isDragged = false;
+            _rectTrans.anchoredPosition = _initialPosition;
+        }
     }
 
     #region Event triggers
@@ -89,7 +109,8 @@ public class DraggableBlobLogic : MonoBehaviour
         _deltaPos.x = pointerData.delta.x * _scalerFactorForHeight;
         _deltaPos.y = pointerData.delta.y * _scalerFactorForHeight;
         _rectTrans.anchoredPosition += (_deltaPos / _blobCustomSize);
-        
+        _isDragged = true;
+
         if (_isHeld)
         {
             //CustomLog.Log((_initialPosition - _rectTrans.anchoredPosition).magnitude.ToString());
@@ -115,7 +136,7 @@ public class DraggableBlobLogic : MonoBehaviour
         CustomLog.Log("OnEndDrag: " + _lane.ToString());
         _blobColor.a = 0.0f;
         _draggableImage.color = _blobColor;
-
+        _isDragged = false;
         // check end drag position
         Vector3 lastAnchoredPos = _rectTrans.position;
         _rectTrans.anchoredPosition = _initialPosition;

@@ -182,6 +182,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
     private IEnumerator ResurrectRoutine(LaserLinesEnum lane)
     {
+        _playerBattleLogic.BlockBlobDrag(true);
         yield return new WaitForEndOfFrame();
         BlobTypes type = _scenarioLogic.CurrentBlobSelection[0];
         _scenarioLogic.RemoveNextBlobFromQueue();
@@ -193,6 +194,7 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _enemyBattleLogic.SetLaserAnim(lane, true);
         _laserBeamList[(int)lane].LasetSet(_enemyBattleLogic.GetBlobForce(lane), _playerBattleLogic.GetBlobForce(lane));
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
+        _playerBattleLogic.BlockBlobDrag(false);
         yield break;
     }
 }
