@@ -38,6 +38,10 @@ public class MainScenarioLogic : MonoBehaviour
     [SerializeField]
     private AffinityConfiguration _affinityConfig;
 
+    [Header("Main configuration gameplay waves")]
+    [SerializeField]
+    private GameplayConfiguration _gameplayConfig;
+
     [Header("Debug stuff!")]
     [SerializeField]
     private int _debugEnemyCount = 20;
