@@ -89,9 +89,9 @@ public class MainScenarioLogic : MonoBehaviour
         _laserGroupLogic.Init(this);
     }
 
-    public void StartGame(List<BlobTypes> _blobSelection)
+    public void StartGame()
     {
-        _currentBlobSelection = _blobSelection;
+        _currentBlobSelection = new List<BlobTypes>(_gameplayConfig.startingTypes);
         for (int i = 0; i < c_enemyReserveCount; i++)
         {
             _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));

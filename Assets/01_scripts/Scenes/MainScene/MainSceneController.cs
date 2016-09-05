@@ -41,8 +41,6 @@ public class MainSceneController : SceneController
         get { return _isPaused; }
     }
 
-    private List<BlobTypes> _lastBlobSelection;
-
     private int _multiplier = 1;
     public int Multiplier
     {
@@ -106,15 +104,13 @@ public class MainSceneController : SceneController
         _mainMenuLogic.Show(onlyMain);
     }
 
-    public void StartGame(List<BlobTypes> _blobSelection)
+    public void StartGame()
     {
         _isPaused = false;
         _multiplier = 1;
         _score = 0;
         _hudLogic.ResetGameData();
-        // making a copy of original selection for restart game logic
-        _lastBlobSelection = new List<BlobTypes>(_blobSelection);
-        _scenarioLogic.StartGame(_blobSelection);
+        _scenarioLogic.StartGame();
     }
 
     public void TogglePauseGame()
@@ -130,17 +126,11 @@ public class MainSceneController : SceneController
     public void RestartGame()
     {
         _scenarioLogic.EndGame();
-        string blobLog = "Restart game's Selected blobs: ";
-        foreach (BlobTypes s in _lastBlobSelection)
-        {
-            blobLog += (s.ToString() + " ");
-        }
-        CustomLog.Log(blobLog);
         TogglePauseGame();
         _multiplier = 1;
         _score = 0;
         _hudLogic.ResetGameData();
-        _scenarioLogic.StartGame(new List<BlobTypes>(_lastBlobSelection));
+        _scenarioLogic.StartGame();
     }
 
     public void EndGame(bool goToMainMenu)

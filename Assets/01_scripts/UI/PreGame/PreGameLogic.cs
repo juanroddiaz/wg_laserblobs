@@ -112,6 +112,6 @@ public class PreGameLogic : MonoBehaviour
         CustomLog.Log(blobLog);
 
         _pregameContentObject.SetActive(false);
-        _sceneController.StartGame(_sortedBlobSelection);
+        _sceneController.StartGame();
     }
 }
