@@ -49,50 +49,50 @@ public class PreGameLogic : MonoBehaviour
             t.isOn = false;
         }
 
-        _sortedBlobSelection.Clear();
+        _sortedBlobSelection = _sceneController.GetInitialBlobs();
         // initialize prebattle screen logic setting the difficulty to its default
         _selectedDifficulty = GameDifficulty.Medium;
-        _playButton.enabled = false;
+        _playButton.enabled = true;
         _pregameContentObject.SetActive(true);
     }
 
     public void OnToggleDifficulty(int difficultyIdx)
     {
-        if (_selectedDifficulty == GameDifficulty.Max)
-        {
-            // uninitialized logic
-            return;
-        }
+        //if (_selectedDifficulty == GameDifficulty.Max)
+        //{
+        //    // uninitialized logic
+        //    return;
+        //}
 
-        GameDifficulty diff = (GameDifficulty)difficultyIdx;
-        if (_selectedDifficulty != diff)
-        {
-            _difficultyToggleList[(int)_selectedDifficulty].interactable = true;
-            _selectedDifficulty = diff;
-            _difficultyToggleList[difficultyIdx].interactable = false;
-            CustomLog.Log("Selected difficulty: " + _selectedDifficulty.ToString());
-        }
+        //GameDifficulty diff = (GameDifficulty)difficultyIdx;
+        //if (_selectedDifficulty != diff)
+        //{
+        //    _difficultyToggleList[(int)_selectedDifficulty].interactable = true;
+        //    _selectedDifficulty = diff;
+        //    _difficultyToggleList[difficultyIdx].interactable = false;
+        //    CustomLog.Log("Selected difficulty: " + _selectedDifficulty.ToString());
+        //}
     }
 
     public void OnToggleBlobs(int blobIdx)
     {
-        if (_selectedDifficulty == GameDifficulty.Max)
-        {
-            // uninitialized logic
-            return;
-        }
+        //if (_selectedDifficulty == GameDifficulty.Max)
+        //{
+        //    // uninitialized logic
+        //    return;
+        //}
 
-        if (_blobsToggleList[blobIdx].isOn)
-        {
-            _sortedBlobSelection.Add((BlobTypes)blobIdx);
-        }
-        else
-        {
-            _sortedBlobSelection.Remove((BlobTypes)blobIdx);
-        }
+        //if (_blobsToggleList[blobIdx].isOn)
+        //{
+        //    _sortedBlobSelection.Add((BlobTypes)blobIdx);
+        //}
+        //else
+        //{
+        //    _sortedBlobSelection.Remove((BlobTypes)blobIdx);
+        //}
 
-        // TODO: difficluty dependant blob quantity limit
-        _playButton.enabled = _sortedBlobSelection.Count >= 3;
+        //// TODO: difficluty dependant blob quantity limit
+        //_playButton.enabled = _sortedBlobSelection.Count >= 3;
     }
 
     public void OnBackButton()

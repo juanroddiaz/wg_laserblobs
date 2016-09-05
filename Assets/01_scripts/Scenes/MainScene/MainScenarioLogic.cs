@@ -70,6 +70,11 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _gameplayConfig.amountForDifficultIncreasing; }
     }
 
+    public List<BlobTypes> GetInitialBlobs()
+    {
+        return _gameplayConfig.startingTypes;
+    }
+
     private const int c_enemyReserveCount = 10;
 
     public void Init(MainSceneController sceneController)

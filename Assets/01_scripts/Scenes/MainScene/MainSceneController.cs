@@ -87,6 +87,11 @@ public class MainSceneController : SceneController
         _hudLogic.UpdateScore();
     }
 
+    public List<BlobTypes> GetInitialBlobs()
+    {
+        return _scenarioLogic.GetInitialBlobs();
+    }
+
     #region UI logic
     public void DisplayPreGameMenu(int debugMusic)
     {
