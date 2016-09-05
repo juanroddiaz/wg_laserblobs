@@ -286,17 +286,17 @@ public class BattleGroundLogic : MonoBehaviour
                 // DEBUG DIFFICULT INCREASING 
                 if (_scenarioLogic.SceneController.Score > 0)
                 {
-                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.DebugEnemyCountForDifficultyInc == 0)
+                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForDifficultyInc == 0)
                     {
                         foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
                         {
-                            bgpl.DebugIncreaseLaserForce(_scenarioLogic.DebugDifficultyIncForceStep);
+                            bgpl.DebugIncreaseLaserForce(_scenarioLogic.DifficultyIncForceStep);
                             _scenarioLogic.UpdateDifficulty();
                         }
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
 
-                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.DebugEnemyCountForEarningBlob == 0)
+                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForEarningBlob == 0)
                     {
                         // rewarding the player with a blob
                         _scenarioLogic.AddBlobToPlayerReserve();
@@ -310,7 +310,7 @@ public class BattleGroundLogic : MonoBehaviour
 
     public void UpdateDifficulty()
     {
-        _currentBlobLaserForce += _scenarioLogic.DebugDifficultyIncForceStep;
+        _currentBlobLaserForce += _scenarioLogic.DifficultyIncForceStep;
     }
 
     #region Blob resurrection!

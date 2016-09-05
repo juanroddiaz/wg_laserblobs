@@ -42,28 +42,6 @@ public class MainScenarioLogic : MonoBehaviour
     [SerializeField]
     private GameplayConfiguration _gameplayConfig;
 
-    [Header("Debug stuff!")]
-    [SerializeField]
-    private int _debugEnemyCount = 20;
-    [SerializeField]
-    private int _debugEnemyCountForDifficultyInc = 10;
-    public int DebugEnemyCountForDifficultyInc
-    {
-        get { return _debugEnemyCountForDifficultyInc; }
-    }
-    [SerializeField]
-    private int _debugEnemyCountForEarningBlob = 5;
-    public int DebugEnemyCountForEarningBlob
-    {
-        get { return _debugEnemyCountForEarningBlob; }
-    }
-    [SerializeField]
-    private float _debugDifficultyIncForceStep = 0.0005f;
-    public float DebugDifficultyIncForceStep
-    {
-        get { return _debugDifficultyIncForceStep; }
-    }
-
     private MainSceneController _sceneController;
     public MainSceneController SceneController
     {
@@ -76,6 +54,23 @@ public class MainScenarioLogic : MonoBehaviour
     {
         get { return _canvasScaler; }
     }
+
+    public int EnemyCountForEarningBlob
+    {
+        get { return _gameplayConfig.amountForBlobEarning; }
+    }
+
+    public float DifficultyIncForceStep
+    {
+        get { return _gameplayConfig.difficultyIncForceStep; }
+    }
+
+    public int EnemyCountForDifficultyInc
+    {
+        get { return _gameplayConfig.amountForDifficultIncreasing; }
+    }
+
+    private const int c_enemyReserveCount = 10;
 
     public void Init(MainSceneController sceneController)
     {
@@ -92,7 +87,7 @@ public class MainScenarioLogic : MonoBehaviour
     public void StartGame(List<BlobTypes> _blobSelection)
     {
         _currentBlobSelection = _blobSelection;
-        for (int i = 0; i < _debugEnemyCount; i++)
+        for (int i = 0; i < c_enemyReserveCount; i++)
         {
             _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
         }
