@@ -34,10 +34,11 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _currentEnemyQueue; }
     }
 
-    // blob enemy queue data
+    // blob gameplay's queue data
     private List<BlobTypes> _totalEnemyQueue = new List<BlobTypes>();
     private int _totalEnemyAmount = 0;
     private int _currentEnemyTurn = 0;
+    private int _currentPlayerTurn = 0;
 
     [Header("Main configuration for affinity and damage tables")]
     [SerializeField]
@@ -103,6 +104,7 @@ public class MainScenarioLogic : MonoBehaviour
 
         _totalEnemyAmount = _totalEnemyQueue.Count;
         _currentEnemyTurn = 0;
+        _currentPlayerTurn = 0;
 
         for (int i = 0; i < c_enemyReserveCount; i++)
         {
@@ -181,6 +183,12 @@ public class MainScenarioLogic : MonoBehaviour
                 _currentEnemyTurn = 0;
                 CalculateEnemyQueue();
             }
+        }
+        // calculatingblob earning indexation
+        _currentPlayerTurn += amount;
+        if (_totalEnemyQueue.Count <= _currentPlayerTurn)
+        {
+            _currentPlayerTurn -= _totalEnemyQueue.Count;
         }
     }
     #endregion
@@ -299,7 +307,8 @@ public class MainScenarioLogic : MonoBehaviour
     #region Blob earning methods
     public void AddBlobToPlayerReserve()
     {
-        _currentBlobSelection.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
+        // earning the current enemy turn's blob
+        _currentBlobSelection.Add(_totalEnemyQueue[_currentPlayerTurn]);
         _laserGroupLogic.AddBlobToPlayerReserve();
     }
     #endregion
