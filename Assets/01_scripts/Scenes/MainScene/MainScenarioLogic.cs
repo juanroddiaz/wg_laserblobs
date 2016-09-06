@@ -34,6 +34,11 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _currentEnemyQueue; }
     }
 
+    // blob enemy queue data
+    private List<BlobTypes> _totalEnemyQueue = new List<BlobTypes>();
+    private int _totalEnemyAmount = 0;
+    private int _currentEnemyTurn = 0;
+
     [Header("Main configuration for affinity and damage tables")]
     [SerializeField]
     private AffinityConfiguration _affinityConfig;
@@ -86,17 +91,50 @@ public class MainScenarioLogic : MonoBehaviour
             CustomLog.LogError("Missing blob prefab entries in MainScenarioLogic object!! Aborting :(");
             return;
         }
+
         _laserGroupLogic.Init(this);
     }
 
     public void StartGame()
     {
         _currentBlobSelection = new List<BlobTypes>(_gameplayConfig.startingTypes);
+
+        CalculateEnemyQueue();
+
+        _totalEnemyAmount = _totalEnemyQueue.Count;
+        _currentEnemyTurn = 0;
+
         for (int i = 0; i < c_enemyReserveCount; i++)
         {
-            _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
+            _currentEnemyQueue.Add(_totalEnemyQueue[i]);
+            _currentEnemyTurn++;
         }
         _laserGroupLogic.LaserSetting();
+    }
+
+    private void CalculateEnemyQueue()
+    {
+        _totalEnemyQueue.Clear();
+        // creating enemy blobs total queue for this gameplay
+        foreach (BlobsWaveConfig waveConfig in _gameplayConfig.blobsWaveConfig)
+        {
+            if (waveConfig.isRandomPool)
+            {
+                int randomIdx = 0;
+                for (int i = 0; i < waveConfig.randomIterations; i++)
+                {
+                    randomIdx = Random.Range(0, waveConfig.availableTypes.Count);
+                    _totalEnemyQueue.Add(waveConfig.availableTypes[randomIdx]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < waveConfig.availableTypes.Count; i++)
+                {
+                    _totalEnemyQueue.Add(waveConfig.availableTypes[i]);
+                }
+            }
+        }
     }
 
     public void EndGame()
@@ -133,10 +171,16 @@ public class MainScenarioLogic : MonoBehaviour
             return;
         }
         _currentEnemyQueue.RemoveRange(0, amount);
-        // TODO: enemy spawing generetion according to difficulty and game settings
+        // enemy spawing generetion according to difficulty and game settings
         for (int i = 0; i < amount; i++)
         {
-            _currentEnemyQueue.Add((BlobTypes)Random.Range(0, (int)BlobTypes.MAX));
+            _currentEnemyQueue.Add(_totalEnemyQueue[_currentEnemyTurn]);
+            _currentEnemyTurn++;
+            if (_totalEnemyQueue.Count == _currentEnemyTurn)
+            {
+                _currentEnemyTurn = 0;
+                CalculateEnemyQueue();
+            }
         }
     }
     #endregion
