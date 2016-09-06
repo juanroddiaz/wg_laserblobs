@@ -98,7 +98,7 @@ public class MainScenarioLogic : MonoBehaviour
     public void StartGame()
     {
         _currentBlobSelection = new List<BlobTypes>(_gameplayConfig.startingTypes);
-
+        _currentEnemyQueue.Clear();
         CalculateEnemyQueue();
 
         _totalEnemyAmount = _totalEnemyQueue.Count;
