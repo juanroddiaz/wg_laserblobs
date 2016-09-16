@@ -288,10 +288,10 @@ public class BattleGroundLogic : MonoBehaviour
                 {
                     if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForDifficultyInc == 0)
                     {
+                        _scenarioLogic.UpdateDifficulty();
                         foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
                         {
                             bgpl.DebugIncreaseLaserForce(_scenarioLogic.DifficultyIncForceStep);
-                            _scenarioLogic.UpdateDifficulty();
                         }
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
