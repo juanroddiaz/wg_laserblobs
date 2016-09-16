@@ -78,7 +78,7 @@ public class BattleGroundPivotLogic : MonoBehaviour
         _blobLogic.UpdateLaserForce(force);
     }
 
-    public void DebugIncreaseLaserForce(float inc)
+    public void IncreaseBaseLaserForce(float inc)
     {
         _blobLogic.IncreaseBaseLaserForce(inc);
     }

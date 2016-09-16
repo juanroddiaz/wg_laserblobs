@@ -284,7 +284,7 @@ public class BattleGroundLogic : MonoBehaviour
             case BattleGroundType.ENEMY:
                 // score updating
                 _scenarioLogic.SceneController.UpdateScore();
-                // DEBUG DIFFICULT INCREASING 
+                // DIFFICULT INCREASING 
                 if (_scenarioLogic.SceneController.Score > 0)
                 {
                     if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForDifficultyInc == 0)
@@ -292,7 +292,7 @@ public class BattleGroundLogic : MonoBehaviour
                         _scenarioLogic.UpdateDifficulty();
                         foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
                         {
-                            bgpl.DebugIncreaseLaserForce(_scenarioLogic.DifficultyIncForceStep);
+                            bgpl.IncreaseBaseLaserForce(_scenarioLogic.EnemyDifficultyIncForceStep);
                         }
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
@@ -309,9 +309,9 @@ public class BattleGroundLogic : MonoBehaviour
         yield break;
     }
 
-    public void UpdateDifficulty()
+    public void UpdateDifficulty(float diff)
     {
-        _currentBlobLaserForce += _scenarioLogic.DifficultyIncForceStep;
+        _currentBlobLaserForce += diff;
     }
 
     #region Blob resurrection!

@@ -66,9 +66,14 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _gameplayConfig.amountForBlobEarning; }
     }
 
-    public float DifficultyIncForceStep
+    public float PlayerDifficultyIncForceStep
     {
-        get { return _gameplayConfig.difficultyIncForceStep; }
+        get { return _gameplayConfig.playerDiffIncForceStep; }
+    }
+
+    public float EnemyDifficultyIncForceStep
+    {
+        get { return _gameplayConfig.enemyDiffIncForceStep; }
     }
 
     public int EnemyCountForDifficultyInc

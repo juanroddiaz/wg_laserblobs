@@ -22,7 +22,9 @@ public class GameplayConfiguration : ScriptableObject
     // amount of blobs killed to get a difficulty increment
     public int amountForDifficultIncreasing = 5;
     // enemy's laser force increment per difficulty step
-    public float difficultyIncForceStep = 0.0005f;
+    public float enemyDiffIncForceStep = 0.0005f;
+    // player's laser force increment per difficulty step
+    public float playerDiffIncForceStep = 0.0005f;
     // starting blob types
     public List<BlobTypes> startingTypes = new List<BlobTypes>();
     // list of blob waves configuration for gameplay

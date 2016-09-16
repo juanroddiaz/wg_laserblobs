@@ -164,8 +164,8 @@ public class LaserBeamGroupLogic : MonoBehaviour
 
     public void UpdateDifficulty()
     {
-        _enemyBattleLogic.UpdateDifficulty();
-        _playerBattleLogic.UpdateDifficulty();
+        _enemyBattleLogic.UpdateDifficulty(_scenarioLogic.EnemyDifficultyIncForceStep);
+        _playerBattleLogic.UpdateDifficulty(_scenarioLogic.PlayerDifficultyIncForceStep);
         CustomLog.LogWarning("_enemyBattleLogic's difficulty: " + _enemyBattleLogic.BlobLaserForce.ToString() +
                                 ", _playerBattleLogic's difficulty: " + _playerBattleLogic.BlobLaserForce.ToString());
     }
