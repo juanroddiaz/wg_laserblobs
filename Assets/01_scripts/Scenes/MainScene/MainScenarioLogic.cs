@@ -61,9 +61,21 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _canvasScaler; }
     }
 
-    public int EnemyCountForEarningBlob
+    private int currectEnemyCountIndex = 0;
+    private int currentEnemyCountLoop = 0;
+    public int EnemyCountForEarningBlob()
     {
-        get { return _gameplayConfig.amountForBlobEarning; }
+        return currentEnemyCountLoop + _gameplayConfig.amountForBlobEarning[currectEnemyCountIndex];
+    }
+
+    public void IncreaseEnemyCountIndex()
+    {
+        currectEnemyCountIndex++;
+        if (currectEnemyCountIndex == _gameplayConfig.amountForBlobEarning.Count)
+        {
+            currentEnemyCountLoop = _gameplayConfig.amountForBlobEarning[currectEnemyCountIndex - 1];
+            currectEnemyCountIndex = 0;            
+        }
     }
 
     public float PlayerDifficultyIncForceStep
@@ -110,6 +122,9 @@ public class MainScenarioLogic : MonoBehaviour
         _totalEnemyAmount = _totalEnemyQueue.Count;
         _currentEnemyTurn = 0;
         _currentPlayerTurn = 0;
+
+        currectEnemyCountIndex = 0;
+        currentEnemyCountLoop = 0;
 
         for (int i = 0; i < c_enemyReserveCount; i++)
         {

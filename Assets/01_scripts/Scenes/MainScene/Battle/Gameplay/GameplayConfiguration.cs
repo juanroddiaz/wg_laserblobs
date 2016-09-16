@@ -18,7 +18,7 @@ public class BlobsWaveConfig
 public class GameplayConfiguration : ScriptableObject
 {
     // amount of blobs killed to get another blob as reward from availableTypes pool
-    public int amountForBlobEarning = 5;
+    public List<int> amountForBlobEarning = new List<int>();
     // amount of blobs killed to get a difficulty increment
     public int amountForDifficultIncreasing = 5;
     // enemy's laser force increment per difficulty step

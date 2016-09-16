@@ -298,10 +298,11 @@ public class BattleGroundLogic : MonoBehaviour
                     }
                 }
 
-                if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForEarningBlob == 0)
+                if (_scenarioLogic.SceneController.Score == _scenarioLogic.EnemyCountForEarningBlob())
                 {
                     // rewarding the player with a blob they killed
                     _scenarioLogic.AddBlobToPlayerReserve(killedType);
+                    _scenarioLogic.IncreaseEnemyCountIndex();
                     CustomLog.LogWarning("ADDING A BLOB! " + killedType.ToString());
                 }
                 break;
