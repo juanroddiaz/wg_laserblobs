@@ -305,10 +305,10 @@ public class MainScenarioLogic : MonoBehaviour
     }
 
     #region Blob earning methods
-    public void AddBlobToPlayerReserve()
+    public void AddBlobToPlayerReserve(BlobTypes type)
     {
         // earning the current enemy turn's blob
-        _currentBlobSelection.Add(_totalEnemyQueue[_currentPlayerTurn]);
+        _currentBlobSelection.Add(type);
         _laserGroupLogic.AddBlobToPlayerReserve();
     }
     #endregion

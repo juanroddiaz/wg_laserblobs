@@ -235,6 +235,7 @@ public class BattleGroundLogic : MonoBehaviour
         }
         BattleGroundPivotLogic deadBlob = _blobLogicList[deadIdx];
         int siblingIdx = deadBlob.transform.GetSiblingIndex();
+        BlobTypes killedType = deadBlob.Type;
         deadBlob.DeathEvent();
         yield return new WaitForSeconds(0.5f);
         Destroy(deadBlob.gameObject);
@@ -295,13 +296,13 @@ public class BattleGroundLogic : MonoBehaviour
                         }
                         CustomLog.LogWarning("DIFFICULT INCREASED!");
                     }
+                }
 
-                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForEarningBlob == 0)
-                    {
-                        // rewarding the player with a blob
-                        _scenarioLogic.AddBlobToPlayerReserve();
-                        CustomLog.LogWarning("ADDING A BLOB!");
-                    }
+                if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForEarningBlob == 0)
+                {
+                    // rewarding the player with a blob they killed
+                    _scenarioLogic.AddBlobToPlayerReserve(killedType);
+                    CustomLog.LogWarning("ADDING A BLOB! " + killedType.ToString());
                 }
                 break;
         }

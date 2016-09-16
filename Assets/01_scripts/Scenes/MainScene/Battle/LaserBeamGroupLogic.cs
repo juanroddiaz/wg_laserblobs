@@ -112,7 +112,6 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _laserBeamList[(int)lane].UpdatePlayerLaserColor(_playerBattleLogic.GetBlobStartColor(lane));
     }
 
-    // [TODO] enemy reserve from seed!
     public IEnumerator EnemyBlobDeath(LaserLinesEnum lane)
     {
         BlobTypes type = BlobTypes.MAX;
