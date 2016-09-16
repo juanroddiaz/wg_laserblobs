@@ -81,7 +81,7 @@ public class BattleGroundLogic : MonoBehaviour
         int idx = 0;
         for (int i = 0; i < (int)LaserLinesEnum.Max; i++)
         {
-            int blobTypeIdx = _type == BattleGroundType.PLAYER ? (int)scenarioLogic.CurrentBlobSelection[i] : i;
+            int blobTypeIdx = _type == BattleGroundType.PLAYER ? (int)scenarioLogic.CurrentBlobSelection[i] : (int)scenarioLogic.CurrentEnemyQueue[i];
             GameObject obj = Instantiate(scenarioLogic.BlobPrefabs[blobTypeIdx], Vector3.zero, Quaternion.identity) as GameObject;
             LaserLinesEnum lane = (LaserLinesEnum)idx;
             obj.transform.SetParent(transform);
