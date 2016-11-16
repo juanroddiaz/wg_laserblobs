@@ -12,7 +12,7 @@ public class HudUiLogic : MonoBehaviour
     [SerializeField]
     private Text _scoreLabel;
     [SerializeField]
-    private Text _multiplierLabel;
+    private Text _waveNumberLabel;
 
     private MainSceneController _sceneController;
 
@@ -27,7 +27,7 @@ public class HudUiLogic : MonoBehaviour
     public void ResetGameData()
     {
         _scoreLabel.text = _sceneController.Score.ToString();
-        _multiplierLabel.text = "x" + _sceneController.Multiplier.ToString();
+        _waveNumberLabel.text = "x" + _sceneController.Multiplier.ToString();
     }
 
     public void OnPauseButton()
@@ -49,6 +49,6 @@ public class HudUiLogic : MonoBehaviour
 
     public void UpdateMultiplier()
     {
-        _multiplierLabel.text = "x" + _sceneController.Multiplier.ToString();
+        _waveNumberLabel.text = "x" + _sceneController.Multiplier.ToString();
     }
 }
