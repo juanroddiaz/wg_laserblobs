@@ -285,18 +285,18 @@ public class BattleGroundLogic : MonoBehaviour
                 // score updating
                 _scenarioLogic.SceneController.UpdateScore();
                 // DIFFICULT INCREASING 
-                if (_scenarioLogic.SceneController.Score > 0)
-                {
-                    if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForDifficultyInc == 0)
-                    {
-                        _scenarioLogic.UpdateDifficulty();
-                        foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
-                        {
-                            bgpl.IncreaseBaseLaserForce(_scenarioLogic.EnemyDifficultyIncForceStep);
-                        }
-                        CustomLog.LogWarning("DIFFICULT INCREASED!");
-                    }
-                }
+                //if (_scenarioLogic.SceneController.Score > 0)
+                //{
+                //    if (_scenarioLogic.SceneController.Score % _scenarioLogic.EnemyCountForDifficultyInc == 0)
+                //    {
+                //        _scenarioLogic.UpdateDifficulty();
+                //        foreach (BattleGroundPivotLogic bgpl in _blobLogicList)
+                //        {
+                //            bgpl.IncreaseBaseLaserForce(_scenarioLogic.EnemyDifficultyIncForceStep);
+                //        }
+                //        CustomLog.LogWarning("DIFFICULT INCREASED!");
+                //    }
+                //}
 
                 if (_scenarioLogic.SceneController.Score == _scenarioLogic.EnemyCountForEarningBlob())
                 {

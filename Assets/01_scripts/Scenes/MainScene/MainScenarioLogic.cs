@@ -65,17 +65,12 @@ public class MainScenarioLogic : MonoBehaviour
     private int currentEnemyCountLoop = 0;
     public int EnemyCountForEarningBlob()
     {
-        return currentEnemyCountLoop + _gameplayConfig.amountForBlobEarning[currectEnemyCountIndex];
+        return currentEnemyCountLoop;
     }
 
     public void IncreaseEnemyCountIndex()
     {
         currectEnemyCountIndex++;
-        if (currectEnemyCountIndex == _gameplayConfig.amountForBlobEarning.Count)
-        {
-            currentEnemyCountLoop = _gameplayConfig.amountForBlobEarning[currectEnemyCountIndex - 1];
-            currectEnemyCountIndex = 0;            
-        }
     }
 
     public float PlayerDifficultyIncForceStep
@@ -88,17 +83,12 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _gameplayConfig.enemyDiffIncForceStep; }
     }
 
-    public int EnemyCountForDifficultyInc
-    {
-        get { return _gameplayConfig.amountForDifficultIncreasing; }
-    }
-
     public List<BlobTypes> GetInitialBlobs()
     {
         return _gameplayConfig.startingTypes;
     }
 
-    private const int c_enemyReserveCount = 10;
+    private const int c_enemyReserveCount = 3;
 
     public void Init(MainSceneController sceneController)
     {
