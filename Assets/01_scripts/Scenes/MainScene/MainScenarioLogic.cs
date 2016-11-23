@@ -73,16 +73,6 @@ public class MainScenarioLogic : MonoBehaviour
         currectEnemyCountIndex++;
     }
 
-    public float PlayerDifficultyIncForceStep
-    {
-        get { return _gameplayConfig.playerDiffIncForceStep; }
-    }
-
-    public float EnemyDifficultyIncForceStep
-    {
-        get { return _gameplayConfig.enemyDiffIncForceStep; }
-    }
-
     public List<BlobTypes> GetInitialBlobs()
     {
         return _gameplayConfig.startingTypes;
@@ -128,7 +118,7 @@ public class MainScenarioLogic : MonoBehaviour
     {
         _totalEnemyQueue.Clear();
         // creating enemy blobs total queue for this gameplay
-        foreach (BlobsWaveConfig waveConfig in _gameplayConfig.blobsWaveConfig)
+        foreach (BlobsWaveConfig waveConfig in _gameplayConfig.blobWavesConfig.waveInstancesList)
         {
             if (waveConfig.isRandomPool)
             {
@@ -308,11 +298,6 @@ public class MainScenarioLogic : MonoBehaviour
         _laserGroupLogic.CalculateDamageMultiplierForLane(lane);
     }
     #endregion
-
-    public void UpdateDifficulty()
-    {
-        _laserGroupLogic.UpdateDifficulty();
-    }
 
     #region Blob earning methods
     public void AddBlobToPlayerReserve(BlobTypes type)

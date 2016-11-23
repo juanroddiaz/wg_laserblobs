@@ -162,14 +162,6 @@ public class LaserBeamGroupLogic : MonoBehaviour
         _laserBeamList[laneIdx].UpdateEnemyLaserColor(color);
     }
 
-    public void UpdateDifficulty()
-    {
-        _enemyBattleLogic.UpdateDifficulty(_scenarioLogic.EnemyDifficultyIncForceStep);
-        _playerBattleLogic.UpdateDifficulty(_scenarioLogic.PlayerDifficultyIncForceStep);
-        CustomLog.LogWarning("_enemyBattleLogic's difficulty: " + _enemyBattleLogic.BlobLaserForce.ToString() +
-                                ", _playerBattleLogic's difficulty: " + _playerBattleLogic.BlobLaserForce.ToString());
-    }
-
     public void AddBlobToPlayerReserve()
     {
         _playerBattleLogic.AddBlobToReserve();

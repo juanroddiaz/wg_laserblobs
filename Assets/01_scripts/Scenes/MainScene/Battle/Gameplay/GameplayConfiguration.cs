@@ -31,13 +31,8 @@ public class BlobsWaveConfig
 
 public class GameplayConfiguration : ScriptableObject
 {
-    // enemy's laser force increment per difficulty step
-    public float enemyDiffIncForceStep = 0.0005f;
-    // player's laser force increment per difficulty step
-    public float playerDiffIncForceStep = 0.0005f;
     // starting blob types
     public List<BlobTypes> startingTypes = new List<BlobTypes>();
     // list of blob waves configuration for gameplay
     public BlobsWaveGroupConfig blobWavesConfig;
-    public List<BlobsWaveConfig> blobsWaveConfig = new List<BlobsWaveConfig>();
 }
