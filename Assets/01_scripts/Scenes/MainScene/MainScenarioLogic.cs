@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class MainScenarioLogic : MonoBehaviour
 {
@@ -61,16 +62,18 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _canvasScaler; }
     }
 
-    private int currectEnemyCountIndex = 0;
-    private int currentEnemyCountLoop = 0;
+    private int _currectEnemyCountIndex = 0;
+    private int _currentWave = 0;
+
+    private List<int> _enemyCountForEarningBlob = new List<int>();
     public int EnemyCountForEarningBlob()
     {
-        return currentEnemyCountLoop;
+        return _enemyCountForEarningBlob.First();
     }
 
     public void IncreaseEnemyCountIndex()
     {
-        currectEnemyCountIndex++;
+        _currectEnemyCountIndex++;
     }
 
     public List<BlobTypes> GetInitialBlobs()
@@ -103,8 +106,7 @@ public class MainScenarioLogic : MonoBehaviour
         _currentEnemyTurn = 0;
         _currentPlayerTurn = 0;
 
-        currectEnemyCountIndex = 0;
-        currentEnemyCountLoop = 0;
+        _currectEnemyCountIndex = 0;
 
         for (int i = 0; i < c_enemyReserveCount; i++)
         {
@@ -117,6 +119,8 @@ public class MainScenarioLogic : MonoBehaviour
     private void CalculateEnemyQueue()
     {
         _totalEnemyQueue.Clear();
+        _enemyCountForEarningBlob.Clear();
+        _currentWave = 1;
         // creating enemy blobs total queue for this gameplay
         foreach (BlobsWaveConfig waveConfig in _gameplayConfig.blobWavesConfig.waveInstancesList)
         {
@@ -136,6 +140,7 @@ public class MainScenarioLogic : MonoBehaviour
                     _totalEnemyQueue.Add(waveConfig.availableTypes[i]);
                 }
             }
+            _enemyCountForEarningBlob.Add(_totalEnemyQueue.Count());
         }
     }
 
@@ -300,11 +305,18 @@ public class MainScenarioLogic : MonoBehaviour
     #endregion
 
     #region Blob earning methods
-    public void AddBlobToPlayerReserve(BlobTypes type)
+    public void AddBlobToPlayerReserve()
     {
-        // earning the current enemy turn's blob
-        _currentBlobSelection.Add(type);
-        _laserGroupLogic.AddBlobToPlayerReserve();
+        // earning the current enemy wave turn's blob
+        foreach (BlobTypes bt in _gameplayConfig.blobWavesConfig.waveInstancesList[_currentWave].rewardsTypes)
+        {
+            _currentBlobSelection.Add(bt);
+            _laserGroupLogic.AddBlobToPlayerReserve();
+        }
+
+        //remove current enemy prize turn
+        _currentWave++;
+        _enemyCountForEarningBlob.RemoveAt(0);
     }
     #endregion
 }
