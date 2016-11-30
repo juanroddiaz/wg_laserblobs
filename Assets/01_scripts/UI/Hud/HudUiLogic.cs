@@ -27,7 +27,7 @@ public class HudUiLogic : MonoBehaviour
     public void ResetGameData()
     {
         _scoreLabel.text = _sceneController.Score.ToString();
-        _waveNumberLabel.text = "x" + _sceneController.Multiplier.ToString();
+        _waveNumberLabel.text = _sceneController.Wave.ToString();
     }
 
     public void OnPauseButton()
@@ -47,8 +47,8 @@ public class HudUiLogic : MonoBehaviour
         _scoreLabel.text = _sceneController.Score.ToString();
     }
 
-    public void UpdateMultiplier()
+    public void UpdateWave()
     {
-        _waveNumberLabel.text = "x" + _sceneController.Multiplier.ToString();
+        _waveNumberLabel.text = _sceneController.Wave.ToString();
     }
 }

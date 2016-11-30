@@ -298,12 +298,13 @@ public class BattleGroundLogic : MonoBehaviour
                 //    }
                 //}
 
-                if (_scenarioLogic.SceneController.Score == _scenarioLogic.EnemyCountForEarningBlob())
+                _scenarioLogic.IncreaseEnemyCountIndex();
+                if (_scenarioLogic.SceneController.Score == _scenarioLogic.EnemyCountForEarningBlob)
                 {
                     // rewarding the player with a blob they killed
                     _scenarioLogic.AddBlobToPlayerReserve();
+                    _scenarioLogic.SceneController.UpdateWave();
                 }
-                _scenarioLogic.IncreaseEnemyCountIndex();
                 break;
         }
         yield break;

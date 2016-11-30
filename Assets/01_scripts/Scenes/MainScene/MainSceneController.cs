@@ -41,10 +41,10 @@ public class MainSceneController : SceneController
         get { return _isPaused; }
     }
 
-    private int _multiplier = 1;
-    public int Multiplier
+    private int _wave = 1;
+    public int Wave
     {
-        get { return _multiplier; }
+        get { return _wave; }
     }
 
     private int _score = 0;
@@ -73,15 +73,15 @@ public class MainSceneController : SceneController
         base.Update();
     }
 
-    public void UpdateMultiplier(int m)
+    public void UpdateWave()
     {
-        _multiplier = m;
-        _hudLogic.UpdateMultiplier();
+        _wave += 1;
+        _hudLogic.UpdateWave();
     }
 
     public void UpdateScore()
     {
-        _score += _multiplier;
+        _score += 1;
         _hudLogic.UpdateScore();
     }
 
@@ -107,7 +107,7 @@ public class MainSceneController : SceneController
     public void StartGame()
     {
         _isPaused = false;
-        _multiplier = 1;
+        _wave = 1;
         _score = 0;
         _hudLogic.ResetGameData();
         _scenarioLogic.StartGame();
@@ -127,7 +127,7 @@ public class MainSceneController : SceneController
     {
         _scenarioLogic.EndGame();
         TogglePauseGame();
-        _multiplier = 1;
+        _wave = 1;
         _score = 0;
         _hudLogic.ResetGameData();
         _scenarioLogic.StartGame();

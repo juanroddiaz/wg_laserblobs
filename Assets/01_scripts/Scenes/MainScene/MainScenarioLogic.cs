@@ -62,18 +62,14 @@ public class MainScenarioLogic : MonoBehaviour
         get { return _canvasScaler; }
     }
 
-    private int _currectEnemyCountIndex = 0;
+    private int _currentEnemyCountIndex = 0;
     private int _currentWave = 0;
 
-    private List<int> _enemyCountForEarningBlob = new List<int>();
-    public int EnemyCountForEarningBlob()
-    {
-        return _enemyCountForEarningBlob.First();
-    }
+    public int EnemyCountForEarningBlob { get; private set; }
 
     public void IncreaseEnemyCountIndex()
     {
-        _currectEnemyCountIndex++;
+        _currentEnemyCountIndex++;
     }
 
     public List<BlobTypes> GetInitialBlobs()
@@ -100,13 +96,16 @@ public class MainScenarioLogic : MonoBehaviour
     {
         _currentBlobSelection = new List<BlobTypes>(_gameplayConfig.startingTypes);
         _currentEnemyQueue.Clear();
+        _currentEnemyTurn = 0;
+        _currentPlayerTurn = 0;
+        _currentWave = 0;
+
         CalculateEnemyQueue();
 
         _totalEnemyAmount = _totalEnemyQueue.Count;
-        _currentEnemyTurn = 0;
-        _currentPlayerTurn = 0;
 
-        _currectEnemyCountIndex = 0;
+        _currentEnemyCountIndex = 0;
+        CalculateNextEnemyCountForReward();
 
         for (int i = 0; i < c_enemyReserveCount; i++)
         {
@@ -119,8 +118,6 @@ public class MainScenarioLogic : MonoBehaviour
     private void CalculateEnemyQueue()
     {
         _totalEnemyQueue.Clear();
-        _enemyCountForEarningBlob.Clear();
-        _currentWave = 1;
         // creating enemy blobs total queue for this gameplay
         foreach (BlobsWaveConfig waveConfig in _gameplayConfig.blobWavesConfig.waveInstancesList)
         {
@@ -140,8 +137,14 @@ public class MainScenarioLogic : MonoBehaviour
                     _totalEnemyQueue.Add(waveConfig.availableTypes[i]);
                 }
             }
-            _enemyCountForEarningBlob.Add(_totalEnemyQueue.Count());
         }
+    }
+
+    private void CalculateNextEnemyCountForReward()
+    {
+        BlobsWaveConfig currentWave = _gameplayConfig.blobWavesConfig.waveInstancesList[_currentWave];
+        int nextWaveLimit = currentWave.isRandomPool ? currentWave.randomIterations : currentWave.availableTypes.Count;
+        EnemyCountForEarningBlob = _currentEnemyCountIndex + nextWaveLimit;
     }
 
     public void EndGame()
@@ -316,7 +319,11 @@ public class MainScenarioLogic : MonoBehaviour
 
         //remove current enemy prize turn
         _currentWave++;
-        _enemyCountForEarningBlob.RemoveAt(0);
+        if (_currentWave == _gameplayConfig.blobWavesConfig.waveInstancesList.Count)
+        {
+            _currentWave = 0;
+        }
+        CalculateNextEnemyCountForReward();
     }
     #endregion
 }
