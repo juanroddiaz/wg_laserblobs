@@ -1,7 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq;
+
+public enum IBlobDifficulty
+{
+    VeryEasy = 0,
+    Easier,
+    Easy,
+    Medium,
+    Hard,
+    Harder,
+    VeryHard,
+    Max
+}
+
+[System.Serializable]
+public class DifficultyBlobEntries
+{
+    public IBlobDifficulty Difficulty;
+    public List<GameObject> BlobTypeObjects;
+}
 
 public class MainScenarioLogic : MonoBehaviour
 {
@@ -14,6 +32,13 @@ public class MainScenarioLogic : MonoBehaviour
     public List<GameObject> BlobPrefabs
     {
         get { return _blobPrefabs; }
+    }
+
+    [SerializeField]
+    private List<DifficultyBlobEntries> _difficultyBlobLists = new List<DifficultyBlobEntries>();
+    public List<DifficultyBlobEntries> DifficultyBlobLists
+    {
+        get { return _difficultyBlobLists; }
     }
 
     [SerializeField]

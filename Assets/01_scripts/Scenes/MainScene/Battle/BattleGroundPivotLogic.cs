@@ -41,6 +41,13 @@ public class BattleGroundPivotLogic : MonoBehaviour
         get { return _type; }
     }
 
+    [SerializeField]
+    private IBlobDifficulty _difficulty = IBlobDifficulty.Max;
+    public IBlobDifficulty Difficulty
+    {
+        get { return _difficulty; }
+    }
+
     private BlobAnimType _teamAnimType = BlobAnimType.Max;
     private BlobAnimations _currentAnim = BlobAnimations.Max;
 
