@@ -28,13 +28,6 @@ public class MainScenarioLogic : MonoBehaviour
 
     [Header("Color blob prefabs, sorted by BlobTypes enumeration.")]
     [SerializeField]
-    private List<GameObject> _blobPrefabs = new List<GameObject>();
-    public List<GameObject> BlobPrefabs
-    {
-        get { return _blobPrefabs; }
-    }
-
-    [SerializeField]
     private List<DifficultyBlobEntries> _difficultyBlobLists = new List<DifficultyBlobEntries>();
     public List<DifficultyBlobEntries> DifficultyBlobLists
     {
@@ -104,16 +97,17 @@ public class MainScenarioLogic : MonoBehaviour
 
     private const int c_enemyReserveCount = 3;
 
+    public GameObject GetBlobTypePerDifficulty(int type)
+    {
+        BlobsWaveConfig currentWave = _gameplayConfig.blobWavesConfig.waveInstancesList[_currentWave];
+        DifficultyBlobEntries entries = _difficultyBlobLists.Find(x => x.Difficulty == currentWave.difficulty);
+
+        return entries.BlobTypeObjects[type];
+    }
+
     public void Init(MainSceneController sceneController)
     {
         _sceneController = sceneController;
-
-        if (_blobPrefabs.Count != (int)BlobTypes.MAX)
-        {
-            CustomLog.LogError("Missing blob prefab entries in MainScenarioLogic object!! Aborting :(");
-            return;
-        }
-
         _laserGroupLogic.Init(this);
     }
 

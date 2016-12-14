@@ -32,7 +32,7 @@ public class ReserveQueueLogic : MonoBehaviour
         }
         for (int i = 0; i < blobList.Count; i++)
         {
-            GameObject obj = Instantiate(_bgLogic.BlobPrefabs[(int)blobList[i]], Vector3.zero, Quaternion.identity) as GameObject; ;
+            GameObject obj = Instantiate(_bgLogic.GetBlobTypePerDifficulty((int)blobList[i]), Vector3.zero, Quaternion.identity) as GameObject; ;
             obj.transform.SetParent(_queueTransform);
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localScale = new Vector3(_blobReserveCustomSize, _blobReserveCustomSize, 1.0f);
@@ -72,7 +72,7 @@ public class ReserveQueueLogic : MonoBehaviour
                 blobType = _bgLogic.CurrentEnemyQueue.Last();
                 break;
         }
-        GameObject obj = Instantiate(_bgLogic.BlobPrefabs[(int)blobType], Vector3.zero, Quaternion.identity) as GameObject; ;
+        GameObject obj = Instantiate(_bgLogic.GetBlobTypePerDifficulty((int)blobType), Vector3.zero, Quaternion.identity) as GameObject; ;
         obj.transform.SetParent(_queueTransform);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = new Vector3(_blobReserveCustomSize, _blobReserveCustomSize, 1.0f);

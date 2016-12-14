@@ -82,7 +82,7 @@ public class BattleGroundLogic : MonoBehaviour
         for (int i = 0; i < (int)LaserLinesEnum.Max; i++)
         {
             int blobTypeIdx = _type == BattleGroundType.PLAYER ? (int)scenarioLogic.CurrentBlobSelection[i] : (int)scenarioLogic.CurrentEnemyQueue[i];
-            GameObject obj = Instantiate(scenarioLogic.BlobPrefabs[blobTypeIdx], Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject obj = Instantiate(scenarioLogic.GetBlobTypePerDifficulty(blobTypeIdx), Vector3.zero, Quaternion.identity) as GameObject;
             LaserLinesEnum lane = (LaserLinesEnum)idx;
             obj.transform.SetParent(transform);
             obj.transform.localPosition = Vector3.zero;
@@ -241,7 +241,7 @@ public class BattleGroundLogic : MonoBehaviour
         Destroy(deadBlob.gameObject);
 
         // blob reserve is over?
-        GameObject blobObj = blobType == BlobTypes.MAX ? _scenarioLogic.DeadBlob : _scenarioLogic.BlobPrefabs[(int)blobType];
+        GameObject blobObj = blobType == BlobTypes.MAX ? _scenarioLogic.DeadBlob : _scenarioLogic.GetBlobTypePerDifficulty((int)blobType);
         GameObject obj = Instantiate(blobObj, Vector3.zero, Quaternion.identity) as GameObject;
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
@@ -322,7 +322,7 @@ public class BattleGroundLogic : MonoBehaviour
         // removing dead blob obj
         Destroy(_blobLogicList[siblingIdx].gameObject);
 
-        GameObject blobObj = _scenarioLogic.BlobPrefabs[(int)blobType];
+        GameObject blobObj = _scenarioLogic.GetBlobTypePerDifficulty((int)blobType);
         GameObject obj = Instantiate(blobObj, Vector3.zero, Quaternion.identity) as GameObject;
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;

@@ -19,6 +19,8 @@ public class BlobsWaveConfig
     public string listDescription = "";
     // enemy's laser force increment for this wave
     public float enemyLaserForce = 0.0005f;
+    // wave difficulty
+    public IBlobDifficulty difficulty = IBlobDifficulty.VeryEasy;
     // a random pool will pick any blob from the pool with a normal random selection. A non random will pick the next blob by list sorting
     public bool isRandomPool;
     // hoy many random entries this wave will have. For a non random wave, the entries will be as same as the list amount
